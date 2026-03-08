@@ -1423,10 +1423,15 @@
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
             .topnav {
+                height: 52px;
                 padding: 0 1rem;
             }
 
             .topnav-tabs {
+                display: none;
+            }
+
+            .back-link {
                 display: none;
             }
 
@@ -1436,8 +1441,8 @@
                 border-radius: 8px;
             }
             .zoom-live-btn svg {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
             }
 
             .main-content {
@@ -1456,7 +1461,7 @@
                 border-top: 1px solid rgba(255,255,255,0.08);
                 z-index: 50;
                 justify-content: space-around;
-                padding: 0.4rem 0;
+                padding: 0.35rem 0;
             }
 
             .mobile-nav button {
@@ -1468,8 +1473,8 @@
                 border: none;
                 color: var(--text-muted);
                 font-family: 'Heebo', sans-serif;
-                font-size: 0.58rem;
-                padding: 0.3rem 0.2rem;
+                font-size: 0.55rem;
+                padding: 0.25rem 0.3rem;
                 cursor: pointer;
             }
 
@@ -1478,20 +1483,20 @@
             }
 
             .mobile-nav button .nav-icon {
-                font-size: 1.15rem;
+                font-size: 1.1rem;
             }
 
-            .mobile-nav .mobile-zoom-btn {
-                color: #2D8CFF;
-            }
-
-            .mobile-nav .mobile-zoom-btn .nav-icon {
-                font-size: unset;
-                line-height: 1;
+            .page-header {
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
             }
 
             .page-header h1 {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
+            }
+
+            .page-header p {
+                font-size: 0.8rem;
             }
 
             .sessions-grid {
@@ -1584,17 +1589,9 @@
             <span class="nav-icon">&#x1F4D6;</span>
             <span>הדרכות</span>
         </button>
-        <button data-section="recommendations">
-            <span class="nav-icon">&#x2B50;</span>
-            <span>המלצות</span>
-        </button>
-        <button class="mobile-zoom-btn" onclick="joinZoom()" title="כניסה לשיעור">
-            <span class="nav-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
-                </svg>
-            </span>
-            <span>זום</span>
+        <button data-section="downloads">
+            <span class="nav-icon">&#x1F4BE;</span>
+            <span>הורדות</span>
         </button>
     </nav>
 
