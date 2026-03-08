@@ -447,12 +447,13 @@
         .session-detail-presentation {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            margin-bottom: 2rem;
+            margin: 0 auto 2rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: #fff;
             text-decoration: none;
-            padding: 0.8rem 1.8rem;
+            padding: 0.8rem 2.5rem;
             border-radius: 50px;
             font-size: 1rem;
             font-weight: 600;
@@ -461,11 +462,19 @@
             font-family: 'Heebo', sans-serif;
             transition: transform 0.2s, box-shadow 0.2s;
             width: fit-content;
+            animation: btnPulse 2.5s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(108, 60, 225, 0.3);
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(108, 60, 225, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(108, 60, 225, 0.55); }
         }
 
         .session-detail-presentation:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
+            box-shadow: 0 5px 25px rgba(108, 60, 225, 0.5);
+            animation: none;
         }
 
         .session-card-body .objective {
@@ -1564,10 +1573,9 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
                 </svg>
-                כניסה לשיעור
+                Zoom
             </a>
-            <a href="index.html" class="back-link">לאתר הראשי &#8592;</a>
-            <a href="portal.html">AI Youth</a>
+            <a href="index.html" title="לאתר הראשי">AI Youth</a>
         </div>
     </header>
 
