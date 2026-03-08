@@ -1487,6 +1487,54 @@
                 cursor: pointer;
             }
 
+            /* More menu popup */
+            .more-menu {
+                display: none;
+                position: fixed;
+                bottom: 60px;
+                left: 0.8rem;
+                background: var(--dark-card);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 14px;
+                padding: 0.5rem;
+                z-index: 60;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+                flex-direction: column;
+                min-width: 140px;
+            }
+
+            .more-menu.open {
+                display: flex;
+                animation: moreSlideUp 0.2s ease;
+            }
+
+            @keyframes moreSlideUp {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .more-menu button {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.7rem 1rem;
+                background: none;
+                border: none;
+                color: var(--text);
+                font-family: 'Heebo', sans-serif;
+                font-size: 0.9rem;
+                font-weight: 500;
+                cursor: pointer;
+                border-radius: 10px;
+                transition: background 0.2s;
+                direction: rtl;
+            }
+
+            .more-menu button:hover,
+            .more-menu button:active {
+                background: rgba(108, 60, 225, 0.15);
+            }
+
             .mobile-nav button.active {
                 color: var(--accent);
             }
@@ -1569,13 +1617,13 @@
             </button>
         </div>
         <div class="topnav-logo">
+            <a href="index.html" title="לאתר הראשי">AI Youth</a>
             <a href="#" class="zoom-live-btn" id="zoomBtn" onclick="joinZoom()" title="הצטרפו למפגש בזום">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M4 3C2.9 3 2 3.9 2 5V15C2 16.1 2.9 17 4 17H14C15.1 17 16 16.1 16 15V12L20 16V4L16 8V5C16 3.9 15.1 3 14 3H4ZM4 5H14V15H4V5Z"/>
                 </svg>
                 Zoom
             </a>
-            <a href="index.html" title="לאתר הראשי">AI Youth</a>
         </div>
     </header>
 
@@ -1587,21 +1635,33 @@
         </button>
         <button data-section="ai-tools">
             <span class="nav-icon">&#x1F916;</span>
-            <span>AI</span>
+            <span>כלי AI</span>
         </button>
         <button data-section="project">
             <span class="nav-icon">&#x1F680;</span>
-            <span>פרויקט</span>
+            <span>הפרויקט</span>
         </button>
         <button data-section="guides">
             <span class="nav-icon">&#x1F4D6;</span>
             <span>הדרכות</span>
         </button>
-        <button data-section="downloads">
-            <span class="nav-icon">&#x1F4BE;</span>
-            <span>הורדות</span>
+        <button id="moreMenuBtn" onclick="toggleMoreMenu()">
+            <span class="nav-icon">&#x2022;&#x2022;&#x2022;</span>
+            <span>עוד</span>
         </button>
     </nav>
+    <!-- MORE MENU POPUP -->
+    <div class="more-menu" id="moreMenu">
+        <button data-section="downloads" onclick="selectMoreSection('downloads')">
+            <span>&#x1F4BE;</span> הורדות
+        </button>
+        <button data-section="recommendations" onclick="selectMoreSection('recommendations')">
+            <span>&#x2B50;</span> המלצות
+        </button>
+        <button data-section="help" onclick="selectMoreSection('help')">
+            <span>&#x2753;</span> עזרה
+        </button>
+    </div>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
@@ -2972,14 +3032,41 @@
             alert('הלינק לזום יעודכן בקרוב! 🎥');
         }
 
+        // ===== MORE MENU =====
+        function toggleMoreMenu() {
+            var menu = document.getElementById('moreMenu');
+            menu.classList.toggle('open');
+        }
+
+        function selectMoreSection(sectionId) {
+            document.getElementById('moreMenu').classList.remove('open');
+            switchSection(sectionId);
+            // Highlight "more" button
+            var moreBtn = document.getElementById('moreMenuBtn');
+            document.querySelectorAll('.mobile-nav button').forEach(b => b.classList.remove('active'));
+            moreBtn.classList.add('active');
+        }
+
+        // Close more menu when tapping elsewhere
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('moreMenu');
+            var btn = document.getElementById('moreMenuBtn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+
         // ===== NAVIGATION =====
-        const allNavBtns = document.querySelectorAll('[data-section]');
+        const allNavBtns = document.querySelectorAll('.mobile-nav button[data-section], .topnav-tabs button[data-section]');
         const allSections = document.querySelectorAll('.portal-section');
 
         function switchSection(sectionId) {
             allSections.forEach(s => s.classList.remove('active'));
-            allNavBtns.forEach(b => b.classList.remove('active'));
-            document.getElementById('section-' + sectionId).classList.add('active');
+            document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('active'));
+            var moreBtn = document.getElementById('moreMenuBtn');
+            if (moreBtn) moreBtn.classList.remove('active');
+            var el = document.getElementById('section-' + sectionId);
+            if (el) el.classList.add('active');
             document.querySelectorAll('[data-section="' + sectionId + '"]').forEach(b => b.classList.add('active'));
             // When switching to sessions, close detail view
             if (sectionId === 'sessions') closeSession();
