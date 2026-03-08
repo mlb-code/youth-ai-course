@@ -203,7 +203,7 @@
         }
 
         .session-tag {
-            margin-right: auto;
+            margin-left: auto;
             background: rgba(255,255,255,0.15);
             padding: 0.2rem 0.7rem;
             border-radius: 20px;
@@ -236,7 +236,7 @@
         }
 
         .session-card-body .content-list li::before {
-            content: "\25B8";
+            content: "\25C2";
             color: var(--primary-light);
             flex-shrink: 0;
             margin-top: 2px;
@@ -259,6 +259,29 @@
         .session-exercise p {
             font-size: 0.88rem;
             color: var(--text-muted);
+        }
+
+        .session-presentation {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .session-presentation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
         }
 
         /* Session detail view */
@@ -837,6 +860,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>שאלו את ה-AI 5 שאלות שונות ותראו את ההבדלים בין הכלים</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(1)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -859,6 +883,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>אתגר פרומפטים: מי יצליח לגרום ל-AI ליצור את התוצאה הכי מדויקה?</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(2)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -881,6 +906,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>כל תלמיד מזהה 3 בעיות מהחיים שלו ומציג לכיתה</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(3)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -903,6 +929,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות שבונות אפיון מלא</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(4)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -925,6 +952,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(5)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -947,6 +975,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>שדרוג האתר: הוספת טופס יצירת קשר, אנימציה ותפריט</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(6)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -969,6 +998,7 @@
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>בניית תוכנית עסקית + יצירת 3 פוסטים שיווקיים עם AI</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(7)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -985,12 +1015,13 @@
                             <li>איך בונים מצגת שמוכרת</li>
                             <li>טיפים לדיבור בפני קהל</li>
                             <li>מבנה הפיץ': בעיה &#x2192; פתרון &#x2192; דמו</li>
-                            <li>פידבק מהשופטים ומההורים</li>
+                            <li>פידבק מהמנחה</li>
                         </ul>
                         <div class="session-exercise">
                             <div class="exercise-label">&#x1F3AF; תרגול</div>
                             <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר!</p>
                         </div>
+                        <button class="session-presentation" onclick="openPresentation(8)">&#x1F4CA; צפו במצגת השיעור</button>
                     </div>
                 </div>
 
@@ -1046,11 +1077,42 @@
                 </div>
 
                 <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #1a1a1a, #333);">&#x2716;</div>
+                    <div class="ai-tool-info">
+                        <h3>Grok</h3>
+                        <p class="ai-tool-desc">של xAI (אילון מאסק). משולב עם X/Twitter, מעודכן בזמן אמת, סגנון ישיר וחד. מצוין לניתוח טרנדים ואירועים.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: חדשות, טרנדים, ניתוח בזמן אמת</div>
+                        <a href="https://grok.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Grok</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FBBC04, #EA4335);">&#x1F4D3;</div>
+                    <div class="ai-tool-info">
+                        <h3>NotebookLM</h3>
+                        <p class="ai-tool-desc">של גוגל. מעלים מסמכים, מאמרים או אתרים והכלי יוצר סיכומים, שאלות ותשובות, ואפילו פודקאסט אוטומטי!</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: לימוד, סיכומים, מחקר, פודקאסט</div>
+                        <a href="https://notebooklm.google.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-NotebookLM</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
                     <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FF4D8D, #e63976);">&#x1F3AC;</div>
                     <div class="ai-tool-info">
                         <h3>Novo</h3>
                         <p class="ai-tool-desc">יצירת סרטוני וידאו עם בינה מלאכותית. כותבים תסריט ומקבלים סרטון מוכן. מושלם לשיווק ולמדיה חברתית.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: סרטונים, שיווק, תוכן ויזואלי</div>
+                        <a href="https://www.novo.ai" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Novo</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FF6B6B, #ee5a24);">&#x1F3A5;</div>
+                    <div class="ai-tool-info">
+                        <h3>Sora</h3>
+                        <p class="ai-tool-desc">של OpenAI. יצירת סרטוני וידאו מטקסט. כותבים תיאור ומקבלים סרטון מקצועי. הדור הבא של יצירת תוכן ויזואלי.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: סרטוני וידאו, קליפים, תוכן יצירתי</div>
+                        <a href="https://sora.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Sora</a>
                     </div>
                 </div>
 
@@ -1060,6 +1122,7 @@
                         <h3>NanoBanana</h3>
                         <p class="ai-tool-desc">יצירת תמונות ועיצובים עם AI. מתארים מה רוצים ומקבלים תמונה מקצועית. מעולה ללוגואים, באנרים ופוסטים.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: תמונות, עיצוב, לוגואים</div>
+                        <a href="https://nanobanana.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-NanoBanana</a>
                     </div>
                 </div>
 
@@ -1353,6 +1416,19 @@
         </div>
     </div>
 
+    <!-- PRESENTATION MODAL -->
+    <div class="summary-overlay" id="presentationOverlay">
+        <div class="summary-card" style="max-width: 900px;">
+            <button class="summary-close" onclick="closePresentation()">&times;</button>
+            <div id="presentationContent"></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 2rem; align-items: center;">
+                <button class="btn-save" id="prevSlide" onclick="prevSlide()" style="opacity: 0.5;">&#x2190; הקודם</button>
+                <span id="slideCounter" style="color: var(--text-muted); font-size: 0.9rem;"></span>
+                <button class="btn-save" id="nextSlide" onclick="nextSlide()">הבא &#x2192;</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ===== NAVIGATION =====
         const allNavBtns = document.querySelectorAll('[data-section]');
@@ -1471,6 +1547,118 @@
         // Close summary on overlay click
         document.getElementById('summaryOverlay').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeSummary();
+        });
+
+        // ===== PRESENTATIONS =====
+        let currentSlides = [];
+        let currentSlide = 0;
+
+        const presentations = {
+            1: [
+                { title: 'ברוכים הבאים!', content: '<h2 style="text-align:center; margin-bottom:1rem;">&#x1F44B; שלום לכולם!</h2><p style="text-align:center; font-size:1.2rem; color:var(--text-muted);">קורס יזמות ובינה מלאכותית לנוער</p><br><p style="text-align:center; color:var(--accent); font-size:1.1rem;">היום נכיר את עולם ה-AI ונתחיל לעבוד!</p>' },
+                { title: 'מה זה בינה מלאכותית?', content: '<h2>&#x1F916; מה זה AI?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2;"><li>&#x25C2; מחשב שלומד לחשוב כמו בן אדם</li><li>&#x25C2; מבין שפה, מזהה תמונות, כותב קוד</li><li>&#x25C2; לא באמת "חושב" &mdash; אבל מדמה חשיבה ברמה גבוהה</li><li>&#x25C2; נמצא כבר בכל מקום: טלפון, גוגל, נטפליקס, ספוטיפיי</li></ul>' },
+                { title: 'דוגמאות מהחיים', content: '<h2>&#x1F30D; AI בחיים היומיום</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F4F1;</div><p>Siri / Google Assistant</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F3AC;</div><p>המלצות של נטפליקס</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F697;</div><p>רכב אוטונומי</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F4AC;</div><p>ChatGPT</p></div></div>' },
+                { title: 'סוגי AI', content: '<h2>&#x1F4A1; סוגי בינה מלאכותית</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li><span style="color:var(--accent); font-weight:700;">טקסט</span> &mdash; ChatGPT, Claude: שיחות, כתיבה, ניתוח</li><li><span style="color:var(--pink); font-weight:700;">תמונות</span> &mdash; NanoBanana, DALL-E: יצירת עיצובים</li><li><span style="color:var(--orange); font-weight:700;">וידאו</span> &mdash; Novo, Runway: יצירת סרטונים</li><li><span style="color:var(--blue); font-weight:700;">קוד</span> &mdash; Cursor, Claude Code: בניית אתרים ואפליקציות</li></ul>' },
+                { title: 'הכלים שלנו', content: '<h2>&#x1F6E0; הכלים שנשתמש בהם</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F4AC;</div><strong>ChatGPT</strong><p style="color:var(--text-muted); font-size:0.9rem;">שיחות, רעיונות, כתיבה</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F9E0;</div><strong>Claude</strong><p style="color:var(--text-muted); font-size:0.9rem;">ניתוח, קוד, דיוק</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong>Cursor</strong><p style="color:var(--text-muted); font-size:0.9rem;">בניית אתרים עם AI</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F30D;</div><strong>Gemini</strong><p style="color:var(--text-muted); font-size:0.9rem;">חיפוש, תמונות, גוגל</p></div></div>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.2rem; margin-bottom:1rem;">שאלו את ה-AI 5 שאלות שונות</p><p style="color:var(--text-muted);">נסו את ChatGPT ואת Claude &mdash; שימו לב להבדלים!</p><br><div style="text-align:right; color:var(--gold); font-size:0.95rem;"><p>&#x2B50; שאלה על היסטוריה</p><p>&#x2B50; שאלה על מדע</p><p>&#x2B50; בקשה לכתוב שיר</p><p>&#x2B50; בקשה לפתור תרגיל</p><p>&#x2B50; שאלה אישית (תחביבים)</p></div></div>' }
+            ],
+            2: [
+                { title: 'אמנות הפרומפט', content: '<h2 style="text-align:center;">&#x270D; אמנות הפרומפט</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">פרומפט = ההוראה שאתם נותנים ל-AI</p><p style="text-align:center; font-size:1.1rem; color:var(--accent); margin-top:0.5rem;">ככל שהפרומפט טוב יותר &mdash; התוצאה טובה יותר!</p>' },
+                { title: 'פרומפט טוב vs רע', content: '<h2>&#x274C; פרומפט רע vs &#x2705; פרומפט טוב</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:rgba(255,77,141,0.15); padding:1.2rem; border-radius:12px; border:1px solid var(--pink);"><strong style="color:var(--pink);">&#x274C; רע</strong><p style="margin-top:0.5rem;">"תכתוב לי משהו על כלבים"</p></div><div style="background:rgba(0,212,170,0.15); padding:1.2rem; border-radius:12px; border:1px solid var(--accent);"><strong style="color:var(--accent);">&#x2705; טוב</strong><p style="margin-top:0.5rem;">"כתוב פוסט לאינסטגרם על 5 גזעי כלבים מומלצים למשפחות, בטון שמח, עם אמוג\'ים"</p></div></div>' },
+                { title: '5 טכניקות', content: '<h2>&#x1F4A1; 5 טכניקות לפרומפט מושלם</h2><br><ol style="font-size:1.05rem; line-height:2.2; padding-right:1.2rem;"><li><strong>היו ספציפיים</strong> &mdash; מה בדיוק אתם רוצים?</li><li><strong>תנו הקשר</strong> &mdash; בשביל מי? לאיזה צורך?</li><li><strong>הגדירו פורמט</strong> &mdash; רשימה? טבלה? פסקה?</li><li><strong>תנו דוגמה</strong> &mdash; "כמו X, אבל עם Y"</li><li><strong>חדדו בהדרגה</strong> &mdash; שפרו את התוצאה בשלבים</li></ol>' },
+                { title: 'מתי להשתמש בכל כלי', content: '<h2>&#x1F914; איזה כלי לאיזו משימה?</h2><br><ul style="list-style:none; font-size:1rem; line-height:2.2;"><li><strong style="color:var(--accent);">ChatGPT</strong> &mdash; סיעור מוחות, כתיבה יצירתית, שיחות</li><li><strong style="color:var(--orange);">Claude</strong> &mdash; ניתוח מעמיק, קוד, משימות מורכבות</li><li><strong style="color:var(--blue);">Gemini</strong> &mdash; חיפוש מידע עדכני, עבודה עם תמונות</li><li><strong style="color:var(--primary-light);">Cursor</strong> &mdash; בניית אתרים ואפליקציות</li></ul>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; אתגר פרומפטים!</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מי מקבל את התוצאה הכי טובה?</p><p style="color:var(--text-muted);">המשימה: גרמו ל-AI ליצור לוגו לחנות גלידה.</p><br><p style="color:var(--gold);">&#x1F3C6; נשווה תוצאות ונבחר מנצח!</p></div>' }
+            ],
+            3: [
+                { title: 'חשיבה יזמית', content: '<h2 style="text-align:center;">&#x1F4A1; חשיבה יזמית</h2><br><p style="text-align:center; font-size:1.2rem; color:var(--text-muted);">היום נלמד לחשוב כמו יזמים &mdash;</p><p style="text-align:center; font-size:1.2rem; color:var(--accent);">לראות בעיות ולהפוך אותן להזדמנויות!</p>' },
+                { title: 'מה זה סטארטאפ?', content: '<h2>&#x1F680; מה זה סטארטאפ?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; חברה צעירה שפותרת בעיה בצורה חדשה</li><li>&#x25C2; מתחילה קטן &mdash; חולמת בגדול</li><li>&#x25C2; ישראל = "אומת הסטארטאפ" &#x1F1EE;&#x1F1F1;</li><li>&#x25C2; Waze, Wix, Monday &mdash; כולם התחילו מרעיון קטן!</li></ul>' },
+                { title: 'הנוסחה', content: '<h2>&#x1F4CB; הנוסחה של כל סטארטאפ</h2><br><div style="text-align:center; font-size:1.5rem; margin:2rem 0;"><span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">בעיה</span> <span style="color:var(--accent); margin:0 1rem;">&#x2192;</span> <span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">פתרון</span> <span style="color:var(--accent); margin:0 1rem;">&#x2192;</span> <span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">מוצר</span></div><p style="text-align:center; color:var(--text-muted);">הכל מתחיל מבעיה שאנשים רוצים לפתור!</p>' },
+                { title: 'איך מוצאים בעיות?', content: '<h2>&#x1F50D; איך מוצאים בעיות טובות?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x2B50; מה מעצבן אותך ביומיום?</li><li>&#x2B50; על מה חברים מתלוננים?</li><li>&#x2B50; מה היית רוצה שיהיה קל יותר?</li><li>&#x2B50; מה חסר לך שלא קיים?</li></ul><br><p style="color:var(--accent);">טיפ: הבעיות הכי טובות הן אלה שאתם חווים בעצמכם!</p>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מצאו 3 בעיות מהחיים שלכם!</p><p style="color:var(--text-muted);">חשבו על: בית ספר, תחביבים, חברים, משפחה</p><br><p style="color:var(--gold);">&#x1F3A4; כל אחד יציג את הבעיות שלו לכיתה</p></div>' }
+            ],
+            4: [
+                { title: 'מרעיון למוצר', content: '<h2 style="text-align:center;">&#x1F3AF; מרעיון למוצר</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום נבחר את הרעיון הטוב ביותר</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ונבנה ממנו תוכנית למוצר אמיתי!</p>' },
+                { title: 'בוחרים רעיון', content: '<h2>&#x2705; איך בוחרים את הרעיון הטוב?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; האם הבעיה אמיתית? (אנשים באמת סובלים מזה?)</li><li>&#x25C2; האם אני מבין את הבעיה? (חוויתי אותה בעצמי?)</li><li>&#x25C2; האם אפשר לבנות פתרון? (עם הכלים שלנו)</li><li>&#x25C2; האם אנשים ירצו להשתמש? (יש ביקוש?)</li></ul>' },
+                { title: 'קהל יעד', content: '<h2>&#x1F465; מי קהל היעד?</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:12px;"><p style="font-size:1.05rem; margin-bottom:1rem;">ענו על השאלות:</p><ul style="list-style:none; font-size:1rem; line-height:2;"><li>&#x2B50; מי ישתמש במוצר? (גיל, מין, תחביבים)</li><li>&#x2B50; איפה הם נמצאים? (סושיאל, בית ספר)</li><li>&#x2B50; מה כואב להם?</li><li>&#x2B50; כמה הם מוכנים לשלם?</li></ul></div>' },
+                { title: 'הצעת ערך', content: '<h2>&#x1F48E; מה מיוחד אצלך?</h2><br><div style="text-align:center; margin:2rem 0;"><div style="background:linear-gradient(135deg, var(--primary), var(--accent)); padding:1.5rem 2rem; border-radius:16px; display:inline-block;"><p style="font-size:1.2rem; font-weight:700;">אנחנו עוזרים ל-[קהל יעד]</p><p style="font-size:1.2rem; font-weight:700;">לפתור את [הבעיה]</p><p style="font-size:1.2rem; font-weight:700;">על ידי [הפתרון שלנו]</p></div></div><p style="text-align:center; color:var(--text-muted);">מלאו את המשפט הזה לפרויקט שלכם!</p>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מלאו את "בונה הפרויקט" באזור האישי!</p><p style="color:var(--text-muted);">10 שאלות שבונות את האפיון המלא של הסטארטאפ שלכם</p><br><p style="color:var(--gold);">&#x1F4BB; לכו ללשונית "הפרויקט שלי" ותתחילו!</p></div>' }
+            ],
+            5: [
+                { title: 'בונים אתר!', content: '<h2 style="text-align:center;">&#x1F6E0; בונים אתר &mdash; חלק 1</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום מתקינים Cursor</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ובונים את דף הנחיתה הראשון למוצר שלכם!</p>' },
+                { title: 'מה זה Cursor?', content: '<h2>&#x1F4BB; מה זה Cursor?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; עורך קוד חכם עם AI מובנה</li><li>&#x25C2; אתם כותבים מה אתם רוצים &mdash; Cursor כותב את הקוד!</li><li>&#x25C2; לא צריך לדעת תכנות מראש</li><li>&#x25C2; הכלי המרכזי שנשתמש בו לבניית הפרויקט</li></ul>' },
+                { title: 'התקנה', content: '<h2>&#x1F4E5; מתקינים Cursor</h2><br><ol style="font-size:1.05rem; line-height:2.2; padding-right:1.2rem;"><li>נכנסים ל-<strong>cursor.com</strong></li><li>לוחצים "Download"</li><li>מתקינים ופותחים</li><li>נרשמים עם Google או אימייל</li><li>לוחצים <strong>Cmd+I</strong> (מק) או <strong>Ctrl+I</strong> (ווינדוס)</li><li>כותבים מה רוצים לבנות!</li></ol>' },
+                { title: 'מבנה אתר', content: '<h2>&#x1F3D7; מבנה בסיסי של אתר</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li><strong style="color:var(--accent);">HTML</strong> &mdash; השלד (מה יש בדף)</li><li><strong style="color:var(--pink);">CSS</strong> &mdash; העיצוב (איך זה נראה)</li><li><strong style="color:var(--gold);">JavaScript</strong> &mdash; הלוגיקה (מה קורה כשלוחצים)</li></ul><br><p style="color:var(--text-muted);">אל דאגה! Cursor כותב את הכל בשבילכם &#x1F60E;</p>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">בנו דף נחיתה למוצר שלכם!</p><p style="color:var(--text-muted);">פתחו Cursor, לחצו Cmd+I וכתבו:</p><br><div style="background:var(--dark-card); padding:1rem; border-radius:8px; direction:ltr; text-align:left; font-family:monospace; color:var(--accent);">"Build me a landing page for [שם המוצר] in Hebrew RTL"</div></div>' }
+            ],
+            6: [
+                { title: 'בונים אתר — חלק 2', content: '<h2 style="text-align:center;">&#x2728; בונים אתר &mdash; חלק 2</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום נשדרג את האתר שלכם!</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">עיצוב, אנימציות, מובייל ועוד...</p>' },
+                { title: 'אנימציות', content: '<h2>&#x1F3AC; הוספת אנימציות</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; כניסה חלקה של אלמנטים (fade in)</li><li>&#x25C2; אפקט hover על כפתורים וכרטיסים</li><li>&#x25C2; גלילה חלקה בין סקשנים</li><li>&#x25C2; טרנזישנים וגרדיאנטים</li></ul><br><p style="color:var(--text-muted);">&#x1F4A1; פשוט תגידו ל-Cursor: "הוסף אנימציות לאתר"!</p>' },
+                { title: 'רספונסיביות', content: '<h2>&#x1F4F1; רספונסיביות &mdash; מובייל!</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; text-align:center;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F5A5;</div><p>דסקטופ</p><p style="color:var(--text-muted); font-size:0.85rem;">פריסה רחבה, 2-3 עמודות</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F4F1;</div><p>מובייל</p><p style="color:var(--text-muted); font-size:0.85rem;">עמודה אחת, כפתורים גדולים</p></div></div><br><p style="color:var(--accent);">האתר חייב לעבוד טוב בטלפון!</p>' },
+                { title: 'פיצ\'רים', content: '<h2>&#x2699; הוספת פיצ\'רים</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; טופס יצירת קשר</li><li>&#x25C2; תפריט ניווט עם המבורגר למובייל</li><li>&#x25C2; גלריית תמונות</li><li>&#x25C2; דף "אודות" ו"צור קשר" נוספים</li></ul>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">שדרגו את האתר שלכם!</p><p style="color:var(--text-muted);">הוסיפו לפחות 3 דברים:</p><br><p style="color:var(--gold);">&#x2B50; טופס יצירת קשר</p><p style="color:var(--gold);">&#x2B50; אנימציה אחת לפחות</p><p style="color:var(--gold);">&#x2B50; תפריט ניווט</p></div>' }
+            ],
+            7: [
+                { title: 'מודל עסקי ושיווק', content: '<h2 style="text-align:center;">&#x1F4B0; מודל עסקי ושיווק</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">איך הסטארטאפ שלכם ירוויח כסף?</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ואיך תגיעו ללקוחות?</p>' },
+                { title: 'מודלים עסקיים', content: '<h2>&#x1F4B3; מודלים עסקיים</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--accent);">מנוי חודשי</strong><p style="color:var(--text-muted); font-size:0.9rem;">Spotify, Netflix</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--gold);">פרימיום</strong><p style="color:var(--text-muted); font-size:0.9rem;">חינם + תשלום על פיצ\'רים</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--pink);">חנות</strong><p style="color:var(--text-muted); font-size:0.9rem;">מוכרים מוצרים</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--blue);">פרסום</strong><p style="color:var(--text-muted); font-size:0.9rem;">חינם + הכנסות מפרסום</p></div></div>' },
+                { title: 'שיווק', content: '<h2>&#x1F4E3; איך מגיעים ללקוחות?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; <strong>אינסטגרם / TikTok</strong> &mdash; תוכן ויזואלי, רילס</li><li>&#x25C2; <strong>מפה לאוזן</strong> &mdash; חברים מספרים לחברים</li><li>&#x25C2; <strong>שיתופי פעולה</strong> &mdash; עם אנשים בתחום</li><li>&#x25C2; <strong>תוכן + AI</strong> &mdash; AI עוזר ליצור תוכן מהר!</li></ul>' },
+                { title: 'תוכן עם AI', content: '<h2>&#x1F916; יצירת תוכן עם AI</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:12px;"><p style="margin-bottom:1rem;">בקשו מ-ChatGPT:</p><div style="background:var(--dark-card); padding:1rem; border-radius:8px; direction:ltr; text-align:left; font-family:monospace; color:var(--accent); font-size:0.9rem;">"Write 3 Instagram posts for my startup [name] that helps [audience] with [problem]. Write in Hebrew, fun tone, with emojis."</div></div>' },
+                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">בנו תוכנית עסקית + 3 פוסטים!</p><p style="color:var(--text-muted);">השתמשו ב-AI ליצירת תוכן שיווקי</p><br><p style="color:var(--gold);">&#x2B50; תוכנית עסקית בעמוד אחד</p><p style="color:var(--gold);">&#x2B50; 3 פוסטים לאינסטגרם</p></div>' }
+            ],
+            8: [
+                { title: 'יום הפיץ\'!', content: '<h2 style="text-align:center;">&#x1F3C6; יום הפיץ\'!</h2><br><p style="text-align:center; font-size:1.2rem; color:var(--gold);">היום אתם מציגים את הפרויקט!</p><p style="text-align:center; font-size:1.1rem; color:var(--text-muted); margin-top:0.5rem;">3 דקות. בעיה. פתרון. דמו.</p>' },
+                { title: 'מבנה הפיץ\'', content: '<h2>&#x1F4CB; מבנה הפיץ\' &mdash; 3 דקות</h2><br><ol style="font-size:1.1rem; line-height:2.5; padding-right:1.2rem;"><li><strong style="color:var(--pink);">הבעיה</strong> (30 שניות) &mdash; ספרו על הבעיה</li><li><strong style="color:var(--accent);">הפתרון</strong> (30 שניות) &mdash; מה בניתם?</li><li><strong style="color:var(--gold);">דמו חי</strong> (90 שניות) &mdash; הראו את המוצר!</li><li><strong style="color:var(--blue);">סיכום</strong> (30 שניות) &mdash; מה הלאה?</li></ol>' },
+                { title: 'טיפים', content: '<h2>&#x1F4A1; טיפים להצגה מעולה</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x2B50; דברו לאט וברור</li><li>&#x2B50; תסתכלו על הקהל (המצלמה)</li><li>&#x2B50; תתלהבו! אם אתם לא מתלהבים &mdash; הקהל לא יתלהב</li><li>&#x2B50; תתאמנו לפני &mdash; לפחות פעמיים</li><li>&#x2B50; זה בסדר לטעות &mdash; פשוט תמשיכו!</li></ul>' },
+                { title: 'בהצלחה!', content: '<h2 style="text-align:center;">&#x1F680; בהצלחה!</h2><br><div style="text-align:center;"><p style="font-size:1.3rem; margin-bottom:1.5rem;">סיימתם קורס יזמות ובינה מלאכותית!</p><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F4A1;</div><p>למדתם לחשוב<br>כמו יזמים</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F916;</div><p>שלטתם<br>בכלי AI</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F3D7;</div><p>בניתם מוצר<br>אמיתי!</p></div></div></div>' }
+            ]
+        };
+
+        function openPresentation(num) {
+            currentSlides = presentations[num];
+            currentSlide = 0;
+            renderSlide();
+            document.getElementById('presentationOverlay').classList.add('active');
+        }
+
+        function closePresentation() {
+            document.getElementById('presentationOverlay').classList.remove('active');
+        }
+
+        function renderSlide() {
+            const container = document.getElementById('presentationContent');
+            container.innerHTML = currentSlides[currentSlide].content;
+            document.getElementById('slideCounter').textContent =
+                (currentSlide + 1) + ' / ' + currentSlides.length;
+            document.getElementById('prevSlide').style.opacity = currentSlide === 0 ? '0.3' : '1';
+            document.getElementById('nextSlide').style.opacity = currentSlide === currentSlides.length - 1 ? '0.3' : '1';
+        }
+
+        function nextSlide() {
+            if (currentSlide < currentSlides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        document.getElementById('presentationOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closePresentation();
+        });
+
+        // Keyboard navigation for presentation
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('presentationOverlay').classList.contains('active')) return;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                // In RTL: right arrow = previous, left arrow = next
+                if (e.key === 'ArrowRight') prevSlide();
+                if (e.key === 'ArrowLeft') nextSlide();
+            }
+            if (e.key === 'Escape') closePresentation();
         });
 
         // Init
