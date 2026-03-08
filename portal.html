@@ -109,7 +109,10 @@
         .zoom-live-btn:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 15px rgba(45, 140, 255, 0.35);
-            background: linear-gradient(135deg, #3D9CFF, #1B6CFF);
+            background: linear-gradient(135deg, #3D9CFF, #1B6CFF) !important;
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+            -webkit-background-clip: unset !important;
         }
 
         .zoom-live-btn svg {
@@ -404,7 +407,7 @@
         .session-detail-back:hover {
             background: rgba(0,212,170,0.2);
             border-color: var(--accent);
-            transform: translateX(4px);
+            transform: translateX(-4px);
         }
 
         .session-detail-title {
@@ -477,12 +480,14 @@
             line-height: 2.2;
         }
 
-        .session-card-body .content-list {
+        .session-card-body .content-list,
+        .session-detail-content .content-list {
             list-style: none;
             margin-bottom: 2.5rem;
         }
 
-        .session-card-body .content-list li {
+        .session-card-body .content-list li,
+        .session-detail-content .content-list li {
             padding: 1.8rem 0.8rem 1.8rem 0 !important;
             font-size: 1.05rem;
             color: var(--text-muted);
@@ -493,7 +498,8 @@
             margin-bottom: 0;
         }
 
-        .session-card-body .content-list li::before {
+        .session-card-body .content-list li::before,
+        .session-detail-content .content-list li::before {
             content: "\25C2";
             color: var(--primary-light);
             position: absolute;
@@ -501,7 +507,8 @@
             top: 1.8rem;
         }
 
-        .session-card-body .content-list li::after {
+        .session-card-body .content-list li::after,
+        .session-detail-content .content-list li::after {
             content: '';
             display: block;
             height: 2px;
@@ -510,11 +517,13 @@
             border-radius: 1px;
         }
 
-        .session-card-body .content-list li:last-child::after {
+        .session-card-body .content-list li:last-child::after,
+        .session-detail-content .content-list li:last-child::after {
             display: none;
         }
 
-        .session-card-body .content-list li strong {
+        .session-card-body .content-list li strong,
+        .session-detail-content .content-list li strong {
             color: #f0eef5 !important;
             display: block !important;
             font-size: 1.15rem;
@@ -1552,7 +1561,7 @@
                 </svg>
                 כניסה לשיעור
             </a>
-            <a href="index.html" class="back-link">&#8594; לאתר הראשי</a>
+            <a href="index.html" class="back-link">לאתר הראשי &#8592;</a>
             <a href="portal.html">AI Youth</a>
         </div>
     </header>
@@ -2006,7 +2015,7 @@
             <!-- Session Detail View (populated by JS) -->
             <div class="session-detail-view" id="sessionDetailView">
                 <div class="session-detail-header">
-                    <button class="session-detail-back" onclick="closeSession()">→ חזרה לכל המפגשים</button>
+                    <button class="session-detail-back" onclick="closeSession()">חזרה לכל המפגשים ←</button>
                     <div class="session-detail-title">
                         <div class="session-number" id="detailNum"></div>
                         <h2 id="detailTitle"></h2>
