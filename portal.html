@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אזור אישי | יזמות ובינה מלאכותית לנוער</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5228CC;
+            --accent: #00D4AA;
+            --accent-light: #34EABB;
+            --dark: #1a1a2e;
+            --dark-card: #25253e;
+            --dark-lighter: #32324e;
+            --text: #f0eef5;
+            --text-muted: #b8b0d0;
+            --gold: #F5C842;
+            --orange: #FF7849;
+            --pink: #FF4D8D;
+            --blue: #4DA3FF;
+            --sidebar-width: 240px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--dark-card);
+            border-left: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-logo a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-logo .back-link {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            -webkit-text-fill-color: var(--text-muted);
+            background: none;
+        }
+
+        .sidebar-logo .back-link:hover {
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+            flex: 1;
+        }
+
+        .sidebar-nav button {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .sidebar-nav button:hover {
+            background: rgba(108, 60, 225, 0.1);
+            color: var(--text);
+        }
+
+        .sidebar-nav button.active {
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.2), rgba(0, 212, 170, 0.1));
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            font-weight: 600;
+        }
+
+        .sidebar-nav button .nav-icon {
+            font-size: 1.3rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            padding: 2rem 2.5rem;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ===== SECTIONS (hidden by default) ===== */
+        .portal-section {
+            display: none;
+        }
+
+        .portal-section.active {
+            display: block;
+        }
+
+        /* ===== SESSIONS GRID ===== */
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .session-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .session-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(108, 60, 225, 0.2);
+        }
+
+        .session-card-header {
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .session-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .session-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .session-tag {
+            margin-right: auto;
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        .session-card-body {
+            padding: 1.5rem;
+        }
+
+        .session-card-body .objective {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .session-card-body .content-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .session-card-body .content-list li {
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .session-card-body .content-list li::before {
+            content: "\25B8";
+            color: var(--primary-light);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .session-exercise {
+            background: var(--dark-lighter);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .session-exercise .exercise-label {
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .session-exercise p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Session detail view */
+        .session-detail {
+            display: none;
+        }
+
+        .session-detail.active {
+            display: block;
+        }
+
+        .session-detail-back {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .session-detail-back:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== AI TOOLS ===== */
+        .ai-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ai-tool-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+            transition: transform 0.3s;
+        }
+
+        .ai-tool-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .ai-tool-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .ai-tool-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .ai-tool-info .ai-tool-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+            line-height: 1.5;
+        }
+
+        .ai-tool-info .ai-tool-good-for {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .ai-tool-link {
+            display: inline-block;
+            margin-top: 0.6rem;
+            color: var(--primary-light);
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .ai-tool-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== PROJECT BUILDER ===== */
+        .project-builder {
+            max-width: 800px;
+        }
+
+        .project-progress {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-dot {
+            flex: 1;
+            height: 6px;
+            background: var(--dark-lighter);
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+
+        .progress-dot.filled {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .project-question {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-question .q-number {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-question h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-question .q-hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .project-question textarea {
+            width: 100%;
+            min-height: 100px;
+            background: var(--dark-lighter);
+            border: 2px solid rgba(108, 60, 225, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .project-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .project-question textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
+        }
+
+        .btn-summary {
+            background: linear-gradient(135deg, var(--accent), #00b894);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-summary:hover {
+            transform: translateY(-2px);
+        }
+
+        .save-status {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .save-status.show {
+            opacity: 1;
+        }
+
+        /* Summary modal */
+        .summary-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .summary-overlay.active {
+            display: flex;
+        }
+
+        .summary-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .summary-card h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .summary-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item .s-label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .summary-item .s-value {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .summary-item .s-value.empty {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .summary-close {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== DOWNLOADS ===== */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .download-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .download-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .download-card h3 {
+            margin-bottom: 0.4rem;
+        }
+
+        .download-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ===== FAQ/HELP ===== */
+        .help-list {
+            max-width: 800px;
+        }
+
+        .help-item {
+            background: var(--dark-card);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .help-question {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .help-question:hover {
+            background: rgba(108, 60, 225, 0.08);
+        }
+
+        .help-question .toggle-icon {
+            color: var(--accent);
+            font-size: 1.3rem;
+            transition: transform 0.3s;
+        }
+
+        .help-item.open .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .help-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .help-item.open .help-answer {
+            max-height: 600px;
+        }
+
+        .help-answer-inner {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .help-answer-inner ol, .help-answer-inner ul {
+            padding-right: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .help-answer-inner li {
+            margin-bottom: 0.4rem;
+        }
+
+        .help-answer-inner code {
+            background: var(--dark-lighter);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* ===== MOBILE BOTTOM NAV ===== */
+        .mobile-nav {
+            display: none;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-right: 0;
+                padding: 1.2rem 1rem 5rem;
+            }
+
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--dark-card);
+                border-top: 1px solid rgba(255,255,255,0.08);
+                z-index: 50;
+                justify-content: space-around;
+                padding: 0.5rem 0;
+            }
+
+            .mobile-nav button {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.2rem;
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                font-family: 'Heebo', sans-serif;
+                font-size: 0.65rem;
+                padding: 0.4rem 0.5rem;
+                cursor: pointer;
+            }
+
+            .mobile-nav button.active {
+                color: var(--accent);
+            }
+
+            .mobile-nav button .nav-icon {
+                font-size: 1.3rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-question {
+                padding: 1.2rem;
+            }
+
+            .project-actions {
+                flex-direction: column;
+            }
+
+            .summary-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR (Desktop) -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="portal.html">AI Youth</a>
+            <a href="index.html" class="back-link">&#8592; חזרה לאתר הראשי</a>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="active" data-section="sessions">
+                <span class="nav-icon">&#x1F4DA;</span>
+                <span>מפגשים</span>
+            </button>
+            <button data-section="ai-tools">
+                <span class="nav-icon">&#x1F916;</span>
+                <span>כלי AI</span>
+            </button>
+            <button data-section="project">
+                <span class="nav-icon">&#x1F680;</span>
+                <span>הפרויקט שלי</span>
+            </button>
+            <button data-section="downloads">
+                <span class="nav-icon">&#x1F4BE;</span>
+                <span>הורדות</span>
+            </button>
+            <button data-section="help">
+                <span class="nav-icon">&#x2753;</span>
+                <span>עזרה</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-nav">
+        <button class="active" data-section="sessions">
+            <span class="nav-icon">&#x1F4DA;</span>
+            <span>מפגשים</span>
+        </button>
+        <button data-section="ai-tools">
+            <span class="nav-icon">&#x1F916;</span>
+            <span>AI</span>
+        </button>
+        <button data-section="project">
+            <span class="nav-icon">&#x1F680;</span>
+            <span>פרויקט</span>
+        </button>
+        <button data-section="downloads">
+            <span class="nav-icon">&#x1F4BE;</span>
+            <span>הורדות</span>
+        </button>
+        <button data-section="help">
+            <span class="nav-icon">&#x2753;</span>
+            <span>עזרה</span>
+        </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- ==================== SESSIONS ==================== -->
+        <div class="portal-section active" id="section-sessions">
+            <div class="page-header">
+                <h1>&#x1F4DA; מפגשי הקורס</h1>
+                <p>8 מפגשים, פעמיים בשבוע, 45 דקות כל מפגש</p>
+            </div>
+            <div class="sessions-grid">
+
+                <!-- Session 1 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">1</div>
+                        <h3>ברוכים הבאים לעולם ה-AI</h3>
+                        <span class="session-tag">היכרות</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: הכרות עם בינה מלאכותית וחוויה ראשונה</div>
+                        <ul class="content-list">
+                            <li>מה זה בינה מלאכותית? דוגמאות מהחיים היומיום</li>
+                            <li>סוגי AI: טקסט, תמונות, וידאו, קוד</li>
+                            <li>הכרות עם ChatGPT ו-Claude</li>
+                            <li>איך AI משנה את העולם כבר היום</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>שאלו את ה-AI 5 שאלות שונות ותראו את ההבדלים בין הכלים</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 2 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">2</div>
+                        <h3>אמנות הפרומפט</h3>
+                        <span class="session-tag">AI</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית</div>
+                        <ul class="content-list">
+                            <li>מה זה פרומפט ולמה הוא כל כך חשוב?</li>
+                            <li>5 טכניקות לכתיבת פרומפטים מעולים</li>
+                            <li>הבדלים בין הכלים: מתי להשתמש בכל אחד</li>
+                            <li>טעויות נפוצות ואיך להימנע מהן</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>אתגר פרומפטים: מי יצליח לגרום ל-AI ליצור את התוצאה הכי מדויקה?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 3 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">3</div>
+                        <h3>חשיבה יזמית &mdash; מוצאים בעיות</h3>
+                        <span class="session-tag">יזמות</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: לחשוב כמו יזמים ולזהות בעיות אמיתיות</div>
+                        <ul class="content-list">
+                            <li>מה זה סטארטאפ? סיפורי יזמים ישראלים</li>
+                            <li>הנוסחה: בעיה &#x2192; פתרון &#x2192; מוצר</li>
+                            <li>איך מזהים בעיות שאנשים מוכנים לשלם עליהן?</li>
+                            <li>Design Thinking לנוער</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>כל תלמיד מזהה 3 בעיות מהחיים שלו ומציג לכיתה</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 4 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">4</div>
+                        <h3>מרעיון למוצר</h3>
+                        <span class="session-tag">אסטרטגיה</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: לבחור רעיון ולתכנן את המוצר</div>
+                        <ul class="content-list">
+                            <li>בחירת הרעיון הטוב ביותר מתוך השלושה</li>
+                            <li>הגדרת קהל יעד: למי אנחנו פותרים?</li>
+                            <li>הצעת ערך: מה מיוחד בפתרון שלנו?</li>
+                            <li>ניתוח מתחרים: מה כבר קיים בשוק?</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות שבונות אפיון מלא</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 5 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">5</div>
+                        <h3>בונים אתר &mdash; חלק 1</h3>
+                        <span class="session-tag">בנייה</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: התקנת Cursor ובנייה ראשונה עם AI</div>
+                        <ul class="content-list">
+                            <li>התקנת Cursor &mdash; עורך הקוד החכם</li>
+                            <li>מבנה בסיסי של אתר: HTML ו-CSS</li>
+                            <li>בנייה עם AI: אומרים ל-Cursor מה לבנות</li>
+                            <li>הקובץ הראשון שלך חי בדפדפן!</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 6 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">6</div>
+                        <h3>בונים אתר &mdash; חלק 2</h3>
+                        <span class="session-tag">פיתוח</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: להוסיף פיצ'רים ועיצוב מקצועי</div>
+                        <ul class="content-list">
+                            <li>הוספת אנימציות ואפקטים</li>
+                            <li>JavaScript בסיסי: כפתורים שעובדים</li>
+                            <li>רספונסיביות: איך נראה במובייל?</li>
+                            <li>טפסים, תפריט ניווט ודפים נוספים</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>שדרוג האתר: הוספת טופס יצירת קשר, אנימציה ותפריט</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 7 -->
+                <div class="session-card">
+                    <div class="session-card-header">
+                        <div class="session-number">7</div>
+                        <h3>מודל עסקי ושיווק</h3>
+                        <span class="session-tag">עסקים</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: איך מרוויחים כסף ומגיעים ללקוחות</div>
+                        <ul class="content-list">
+                            <li>מודלים עסקיים: מנוי, פרימיום, חנות</li>
+                            <li>שיווק דיגיטלי: רשתות חברתיות ותוכן</li>
+                            <li>יצירת תוכן שיווקי עם AI</li>
+                            <li>בניית תוכנית עסקית בעמוד אחד</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>בניית תוכנית עסקית + יצירת 3 פוסטים שיווקיים עם AI</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session 8 -->
+                <div class="session-card">
+                    <div class="session-card-header" style="background: linear-gradient(135deg, var(--gold), var(--orange));">
+                        <div class="session-number">8</div>
+                        <h3>&#x1F3C6; יום הפיץ'</h3>
+                        <span class="session-tag">הצגה</span>
+                    </div>
+                    <div class="session-card-body">
+                        <div class="objective">מטרה: להציג את הפרויקט בפני קהל</div>
+                        <ul class="content-list">
+                            <li>איך בונים מצגת שמוכרת</li>
+                            <li>טיפים לדיבור בפני קהל</li>
+                            <li>מבנה הפיץ': בעיה &#x2192; פתרון &#x2192; דמו</li>
+                            <li>פידבק מהשופטים ומההורים</li>
+                        </ul>
+                        <div class="session-exercise">
+                            <div class="exercise-label">&#x1F3AF; תרגול</div>
+                            <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== AI TOOLS ==================== -->
+        <div class="portal-section" id="section-ai-tools">
+            <div class="page-header">
+                <h1>&#x1F916; הכירו את כלי ה-AI</h1>
+                <p>כל הכלים שתשתמשו בהם במהלך הקורס</p>
+            </div>
+            <div class="ai-tools-grid">
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #10a37f, #1a7f5a);">&#x1F4AC;</div>
+                    <div class="ai-tool-info">
+                        <h3>ChatGPT</h3>
+                        <p class="ai-tool-desc">הכלי הכי פופולרי בעולם. מעולה לשיחות, כתיבה, סיעור מוחות וניתוח מידע. הממשק פשוט ואינטואיטיבי.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: שיחה, כתיבה, סיכומים, רעיונות</div>
+                        <a href="https://chat.openai.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-ChatGPT</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #D97757, #b85c3e);">&#x1F9E0;</div>
+                    <div class="ai-tool-info">
+                        <h3>Claude</h3>
+                        <p class="ai-tool-desc">של Anthropic. חכם ומדויק במיוחד. מצוין לקוד, ניתוח ארוך, כתיבה מקצועית ומשימות מורכבות.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: קוד, ניתוח, כתיבה ארוכה, דיוק</div>
+                        <a href="https://claude.ai" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Claude</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #4285f4, #3367d6);">&#x1F30D;</div>
+                    <div class="ai-tool-info">
+                        <h3>Gemini</h3>
+                        <p class="ai-tool-desc">של גוגל. משולב עם חיפוש גוגל, יכול לנתח תמונות ולעבוד עם כלי גוגל כמו Docs ו-Gmail.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: חיפוש, תמונות, שילוב עם גוגל</div>
+                        <a href="https://gemini.google.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Gemini</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #6C3CE1, #8B5CF6);">&#x1F4BB;</div>
+                    <div class="ai-tool-info">
+                        <h3>Cursor</h3>
+                        <p class="ai-tool-desc">עורך קוד חכם עם AI מובנה. כותבים מה רוצים לבנות ו-Cursor כותב את הקוד. הכלי המרכזי שלנו בקורס!</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: בניית אתרים, אפליקציות, קוד</div>
+                        <a href="https://cursor.com" target="_blank" class="ai-tool-link">&#x2192; הורדת Cursor</a>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #FF4D8D, #e63976);">&#x1F3AC;</div>
+                    <div class="ai-tool-info">
+                        <h3>Novo</h3>
+                        <p class="ai-tool-desc">יצירת סרטוני וידאו עם בינה מלאכותית. כותבים תסריט ומקבלים סרטון מוכן. מושלם לשיווק ולמדיה חברתית.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: סרטונים, שיווק, תוכן ויזואלי</div>
+                    </div>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon" style="background: linear-gradient(135deg, #F5C842, #e6b030);">&#x1F33F;</div>
+                    <div class="ai-tool-info">
+                        <h3>NanoBanana</h3>
+                        <p class="ai-tool-desc">יצירת תמונות ועיצובים עם AI. מתארים מה רוצים ומקבלים תמונה מקצועית. מעולה ללוגואים, באנרים ופוסטים.</p>
+                        <div class="ai-tool-good-for">&#x2B50; מצוין ל: תמונות, עיצוב, לוגואים</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== PROJECT BUILDER ==================== -->
+        <div class="portal-section" id="section-project">
+            <div class="page-header">
+                <h1>&#x1F680; בונה הפרויקט</h1>
+                <p>ענו על השאלות ובנו את האפיון לסטארטאפ שלכם</p>
+            </div>
+
+            <div class="project-builder">
+                <div class="project-progress" id="progressBar"></div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 1 מתוך 10</div>
+                    <h3>מה השם של הפרויקט שלך?</h3>
+                    <div class="q-hint">תבחרו שם קליט שמסביר מה המוצר עושה</div>
+                    <textarea data-q="0" placeholder="למשל: StudyBuddy, FoodShare, PetAlert..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 2 מתוך 10</div>
+                    <h3>איזו בעיה אתה פותר?</h3>
+                    <div class="q-hint">תארו בעיה אמיתית שאנשים חווים ביומיום</div>
+                    <textarea data-q="1" placeholder="למשל: קשה למצוא חברים ללמוד איתם למבחנים..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 3 מתוך 10</div>
+                    <h3>למי אתה פותר את הבעיה?</h3>
+                    <div class="q-hint">מי קהל היעד? גיל, תחומי עניין, מיקום</div>
+                    <textarea data-q="2" placeholder="למשל: תלמידי תיכון בישראל שנמצאים לפני בחינות..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 4 מתוך 10</div>
+                    <h3>איך פותרים את הבעיה היום?</h3>
+                    <div class="q-hint">מה קיים כבר? למה זה לא מספיק טוב?</div>
+                    <textarea data-q="3" placeholder="למשל: היום משתמשים בקבוצות וואטסאפ אבל זה לא מאורגן..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 5 מתוך 10</div>
+                    <h3>מה הפתרון שלך?</h3>
+                    <div class="q-hint">תסבירו את הרעיון שלכם במשפט אחד או שניים</div>
+                    <textarea data-q="4" placeholder="למשל: אפליקציה שמחברת תלמידים לקבוצות לימוד לפי מקצוע..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 6 מתוך 10</div>
+                    <h3>אילו פיצ'רים יהיו במוצר?</h3>
+                    <div class="q-hint">רשמו 3-5 יכולות עיקריות</div>
+                    <textarea data-q="5" placeholder="למשל: 1) חיפוש שותפים ללמידה 2) צ'אט קבוצתי 3) לוח זמנים משותף..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 7 מתוך 10</div>
+                    <h3>איך תרוויח כסף?</h3>
+                    <div class="q-hint">מנוי חודשי? חינם עם פרימיום? פרסום?</div>
+                    <textarea data-q="6" placeholder="למשל: גרסה בסיסית חינם, מנוי פרימיום עם פיצ'רים נוספים..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 8 מתוך 10</div>
+                    <h3>מה הדבר הראשון שתבנה? (MVP)</h3>
+                    <div class="q-hint">הגרסה הכי פשוטה שעדיין שימושית</div>
+                    <textarea data-q="7" placeholder="למשל: דף נחיתה + טופס הרשמה + חיבור לוואטסאפ..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 9 מתוך 10</div>
+                    <h3>איך תגיע ללקוחות?</h3>
+                    <div class="q-hint">שיווק ברשתות? מפה לאוזן? שיתופי פעולה?</div>
+                    <textarea data-q="8" placeholder="למשל: אשתף בקבוצות של בתי ספר, אעשה סרטון TikTok..."></textarea>
+                </div>
+
+                <div class="project-question">
+                    <div class="q-number">שאלה 10 מתוך 10</div>
+                    <h3>מה ההצלחה נראית עבורך?</h3>
+                    <div class="q-hint">מה המטרה? כמה משתמשים? איזה שינוי?</div>
+                    <textarea data-q="9" placeholder="למשל: 100 תלמידים ישתמשו באפליקציה בחודש הראשון..."></textarea>
+                </div>
+
+                <div class="project-actions">
+                    <button class="btn-save" onclick="saveProject()">&#x1F4BE; שמור תשובות</button>
+                    <button class="btn-summary" onclick="showSummary()">&#x1F4CB; הצג אפיון מלא</button>
+                </div>
+                <div class="save-status" id="saveStatus">&#x2714; נשמר בהצלחה!</div>
+            </div>
+        </div>
+
+        <!-- ==================== DOWNLOADS ==================== -->
+        <div class="portal-section" id="section-downloads">
+            <div class="page-header">
+                <h1>&#x1F4BE; הורדות</h1>
+                <p>כל התוכנות שתצטרכו להתקין למהלך הקורס</p>
+            </div>
+            <div class="downloads-grid">
+
+                <div class="download-card">
+                    <div class="download-icon">&#x1F4BB;</div>
+                    <h3>Cursor למק</h3>
+                    <p>עורך קוד חכם עם AI מובנה. מתאים ל-macOS.</p>
+                    <a href="https://www.cursor.com/downloads" target="_blank" class="download-btn">&#x2193; הורדה למק</a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">&#x1F5A5;</div>
+                    <h3>Cursor לווינדוס</h3>
+                    <p>עורך קוד חכם עם AI מובנה. מתאים ל-Windows.</p>
+                    <a href="https://www.cursor.com/downloads" target="_blank" class="download-btn">&#x2193; הורדה לווינדוס</a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">&#x1F7E2;</div>
+                    <h3>Node.js</h3>
+                    <p>נדרש להפעלת כלים שונים. התקינו את גרסת LTS.</p>
+                    <a href="https://nodejs.org/en/download" target="_blank" class="download-btn">&#x2193; הורדת Node.js</a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">&#x1F500;</div>
+                    <h3>Git</h3>
+                    <p>מערכת ניהול גרסאות. חיונית לעבודה עם קוד.</p>
+                    <a href="https://git-scm.com/downloads" target="_blank" class="download-btn">&#x2193; הורדת Git</a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">&#x1F310;</div>
+                    <h3>Google Chrome</h3>
+                    <p>הדפדפן המומלץ לפיתוח. יש בו כלי מפתחים מתקדמים.</p>
+                    <a href="https://www.google.com/chrome/" target="_blank" class="download-btn">&#x2193; הורדת Chrome</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== HELP/FAQ ==================== -->
+        <div class="portal-section" id="section-help">
+            <div class="page-header">
+                <h1>&#x2753; עזרה ושאלות</h1>
+                <p>מדריכי התקנה ותשובות לשאלות נפוצות</p>
+            </div>
+            <div class="help-list">
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מתקינים Cursor?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>היכנסו לאתר <a href="https://cursor.com" target="_blank" style="color: var(--accent);">cursor.com</a></li>
+                                <li>לחצו על "Download" &mdash; האתר יזהה אוטומטית אם אתם במק או ווינדוס</li>
+                                <li>הריצו את קובץ ההתקנה שירד</li>
+                                <li><strong>במק:</strong> גררו את האייקון לתיקיית Applications</li>
+                                <li><strong>בווינדוס:</strong> לחצו Next עד שההתקנה מסתיימת</li>
+                                <li>פתחו את Cursor ותירשמו עם חשבון Google או אימייל</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מתקינים Node.js?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>היכנסו ל-<a href="https://nodejs.org" target="_blank" style="color: var(--accent);">nodejs.org</a></li>
+                                <li>הורידו את גרסת <strong>LTS</strong> (הגרסה היציבה)</li>
+                                <li>הריצו את קובץ ההתקנה</li>
+                                <li>לחצו Next בכל השלבים (אל תשנו הגדרות)</li>
+                                <li>לבדיקה: פתחו Terminal (מק) או CMD (ווינדוס) והקלידו <code>node --version</code></li>
+                                <li>אם מופיע מספר גרסה &mdash; ההתקנה הצליחה!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך פותחים פרויקט חדש ב-Cursor?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>פתחו את Cursor</li>
+                                <li>לחצו <code>File</code> &#x2192; <code>Open Folder</code></li>
+                                <li>צרו תיקייה חדשה בשם הפרויקט שלכם (בלי רווחים!)</li>
+                                <li>בחרו את התיקייה ולחצו Open</li>
+                                <li>לחצו <code>Ctrl+I</code> (ווינדוס) או <code>Cmd+I</code> (מק) לפתיחת צ'אט AI</li>
+                                <li>כתבו מה אתם רוצים לבנות ו-Cursor יעזור!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>מה לעשות אם המחשב איטי?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ul>
+                                <li>סגרו תוכנות שלא צריכים (במיוחד דפדפנים עם הרבה טאבים)</li>
+                                <li>הפעילו מחדש את המחשב לפני המפגש</li>
+                                <li>ודאו שיש לפחות 4GB RAM פנויים</li>
+                                <li>אם Cursor עדיין איטי: כתבו לנו בוואטסאפ ונעזור!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך נרשמים ל-ChatGPT / Claude?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <p><strong>ChatGPT:</strong></p>
+                            <ol>
+                                <li>היכנסו ל-<a href="https://chat.openai.com" target="_blank" style="color: var(--accent);">chat.openai.com</a></li>
+                                <li>לחצו "Sign up" ותירשמו עם Google או אימייל</li>
+                                <li>הגרסה החינמית מספיקה לקורס!</li>
+                            </ol>
+                            <br>
+                            <p><strong>Claude:</strong></p>
+                            <ol>
+                                <li>היכנסו ל-<a href="https://claude.ai" target="_blank" style="color: var(--accent);">claude.ai</a></li>
+                                <li>לחצו "Sign up" ותירשמו עם Google או אימייל</li>
+                                <li>הגרסה החינמית מספיקה לקורס!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>איך מתחברים למפגש בזום?</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <ol>
+                                <li>לפני כל מפגש תקבלו לינק בוואטסאפ</li>
+                                <li>לחצו על הלינק &mdash; זום ייפתח אוטומטית</li>
+                                <li>אם זום לא מותקן: הורידו מ-<a href="https://zoom.us/download" target="_blank" style="color: var(--accent);">zoom.us/download</a></li>
+                                <li>ודאו שהמיקרופון והמצלמה עובדים</li>
+                                <li>היו מוכנים 5 דקות לפני!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-item">
+                    <div class="help-question" onclick="toggleHelp(this)">
+                        <span>צריכים עזרה? דברו איתנו!</span>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="help-answer">
+                        <div class="help-answer-inner">
+                            <p>אם יש בעיה טכנית או שאלה &mdash; אנחנו כאן!</p>
+                            <p style="margin-top: 0.5rem;">
+                                <a href="https://wa.me/972546500795?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%A2%D7%96%D7%A8%D7%94%20%D7%98%D7%9B%D7%A0%D7%99%D7%AA" target="_blank" style="color: var(--accent); font-weight: 600;">&#x1F4F1; שלחו הודעה בוואטסאפ</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- PROJECT SUMMARY MODAL -->
+    <div class="summary-overlay" id="summaryOverlay">
+        <div class="summary-card">
+            <button class="summary-close" onclick="closeSummary()">&times;</button>
+            <h2>&#x1F4CB; אפיון הפרויקט שלך</h2>
+            <div id="summaryContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== NAVIGATION =====
+        const allNavBtns = document.querySelectorAll('[data-section]');
+        const allSections = document.querySelectorAll('.portal-section');
+
+        function switchSection(sectionId) {
+            allSections.forEach(s => s.classList.remove('active'));
+            allNavBtns.forEach(b => b.classList.remove('active'));
+
+            document.getElementById('section-' + sectionId).classList.add('active');
+            document.querySelectorAll('[data-section="' + sectionId + '"]').forEach(b => b.classList.add('active'));
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        allNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchSection(btn.dataset.section));
+        });
+
+        // ===== HELP TOGGLE =====
+        function toggleHelp(el) {
+            const item = el.closest('.help-item');
+            const wasOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.help-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+            // Toggle icon
+            document.querySelectorAll('.help-item .toggle-icon').forEach(icon => icon.textContent = '+');
+            if (!wasOpen) item.querySelector('.toggle-icon').textContent = '\u00D7';
+        }
+
+        // ===== PROJECT BUILDER =====
+        const STORAGE_KEY = 'youth-ai-project';
+        const questionLabels = [
+            'שם הפרויקט',
+            'הבעיה',
+            'קהל יעד',
+            'מתחרים / מצב קיים',
+            'הפתרון',
+            'פיצ\'רים עיקריים',
+            'מודל עסקי',
+            'MVP — גרסה ראשונה',
+            'אסטרטגיית שיווק',
+            'הגדרת הצלחה'
+        ];
+
+        // Load saved answers
+        function loadProject() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const answers = JSON.parse(saved);
+                document.querySelectorAll('[data-q]').forEach(ta => {
+                    const idx = parseInt(ta.dataset.q);
+                    if (answers[idx]) ta.value = answers[idx];
+                });
+            }
+            updateProgress();
+        }
+
+        // Save answers
+        function saveProject() {
+            const answers = [];
+            document.querySelectorAll('[data-q]').forEach(ta => {
+                answers[parseInt(ta.dataset.q)] = ta.value;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+            updateProgress();
+
+            const status = document.getElementById('saveStatus');
+            status.classList.add('show');
+            setTimeout(() => status.classList.remove('show'), 2000);
+        }
+
+        // Auto-save on typing
+        document.querySelectorAll('[data-q]').forEach(ta => {
+            ta.addEventListener('input', () => {
+                updateProgress();
+            });
+        });
+
+        // Update progress bar
+        function updateProgress() {
+            const bar = document.getElementById('progressBar');
+            bar.innerHTML = '';
+            document.querySelectorAll('[data-q]').forEach(ta => {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot' + (ta.value.trim() ? ' filled' : '');
+                bar.appendChild(dot);
+            });
+        }
+
+        // Show summary
+        function showSummary() {
+            saveProject();
+            const container = document.getElementById('summaryContent');
+            container.innerHTML = '';
+
+            document.querySelectorAll('[data-q]').forEach(ta => {
+                const idx = parseInt(ta.dataset.q);
+                const item = document.createElement('div');
+                item.className = 'summary-item';
+                const val = ta.value.trim();
+                item.innerHTML = '<div class="s-label">' + questionLabels[idx] + '</div>' +
+                    '<div class="s-value ' + (val ? '' : 'empty') + '">' +
+                    (val || 'טרם מולא') + '</div>';
+                container.appendChild(item);
+            });
+
+            document.getElementById('summaryOverlay').classList.add('active');
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryOverlay').classList.remove('active');
+        }
+
+        // Close summary on overlay click
+        document.getElementById('summaryOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeSummary();
+        });
+
+        // Init
+        loadProject();
+    </script>
+</body>
+</html>
