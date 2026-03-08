@@ -1034,8 +1034,34 @@
             }
 
             .mobile-menu-btn {
-                display: block;
-                z-index: 101;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0.8rem;
+                left: 1rem;
+                right: auto;
+                z-index: 200;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.08);
+                font-size: 1.5rem;
+                color: var(--text);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.25s;
+            }
+
+            .mobile-menu-btn:hover {
+                background: rgba(255, 255, 255, 0.15) !important;
+            }
+
+            /* When menu is open, style the button as X */
+            .mobile-menu-btn.menu-open {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.06);
+                font-size: 2rem;
+                color: var(--text-muted);
             }
 
             .mobile-overlay {
@@ -1047,34 +1073,11 @@
                 font-size: 1.3rem;
             }
 
-            /* Mobile menu: position the real close button over the menu */
-            .nav-links.open ~ #menuBtn {
-                position: fixed;
-                top: 1rem;
-                left: 1.5rem;
-                right: auto;
-                z-index: 102;
-                width: 48px;
-                height: 48px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.05);
-                font-size: 2.2rem;
-                color: var(--text-muted);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background 0.2s;
-            }
-
-            .nav-links.open ~ #menuBtn:hover {
-                background: rgba(255, 255, 255, 0.12);
-            }
-
             /* Mobile menu header/logo */
             .nav-links.open::after {
-                content: 'AI';
+                content: 'AI Youth';
                 position: absolute;
-                top: 1.5rem;
+                top: 1.2rem;
                 right: 1.5rem;
                 font-size: 1.3rem;
                 font-weight: 800;
@@ -1514,7 +1517,7 @@
             </svg>
             <div>
                 <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">המפגשים בזום &mdash; מכל מקום בארץ</div>
-                <div style="font-size: 0.9rem; color: var(--text-muted);">לא צריך להגיע לשום מקום. מחשב נייד, אינטרנט, ויאללה.</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">לא צריך להגיע לשום מקום. מחשב נייד, אינטרנט, וזהו.</div>
             </div>
         </div>
     </section>
@@ -1912,14 +1915,15 @@
         function openMobileMenu() {
             navLinks.classList.add('open');
             mobileOverlay.classList.add('active');
+            menuBtn.classList.add('menu-open');
             menuBtn.innerHTML = '&times;';
-            menuBtn.style.zIndex = '102';
             document.body.style.overflow = 'hidden';
         }
 
         function closeMobileMenu() {
             navLinks.classList.remove('open');
             mobileOverlay.classList.remove('active');
+            menuBtn.classList.remove('menu-open');
             menuBtn.innerHTML = '&#9776;';
             document.body.style.overflow = '';
         }
