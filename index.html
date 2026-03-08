@@ -876,6 +876,24 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
+            /* -- Global mobile spacing -- */
+            section {
+                padding: 2.5rem 1.2rem;
+            }
+
+            .section-title {
+                margin-bottom: 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-title p {
+                font-size: 0.9rem;
+            }
+
+            /* -- Nav -- */
             .nav-links {
                 display: none;
                 position: fixed;
@@ -903,43 +921,239 @@
                 z-index: 101;
             }
 
-            .hero-stats {
-                gap: 1.5rem;
+            /* -- Hero compact -- */
+            .hero {
+                min-height: auto;
+                padding: 5rem 1.2rem 2.5rem;
             }
 
+            .hero h1 {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: row;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .hero-stat .number {
+                font-size: 1.5rem;
+            }
+
+            .hero-stat .label {
+                font-size: 0.75rem;
+            }
+
+            .hero-badge {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+                padding: 0.4rem 1rem;
+            }
+
+            /* -- Hide terminal on mobile -- */
+            .terminal {
+                display: none;
+            }
+
+            /* -- Problem cards compact -- */
+            .problem-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .problem-card {
+                padding: 1.2rem;
+            }
+
+            .problem-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .problem-card h3 {
+                font-size: 1.05rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .problem-card p {
+                font-size: 0.85rem;
+            }
+
+            /* -- Build grid compact -- */
+            .build-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            .build-item {
+                padding: 1rem;
+            }
+
+            .build-icon {
+                font-size: 1.8rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .build-item h3 {
+                font-size: 0.9rem;
+            }
+
+            .build-item p {
+                display: none;
+            }
+
+            /* -- Timeline compact -- */
+            .timeline::before {
+                right: 18px;
+            }
+
+            .timeline-item {
+                gap: 1rem;
+            }
+
+            .timeline-marker {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+
+            .timeline-content {
+                padding: 0.8rem 1rem;
+            }
+
+            .timeline-content h3 {
+                font-size: 0.95rem;
+            }
+
+            .timeline-content p {
+                font-size: 0.8rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .timeline-content .tag {
+                display: none;
+            }
+
+            /* -- Skills compact: 3 columns, icon only with small text -- */
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+            }
+
+            .skill-chip {
+                flex-direction: column;
+                padding: 0.7rem 0.4rem;
+                gap: 0.3rem;
+                text-align: center;
+            }
+
+            .skill-chip .skill-icon {
+                font-size: 1.3rem;
+            }
+
+            .skill-chip span {
+                font-size: 0.7rem;
+            }
+
+            /* -- Instructor compact -- */
             .instructor-card {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem;
+                padding: 1.5rem;
+                gap: 1.2rem;
+            }
+
+            .instructor-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .instructor-info {
+                text-align: center;
+            }
+
+            .instructor-info h3 {
+                font-size: 1.2rem;
+            }
+
+            .instructor-info p {
+                font-size: 0.85rem;
+                line-height: 1.6;
             }
 
             .instructor-tags {
                 justify-content: center;
             }
 
+            /* -- Pricing compact -- */
             .pricing-card {
-                padding: 2rem;
+                padding: 1.5rem;
             }
 
-            .timeline::before {
-                right: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-stats {
-                flex-direction: column;
-                gap: 1rem;
+            .pricing-card .price {
+                font-size: 2.5rem;
             }
 
+            .pricing-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .pricing-features li {
+                font-size: 0.85rem;
+                padding: 0.4rem 0;
+            }
+
+            /* -- FAQ compact -- */
+            .faq-question {
+                font-size: 0.95rem;
+            }
+
+            .faq-answer {
+                font-size: 0.85rem;
+            }
+
+            /* -- CTA compact -- */
+            .cta-section {
+                padding: 3rem 1.2rem;
+            }
+
+            /* -- Buttons -- */
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 0.7rem;
             }
 
             .btn-primary, .btn-secondary {
                 width: 100%;
                 justify-content: center;
+                font-size: 1rem;
+                padding: 0.85rem 1.5rem;
+            }
+
+            .cta-section .btn-primary {
+                font-size: 1.05rem;
+                padding: 1rem 2rem;
+            }
+
+            /* -- WhatsApp float smaller -- */
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+                bottom: 1.2rem;
+                left: 1.2rem;
             }
         }
 
