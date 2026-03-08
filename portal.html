@@ -455,18 +455,24 @@
         }
 
         .session-card-body .content-list li {
-            padding: 1.2rem 0.5rem;
+            padding: 1.5rem 0.5rem;
             font-size: 1.05rem;
             color: var(--text-muted);
             display: flex;
             align-items: flex-start;
             gap: 1rem;
             line-height: 2.2;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
         }
 
         .session-card-body .content-list li:last-child {
             border-bottom: none;
+        }
+
+        .session-card-body .content-list li strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.3rem;
         }
 
         .session-card-body .content-list li::before {
