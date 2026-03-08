@@ -516,43 +516,87 @@
         .summary-card {
             background: var(--dark-card);
             border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 700px;
+            padding: 0;
+            max-width: 750px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
         }
 
-        .summary-card h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .summary-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--accent));
+            padding: 2rem 2.5rem;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        .summary-header .doc-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .summary-header .doc-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .summary-body {
+            padding: 2rem 2.5rem;
         }
 
         .summary-item {
-            margin-bottom: 1.2rem;
-            padding-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: var(--dark-lighter);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
         }
 
-        .summary-item:last-child {
-            border-bottom: none;
+        .summary-item .s-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .summary-item .s-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .summary-item .s-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent);
             font-weight: 600;
             margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .summary-item .s-value {
             font-size: 0.95rem;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
+            white-space: pre-wrap;
         }
 
         .summary-item .s-value.empty {
@@ -560,15 +604,101 @@
             font-style: italic;
         }
 
+        .summary-footer {
+            padding: 1.5rem 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .summary-footer .footer-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .summary-footer .footer-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+        }
+
         .summary-close {
             position: absolute;
             top: 1rem;
             left: 1rem;
-            background: none;
+            background: rgba(0,0,0,0.3);
             border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
             cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .summary-close:hover {
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* Print styles for PDF download */
+        @media print {
+            body * { visibility: hidden; }
+            #summaryOverlay, #summaryOverlay * { visibility: visible; }
+            #summaryOverlay {
+                position: absolute;
+                inset: 0;
+                background: #fff;
+                display: flex;
+                padding: 0;
+            }
+            .summary-card {
+                max-height: none;
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+                background: #fff;
+            }
+            .summary-header {
+                background: #6C3CE1 !important;
+                border-radius: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .summary-body { padding: 1.5rem 2rem; }
+            .summary-item {
+                background: #f5f3fa;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .summary-item .s-value { color: #1a1a2e; }
+            .summary-item .s-label { color: #6C3CE1; }
+            .summary-close, .summary-footer .footer-actions { display: none !important; }
+            .summary-footer .footer-text { color: #666; }
         }
 
         /* ===== DOWNLOADS ===== */
@@ -1411,8 +1541,18 @@
     <div class="summary-overlay" id="summaryOverlay">
         <div class="summary-card">
             <button class="summary-close" onclick="closeSummary()">&times;</button>
-            <h2>&#x1F4CB; אפיון הפרויקט שלך</h2>
-            <div id="summaryContent"></div>
+            <div class="summary-header">
+                <div class="doc-badge">&#x1F4C4; מסמך אפיון</div>
+                <h2 id="summaryProjectName">הפרויקט שלי</h2>
+                <div class="doc-subtitle">יזמות ובינה מלאכותית לנוער</div>
+            </div>
+            <div class="summary-body" id="summaryContent"></div>
+            <div class="summary-footer">
+                <div class="footer-text">&#x2728; נוצר באזור האישי | יזמות ובינה מלאכותית לנוער</div>
+                <div class="footer-actions">
+                    <button class="btn-download" onclick="downloadSummary()">&#x1F4E5; הורד כ-PDF</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1521,19 +1661,42 @@
         }
 
         // Show summary
+        const questionIcons = [
+            { emoji: '\u{1F3F7}', bg: 'linear-gradient(135deg, var(--primary), var(--primary-light))' },
+            { emoji: '\u{1F6A8}', bg: 'linear-gradient(135deg, var(--pink), #e63976)' },
+            { emoji: '\u{1F465}', bg: 'linear-gradient(135deg, var(--blue), #3388cc)' },
+            { emoji: '\u{1F50D}', bg: 'linear-gradient(135deg, var(--orange), #e66830)' },
+            { emoji: '\u{1F4A1}', bg: 'linear-gradient(135deg, var(--accent), #00b894)' },
+            { emoji: '\u{2699}', bg: 'linear-gradient(135deg, var(--primary-light), var(--blue))' },
+            { emoji: '\u{1F4B0}', bg: 'linear-gradient(135deg, var(--gold), var(--orange))' },
+            { emoji: '\u{1F680}', bg: 'linear-gradient(135deg, var(--accent), var(--primary))' },
+            { emoji: '\u{1F4E3}', bg: 'linear-gradient(135deg, var(--pink), var(--primary-light))' },
+            { emoji: '\u{1F3C6}', bg: 'linear-gradient(135deg, var(--gold), #e6b030)' }
+        ];
+
         function showSummary() {
             saveProject();
             const container = document.getElementById('summaryContent');
             container.innerHTML = '';
 
+            // Set project name in header
+            const nameTA = document.querySelector('[data-q="0"]');
+            const projectName = nameTA && nameTA.value.trim() ? nameTA.value.trim() : 'הפרויקט שלי';
+            document.getElementById('summaryProjectName').textContent = projectName;
+
             document.querySelectorAll('[data-q]').forEach(ta => {
                 const idx = parseInt(ta.dataset.q);
+                const val = ta.value.trim();
+                const icon = questionIcons[idx];
                 const item = document.createElement('div');
                 item.className = 'summary-item';
-                const val = ta.value.trim();
-                item.innerHTML = '<div class="s-label">' + questionLabels[idx] + '</div>' +
+                item.innerHTML =
+                    '<div class="s-icon" style="background:' + icon.bg + ';">' + icon.emoji + '</div>' +
+                    '<div class="s-content">' +
+                    '<div class="s-label">' + questionLabels[idx] + '</div>' +
                     '<div class="s-value ' + (val ? '' : 'empty') + '">' +
-                    (val || 'טרם מולא') + '</div>';
+                    (val ? val.replace(/\n/g, '<br>') : '\u05D8\u05E8\u05DD \u05DE\u05D5\u05DC\u05D0') +
+                    '</div></div>';
                 container.appendChild(item);
             });
 
@@ -1542,6 +1705,10 @@
 
         function closeSummary() {
             document.getElementById('summaryOverlay').classList.remove('active');
+        }
+
+        function downloadSummary() {
+            window.print();
         }
 
         // Close summary on overlay click
