@@ -140,6 +140,7 @@
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
         }
 
         .page-header h1 {
@@ -165,8 +166,20 @@
         /* ===== SESSIONS GRID ===== */
         .sessions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .sessions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .session-card {
@@ -175,6 +188,8 @@
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .session-card:hover {
@@ -182,62 +197,276 @@
             box-shadow: 0 8px 30px rgba(108, 60, 225, 0.2);
         }
 
+        /* Session card image banner */
+        .session-card-image {
+            height: 130px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .session-card-image::before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            top: -40px;
+            right: -20px;
+        }
+
+        .session-card-image::after {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            bottom: -30px;
+            left: 20px;
+        }
+
+        .session-card-image .img-num {
+            position: absolute;
+            bottom: 1rem;
+            right: 1.2rem;
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.15);
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .session-card-image .img-deco {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            top: 25px;
+            left: 40%;
+        }
+
         .session-card-header {
-            padding: 1.2rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 1rem 1.2rem;
+            background: none;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
+            position: relative;
         }
 
         .session-number {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .session-card-header h3 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
+            flex: 1;
         }
 
         .session-tag {
-            margin-left: auto;
-            background: rgba(255,255,255,0.15);
+            background: rgba(108, 60, 225, 0.15);
+            color: var(--primary-light);
             padding: 0.2rem 0.7rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
 
+        /* Card preview (shown in grid) */
+        .session-card-preview {
+            padding: 1rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .session-card-preview p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+
+        .session-card-preview .preview-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .session-card-preview .preview-topics span {
+            background: rgba(108, 60, 225, 0.15);
+            color: var(--primary-light);
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .session-card-preview .preview-enter {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: auto;
+            padding-top: 0.8rem;
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Card body (hidden in grid, shown in detail view) */
         .session-card-body {
-            padding: 1.5rem;
+            padding: 2.5rem 3rem;
+            display: none;
+            line-height: 2.2;
+            font-size: 1.05rem;
+        }
+
+        /* ===== SESSION DETAIL VIEW ===== */
+        .session-detail-view {
+            display: none;
+        }
+
+        .session-detail-view.active {
+            display: block;
+        }
+
+        .session-detail-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .session-detail-back {
+            background: rgba(0,212,170,0.1);
+            border: 1px solid rgba(0,212,170,0.3);
+            color: var(--accent);
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.6rem 1.4rem;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            margin-bottom: 1.2rem;
+        }
+
+        .session-detail-back:hover {
+            background: rgba(0,212,170,0.2);
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .session-detail-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .session-detail-title .session-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            font-size: 1.3rem;
+        }
+
+        .session-detail-title h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .session-detail-content {
+            max-width: 850px;
+            line-height: 2.2;
+            font-size: 1.05rem;
+            margin: 0 auto;
+        }
+
+        .session-detail-content h4 {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.15rem;
+            color: var(--text);
+        }
+
+        /* Presentation button in detail view - prominent at top */
+        .session-detail-presentation {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: 'Heebo', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: fit-content;
+        }
+
+        .session-detail-presentation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
         }
 
         .session-card-body .objective {
             color: var(--accent);
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            padding: 1.3rem 1.5rem;
+            background: rgba(0, 212, 170, 0.08);
+            border-radius: 12px;
+            border-right: 4px solid var(--accent);
+            line-height: 2.2;
         }
 
         .session-card-body .content-list {
             list-style: none;
-            margin-bottom: 1rem;
+            margin-bottom: 2.5rem;
         }
 
         .session-card-body .content-list li {
-            padding: 0.3rem 0;
-            font-size: 0.9rem;
+            padding: 1.2rem 0.5rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 1rem;
+            line-height: 2.2;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .session-card-body .content-list li:last-child {
+            border-bottom: none;
         }
 
         .session-card-body .content-list li::before {
@@ -249,59 +478,109 @@
 
         .session-exercise {
             background: var(--dark-lighter);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 0.8rem;
+            border-radius: 14px;
+            padding: 1.8rem 2rem;
+            margin-top: 2rem;
         }
 
         .session-exercise .exercise-label {
-            font-size: 0.8rem;
+            font-size: 1rem;
             color: var(--gold);
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            margin-bottom: 1rem;
         }
 
         .session-exercise p {
-            font-size: 0.88rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
+            line-height: 2.2;
         }
 
         .session-concepts {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.8rem;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
         .concept-tag {
             background: linear-gradient(135deg, rgba(108, 60, 225, 0.2), rgba(0, 212, 170, 0.1));
             border: 1px solid rgba(108, 60, 225, 0.3);
-            padding: 0.3rem 0.8rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             color: var(--accent);
             font-weight: 500;
         }
 
         .session-discussion {
             background: rgba(245, 200, 66, 0.08);
-            border-right: 3px solid var(--gold);
-            border-radius: 0 10px 10px 0;
-            padding: 0.8rem 1rem;
-            margin-top: 0.8rem;
+            border-right: 4px solid var(--gold);
+            border-radius: 0 14px 14px 0;
+            padding: 1.5rem 1.8rem;
+            margin-top: 2rem;
         }
 
         .session-discussion .disc-label {
-            font-size: 0.78rem;
+            font-size: 1rem;
             color: var(--gold);
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.8rem;
         }
 
         .session-discussion p {
-            font-size: 0.85rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 2.2;
+        }
+
+        .session-recap {
+            background: rgba(0, 212, 170, 0.08);
+            border-right: 4px solid var(--accent);
+            border-radius: 0 14px 14px 0;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .session-recap .recap-label {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .session-recap p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 2.2;
+        }
+
+        .session-class-exercise {
+            background: linear-gradient(135deg, rgba(245, 200, 66, 0.1), rgba(255, 120, 73, 0.08));
+            border: 1px solid rgba(245, 200, 66, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .session-class-exercise .class-exercise-label {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .session-class-exercise p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 2.2;
         }
 
         .session-presentation {
@@ -331,38 +610,38 @@
         .session-homework {
             background: linear-gradient(135deg, rgba(77, 163, 255, 0.1), rgba(108, 60, 225, 0.08));
             border: 1px solid rgba(77, 163, 255, 0.2);
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin-top: 1rem;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2.5rem;
         }
 
         .session-homework .homework-label {
-            font-size: 0.82rem;
+            font-size: 1.05rem;
             color: var(--blue);
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         .session-homework p {
-            font-size: 0.88rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 0.4rem;
+            line-height: 2.2;
+            margin-bottom: 1rem;
         }
 
         .session-homework .hw-connection {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
             color: var(--accent);
             font-weight: 600;
             background: rgba(0, 212, 170, 0.1);
-            padding: 0.3rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
         }
 
@@ -383,22 +662,7 @@
             display: block;
         }
 
-        .session-detail-back {
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.95rem;
-            cursor: pointer;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .session-detail-back:hover {
-            text-decoration: underline;
-        }
+        /* duplicate removed — see .session-detail-back above */
 
         /* ===== AI TOOLS ===== */
         .ai-tools-grid {
@@ -462,82 +726,133 @@
             text-decoration: underline;
         }
 
-        /* ===== PROJECT BUILDER ===== */
-        .project-builder {
-            max-width: 800px;
+        /* ===== PROJECT WIZARD ===== */
+        .project-wizard {
+            max-width: 650px;
+            margin: 0 auto;
+            padding-top: 1rem;
         }
 
-        .project-progress {
-            display: flex;
-            gap: 0.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .progress-dot {
-            flex: 1;
+        .wizard-progress {
             height: 6px;
             background: var(--dark-lighter);
             border-radius: 3px;
-            transition: background 0.3s;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
         }
 
-        .progress-dot.filled {
+        .wizard-progress-fill {
+            height: 100%;
             background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+            width: 10%;
         }
 
-        .project-question {
-            background: var(--dark-card);
-            border-radius: 16px;
-            padding: 2rem;
+        .wizard-step-label {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
-        .project-question .q-number {
-            color: var(--accent);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .wizard-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            animation: wizardFade 0.3s ease;
         }
 
-        .project-question h3 {
-            font-size: 1.15rem;
-            margin-bottom: 0.4rem;
+        @keyframes wizardFade {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .project-question .q-hint {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .wizard-emoji {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        .project-question textarea {
-            width: 100%;
-            min-height: 100px;
-            background: var(--dark-lighter);
-            border: 2px solid rgba(108, 60, 225, 0.2);
-            border-radius: 12px;
-            padding: 1rem;
-            color: var(--text);
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.95rem;
-            resize: vertical;
-            transition: border-color 0.3s;
+        .wizard-question {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .project-question textarea:focus {
+        .wizard-hint {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .wizard-textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--dark-lighter);
+            border: 2px solid rgba(108, 60, 225, 0.2);
+            border-radius: 14px;
+            padding: 1.2rem;
+            color: var(--text);
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+            text-align: right;
+        }
+
+        .wizard-textarea:focus {
             outline: none;
             border-color: var(--primary);
         }
 
-        .project-question textarea::placeholder {
+        .wizard-textarea::placeholder {
             color: var(--text-muted);
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
-        .project-actions {
+        .wizard-nav {
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
             margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        .wizard-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .wizard-btn-prev {
+            background: var(--dark-lighter);
+            color: var(--text-muted);
+        }
+
+        .wizard-btn-prev:hover {
+            color: var(--text);
+        }
+
+        .wizard-btn-next {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .wizard-btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
+        }
+
+        .wizard-btn-next.finish {
+            background: linear-gradient(135deg, var(--accent), #00b894);
         }
 
         .btn-save {
@@ -558,29 +873,13 @@
             box-shadow: 0 5px 20px rgba(108, 60, 225, 0.3);
         }
 
-        .btn-summary {
-            background: linear-gradient(135deg, var(--accent), #00b894);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-family: 'Heebo', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .btn-summary:hover {
-            transform: translateY(-2px);
-        }
-
         .save-status {
             color: var(--accent);
             font-size: 0.85rem;
             margin-top: 0.5rem;
             opacity: 0;
             transition: opacity 0.3s;
+            text-align: center;
         }
 
         .save-status.show {
@@ -1151,10 +1450,6 @@
 
     <!-- TOP NAV BAR -->
     <header class="topnav">
-        <div class="topnav-logo">
-            <a href="portal.html">AI Youth</a>
-            <a href="index.html" class="back-link">&#8592; לאתר הראשי</a>
-        </div>
         <div class="topnav-tabs">
             <button class="active" data-section="sessions">
                 <span class="nav-icon">&#x1F4DA;</span>
@@ -1176,10 +1471,18 @@
                 <span class="nav-icon">&#x1F4BE;</span>
                 <span>הורדות</span>
             </button>
+            <button data-section="recommendations">
+                <span class="nav-icon">&#x2B50;</span>
+                <span>המלצות</span>
+            </button>
             <button data-section="help">
                 <span class="nav-icon">&#x2753;</span>
                 <span>עזרה</span>
             </button>
+        </div>
+        <div class="topnav-logo">
+            <a href="index.html" class="back-link">&#8594; לאתר הראשי</a>
+            <a href="portal.html">AI Youth</a>
         </div>
     </header>
 
@@ -1201,13 +1504,9 @@
             <span class="nav-icon">&#x1F4D6;</span>
             <span>הדרכות</span>
         </button>
-        <button data-section="downloads">
-            <span class="nav-icon">&#x1F4BE;</span>
-            <span>הורדות</span>
-        </button>
-        <button data-section="help">
-            <span class="nav-icon">&#x2753;</span>
-            <span>עזרה</span>
+        <button data-section="recommendations">
+            <span class="nav-icon">&#x2B50;</span>
+            <span>המלצות</span>
         </button>
     </nav>
 
@@ -1265,7 +1564,7 @@
                             <p>באילו כלי AI אתם כבר משתמשים בלי לדעת? &bull; מה ההבדל בין תוכנה חכמה לבינה מלאכותית?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (15 דקות)</div>
                             <p>שאלו את ChatGPT ואת Claude את אותן 5 שאלות &mdash; שימו לב להבדלים! שאלה על היסטוריה, מדע, כתיבה יצירתית, תרגיל מתמטי, ושאלה אישית</p>
                         </div>
                         <div class="session-homework">
@@ -1291,6 +1590,10 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: ללמוד לדבר עם AI בצורה אפקטיבית + התקנת Cursor ו-Claude Code</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>הכרנו את עולם ה-AI, ניסינו ChatGPT ו-Claude, ולמדנו מושגים בסיסיים. &bull; <strong>בדיקת משימת בית:</strong> מי ניסה 3 כלי AI שונים? מי התקין Cursor? מה גיליתם?</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>מה זה פרומפט?</strong> ההוראה או השאלה שנותנים ל-AI. חשבו על זה כמו לדבר עם עוזר חכם מאוד &mdash; ככל שתהיו ברורים יותר, כך התוצאה תהיה טובה יותר</li>
                             <li><strong>טכניקה 1 &mdash; היו ספציפיים:</strong> במקום "כתוב על כלבים" כתבו "כתוב פוסט של 200 מילים על 5 גזעי כלבים מומלצים למשפחות עם ילדים קטנים"</li>
@@ -1311,7 +1614,7 @@
                             <p>למה אותו פרומפט נותן תוצאות שונות בכלים שונים? &bull; מה ההבדל בין פרומפט טוב לפרומפט רע?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (15 דקות)</div>
                             <p>אתגר פרומפטים! כולם מקבלים את אותה משימה: "גרמו ל-AI ליצור לוגו לחנות גלידה". מי מקבל את התוצאה הכי טובה? נשווה ונלמד מהפרומפטים של כולם</p>
                         </div>
                         <div class="session-homework">
@@ -1337,10 +1640,14 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: ללמוד לחשוב כמו יזמים, לזהות בעיות אמיתיות ולהבין את הנוסחה של סטארטאפ מצליח</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>למדנו לכתוב פרומפטים מושלמים והתקנו Cursor ו-Claude Code. &bull; <strong>בדיקת משימת בית:</strong> מי הצליח ליצור לוגו עם AI? מי נרשם ל-Claude Code? הראו את התוצאות!</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>מה זה סטארטאפ?</strong> חברה צעירה שפותרת בעיה אמיתית בדרך חדשה או טובה יותר. ההבדל מעסק רגיל: סטארטאפ שואף לצמוח מהר ולהגיע להרבה אנשים</li>
                             <li><strong>סיפורי יזמים ישראליים:</strong> Waze (פתרו את בעיית הפקקים), Wix (הקלו על בניית אתרים), Monday (סידרו כאוס בניהול פרויקטים), Iron Dome (ביטחון). ישראל = "אומת הסטארטאפ" &mdash; יותר סטארטאפים לנפש מכל מדינה!</li>
-                            <li><strong>הנוסחה:</strong> בעיה &#x2192; פתרון &#x2192; מוצר &#x2192; עסק. הכל מתחיל מבעיה אמיתית שאנשים רוצים לפתור!</li>
+                            <li><strong>הנוסחה:</strong> בעיה &#x2190; פתרון &#x2190; מוצר &#x2190; עסק. הכל מתחיל מבעיה אמיתית שאנשים רוצים לפתור!</li>
                             <li><strong>Design Thinking:</strong> שיטה בת 5 שלבים &mdash; הזדהו (הבינו את המשתמש), הגדירו (מה הבעיה בדיוק), חשבו (סיעור מוחות), בנו (אב-טיפוס מהיר), בדקו (קבלו פידבק)</li>
                             <li><strong>איך מוצאים בעיות טובות?</strong> מה מעצבן אתכם ביומיום? על מה חברים מתלוננים? מה הייתם רוצים שיהיה קל יותר? הבעיות הכי טובות הן אלה שאתם חווים בעצמכם!</li>
                             <li><strong>בעיה טובה vs בעיה רעה:</strong> טובה = הרבה אנשים חווים אותה, מוכנים לשלם על פתרון, ספציפית. רעה = עמומה מדי, רק אתם חווים אותה, כבר נפתרה לגמרי</li>
@@ -1349,14 +1656,14 @@
                             <span class="concept-tag">סטארטאפ</span>
                             <span class="concept-tag">Design Thinking</span>
                             <span class="concept-tag">אימות בעיה</span>
-                            <span class="concept-tag">בעיה &#x2192; פתרון</span>
+                            <span class="concept-tag">בעיה &#x2190; פתרון</span>
                         </div>
                         <div class="session-discussion">
                             <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
                             <p>מה הדבר שהכי מעצבן אתכם בבית הספר? &bull; איזו אפליקציה הייתם רוצים שתהיה קיימת?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (15 דקות)</div>
                             <p>כל תלמיד מזהה 3 בעיות מהחיים שלו (בית ספר, תחביבים, חברים, משפחה) ומציג לכיתה. הכיתה מצביעה: איזו בעיה הכי מעניינת?</p>
                         </div>
                         <div class="session-homework">
@@ -1381,6 +1688,10 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: לבחור את הרעיון הטוב ביותר, להגדיר קהל יעד, לבנות הצעת ערך ולתכנן MVP</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>למדנו חשיבה יזמית ומצאנו 3 בעיות מהחיים שלנו. &bull; <strong>בדיקת משימת בית:</strong> מי בחר את הבעיה הטובה ביותר? מי שאל 5 אנשים? מה המתחרים שמצאתם?</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>בחירת הרעיון:</strong> מתוך 3 הבעיות מהמפגש הקודם, בוחרים את הטובה ביותר. הקריטריונים: האם הבעיה אמיתית? האם אני מבין אותה? האם אפשר לבנות פתרון? האם אנשים ירצו להשתמש?</li>
                             <li><strong>קהל יעד:</strong> מי בדיוק סובל מהבעיה? לא "כולם" אלא "תלמידי תיכון בישראל שמתקשים במתמטיקה". בונים פרסונה &mdash; דמות בדיונית שמייצגת את המשתמש האידיאלי</li>
@@ -1400,7 +1711,7 @@
                             <p>מי המשתמש שלכם? תארו אותו בפירוט. &bull; מה הדבר האחד שהמוצר שלכם עושה טוב יותר מכל דבר אחר?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (15 דקות)</div>
                             <p>מילוי "בונה הפרויקט" באזור האישי &mdash; 10 שאלות מנחות שבונות אפיון מלא לסטארטאפ שלכם</p>
                         </div>
                         <div class="session-homework">
@@ -1425,26 +1736,32 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: התקנת Cursor, הבנת מבנה בסיסי של אתר, ובנייה ראשונה של דף נחיתה עם AI</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>בחרנו רעיון, הגדרנו קהל יעד ומילאנו את "בונה הפרויקט". &bull; <strong>בדיקת משימת בית:</strong> מי השלים את 10 השאלות? מי חשב על עיצוב וצבעים? הציגו את האפיון שלכם!</p>
+                        </div>
                         <ul class="content-list">
-                            <li><strong>מה זה Cursor?</strong> עורך קוד חכם עם AI מובנה. אתם מתארים מה רוצים בשפה חופשית ו-Cursor כותב את הקוד! לא צריך ידע קודם בתכנות</li>
-                            <li><strong>התקנה:</strong> הורידו מ-cursor.com, הריצו את ה-EXE, הירשמו עם Google. פתחו תיקייה חדשה לפרויקט (שם באנגלית, בלי רווחים!)</li>
-                            <li><strong>מבנה אתר:</strong> HTML = השלד (מה יש בדף), CSS = העיצוב (איך זה נראה: צבעים, פונטים, פריסה), JavaScript = המוח (מה קורה כשלוחצים). הדפדפן קורא את הקבצים האלה ומציג את הדף</li>
-                            <li><strong>בנייה עם AI:</strong> לוחצים Ctrl+I, כותבים בפירוט מה רוצים: "Build me a landing page for [שם המוצר] with a hero section, about section, features with 3 cards, and contact form. Hebrew RTL, [צבעים]"</li>
-                            <li><strong>תצוגה מקדימה:</strong> פותחים את קובץ ה-HTML בדפדפן Chrome כדי לראות את האתר. כל שינוי = ריענון הדף</li>
+                            <li><strong>מה זה Cursor?</strong> Cursor הוא עורך קוד חכם (מבוסס על VS Code) עם בינה מלאכותית מובנית. במקום ללמוד שפות תכנות &mdash; אתם פשוט מתארים מה אתם רוצים לבנות בשפה חופשית, ו-Cursor כותב את כל הקוד בשבילכם! הוא יודע לבנות אתרים שלמים, לתקן באגים, להוסיף עיצוב ואנימציות &mdash; הכל לפי מה שתבקשו. לא צריך ידע קודם בתכנות!</li>
+                            <li><strong>התקנה צעד אחר צעד:</strong> (1) היכנסו ל-<strong>cursor.com</strong> ולחצו Download. (2) הריצו את קובץ ההתקנה (EXE בווינדוס, DMG במק). (3) פתחו את Cursor והירשמו עם חשבון Google &mdash; הגרסה החינמית מספיקה! (4) לחצו <strong>File &rarr; Open Folder</strong> וצרו תיקייה חדשה בשם הפרויקט (באנגלית, בלי רווחים! למשל: <code>my-startup</code>). (5) לחצו <kbd>Ctrl+I</kbd> (ווינדוס) או <kbd>Cmd+I</kbd> (מק) לפתיחת חלון ה-AI &mdash; וכתבו מה אתם רוצים לבנות!</li>
+                            <li><strong>מבנה אתר &mdash; 3 שכבות:</strong> כל אתר באינטרנט בנוי מ-3 שפות שעובדות ביחד: <strong style="color:var(--accent);">HTML</strong> = השלד &mdash; מגדיר מה יש בדף (כותרות, טקסטים, תמונות, כפתורים). <strong style="color:var(--pink);">CSS</strong> = העיצוב &mdash; קובע איך הדף נראה (צבעים, גדלים, פונטים, מרווחים, פריסה). <strong style="color:var(--gold);">JavaScript</strong> = המוח &mdash; מפעיל דברים (מה קורה כשלוחצים כפתור, אנימציות, טפסים). הדפדפן (Chrome) קורא את 3 הקבצים האלה ומציג את הדף על המסך.</li>
+                            <li><strong>מה זה שרת? איך אתר עובד?</strong> כשאתם כותבים כתובת אתר בדפדפן (למשל google.com), המחשב שלכם (<strong>קליינט</strong>) שולח בקשה ל<strong>שרת</strong> &mdash; מחשב חזק שיושב באיזה מרכז נתונים בעולם ומחזיק את קבצי האתר. השרת שולח חזרה את קבצי ה-HTML/CSS/JS והדפדפן שלכם מציג אותם. <strong>דומיין</strong> (כמו google.com) = הכתובת הידידותית. <strong>אחסון (Hosting)</strong> = השרת שמאחסן את הקבצים. כרגע אנחנו בונים <strong>מקומית</strong> (הקובץ רק על המחשב שלכם) &mdash; במפגש הבא נלמד להעלות את האתר לאינטרנט!</li>
+                            <li><strong>בנייה עם AI &mdash; הפרומפט הראשון:</strong> לוחצים <kbd>Ctrl+I</kbd> (ווינדוס) או <kbd>Cmd+I</kbd> (מק), וכותבים פרומפט מפורט באנגלית (ה-AI מבין אנגלית טוב יותר, אבל התוצאה תהיה בעברית!). לדוגמה: <code>"Build me a landing page for [שם המוצר] with a hero section with catchy headline, about section, features with 3 cards and icons, testimonials, and a contact form. Use [צבעים] colors, Hebrew RTL, modern design with gradients."</code> ככל שהפרומפט מפורט יותר &mdash; התוצאה טובה יותר!</li>
+                            <li><strong>תצוגה מקדימה:</strong> כדי לראות את האתר שבניתם, מחפשים את קובץ ה-<code>index.html</code> בתיקייה ופותחים אותו בדפדפן Chrome (לחיצה כפולה על הקובץ). אחרי כל שינוי ב-Cursor &mdash; חוזרים לדפדפן ולוחצים רענן (F5) כדי לראות את העדכון. זה הזמן לבדוק: האם הטקסט קריא? האם הצבעים נכונים? האם הכפתורים במקום?</li>
                         </ul>
                         <div class="session-concepts">
                             <span class="concept-tag">HTML</span>
                             <span class="concept-tag">CSS</span>
                             <span class="concept-tag">JavaScript</span>
                             <span class="concept-tag">Cursor</span>
+                            <span class="concept-tag">שרת ודומיין</span>
                             <span class="concept-tag">דף נחיתה</span>
                         </div>
                         <div class="session-discussion">
                             <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
-                            <p>אילו חלקים צריכים להיות בדף הנחיתה שלכם? &bull; אילו צבעים מייצגים את המותג שלכם?</p>
+                            <p>אילו חלקים צריכים להיות בדף הנחיתה שלכם? &bull; אילו צבעים מייצגים את המותג שלכם? &bull; מה ההבדל בין אתר שנמצא רק על המחשב שלכם לבין אתר שחי באינטרנט?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (20 דקות)</div>
                             <p>כל תלמיד בונה דף נחיתה למוצר שלו עם Cursor! כותבים פרומפט מפורט ומקבלים אתר שלם</p>
                         </div>
                         <div class="session-homework">
@@ -1469,33 +1786,38 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: לשדרג את האתר עם אנימציות, רספונסיביות למובייל, טפסים ופיצ'רים מתקדמים</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>התקנו Cursor ובנינו את דף הנחיתה הראשון! &bull; <strong>בדיקת משימת בית:</strong> מי הוסיף את הלוגו? מי בדק בטלפון? הראו את האתרים שלכם!</p>
+                        </div>
                         <ul class="content-list">
-                            <li><strong>אנימציות:</strong> CSS transitions לאפקטי hover, scroll animations (אלמנטים נכנסים בגלילה), loading animations. בקשו מ-Cursor: "Add smooth fade-in animations to all sections"</li>
-                            <li><strong>JavaScript בסיסי:</strong> איך לגרום לכפתורים לעבוד (click events), להציג ולהסתיר אלמנטים (toggle), גלילה חלקה בין סקשנים, ולידציה של טפסים</li>
-                            <li><strong>רספונסיביות למובייל:</strong> האתר חייב לעבוד טוב בטלפון! Media queries משנות את הפריסה למסכים קטנים. בקשו: "Make this responsive &mdash; stack columns on mobile"</li>
-                            <li><strong>ניווט:</strong> Header עם לוגו ולינקים, תפריט המבורגר למובייל, גלילה חלקה, header דביק בגלילה</li>
-                            <li><strong>טפסים:</strong> טופס יצירת קשר עם שם/אימייל/הודעה, ולידציה (שדות חובה, פורמט אימייל), כפתור שליחה מעוצב</li>
+                            <li><strong>אנימציות שמשדרגות את האתר:</strong> אנימציות גורמות לאתר להרגיש מקצועי ו"חי". סוגים: (1) <strong>Hover</strong> &mdash; כפתור משנה צבע כשמרחפים עליו. (2) <strong>Fade-in</strong> &mdash; אלמנטים נכנסים בעדינות כשגוללים למטה. (3) <strong>Slide</strong> &mdash; תמונות/טקסטים נכנסים מהצד. דוגמת פרומפט ל-Cursor: <code>"Add smooth fade-in animations when sections scroll into view. Add hover effects to all buttons and cards with scale transform."</code></li>
+                            <li><strong>רספונסיביות &mdash; האתר חייב לעבוד בטלפון!</strong> יותר מ-60% מהגולשים גולשים מהטלפון! <strong>רספונסיביות</strong> = האתר משתנה אוטומטית בהתאם לגודל המסך. במחשב: 3 עמודות זו ליד זו. בטלפון: עמודה אחת, כפתורים גדולים יותר, טקסט קריא. דוגמת פרומפט: <code>"Make the website fully responsive. On mobile: stack all columns, make buttons full-width, increase font sizes, add a hamburger menu."</code></li>
+                            <li><strong>ניווט מקצועי:</strong> כל אתר רציני צריך תפריט ניווט (Header) קבוע למעלה עם: לוגו, קישורים לסקשנים (אודות, פיצ'רים, צור קשר), וכפתור CTA בולט. במובייל &mdash; תפריט "המבורגר" (3 פסים &#x2630;) שנפתח בלחיצה. דוגמת פרומפט: <code>"Add a sticky navigation header with logo, links to sections, and a hamburger menu on mobile."</code></li>
+                            <li><strong>טפסים:</strong> טופס "צור קשר" הוא חובה בכל אתר עסקי. שדות: שם, אימייל, הודעה. הוסיפו ולידציה (בדיקה שהשדות מלאים ושהאימייל תקין). דוגמת פרומפט: <code>"Add a contact form section with name, email, message fields, validation, and a styled submit button."</code></li>
+                            <li><strong>פרסום האתר לאינטרנט &mdash; GitHub Pages:</strong> עד עכשיו האתר חי רק על המחשב שלכם. כדי שכל העולם יוכל לראות אותו, צריך <strong>להעלות אותו לשרת</strong>. <strong>GitHub Pages</strong> = שירות חינמי שהופך את הקוד שלכם לאתר חי באינטרנט! איך זה עובד? (1) יוצרים חשבון ב-GitHub (ראו הדרכה בלשונית "הדרכות"). (2) מעלים את קבצי האתר ל-Repository. (3) מפעילים GitHub Pages בהגדרות. (4) מקבלים כתובת אינטרנט: <code>https://username.github.io/repo-name</code>. מה קורה מאחורי הקלעים? ה<strong>דומיין</strong> (github.io) = הכתובת הקריאה. שרתי GitHub = מחשבים שמריצים את האתר שלכם 24/7. <strong>DNS</strong> = מערכת שמתרגמת את הכתובת הקריאה לכתובת IP של השרת.</li>
                         </ul>
                         <div class="session-concepts">
                             <span class="concept-tag">אנימציה</span>
                             <span class="concept-tag">רספונסיביות</span>
-                            <span class="concept-tag">JavaScript</span>
-                            <span class="concept-tag">טופס</span>
                             <span class="concept-tag">ניווט</span>
+                            <span class="concept-tag">טופס</span>
+                            <span class="concept-tag">GitHub Pages</span>
+                            <span class="concept-tag">דומיין ו-DNS</span>
                         </div>
                         <div class="session-discussion">
                             <div class="disc-label">&#x1F4AC; שאלות לדיון</div>
                             <p>בדקו את האתר שלכם בטלפון &mdash; מה צריך להשתנות? &bull; איזו אנימציה תגרום לאתר להרגיש מקצועי?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (20 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (20 דקות)</div>
                             <p>שדרגו את האתר! הוסיפו לפחות 3 דברים: טופס יצירת קשר, אנימציה אחת, ותפריט ניווט</p>
                         </div>
                         <div class="session-homework">
                             <div class="homework-label">&#x1F3E0; משימת בית</div>
-                            <p>1. העלו את האתר לאינטרנט עם GitHub Pages (ראו הדרכה בלשונית "הדרכות")!</p>
-                            <p>2. שלחו את הלינק ל-3 חברים ובקשו פידבק: מה אהבו? מה הייתם משנים?</p>
-                            <p>3. חשבו: איך הסטארטאפ שלכם ירוויח כסף? מנוי? חינם+פרימיום? פרסום?</p>
+                            <p>1. העלו את האתר לאינטרנט עם GitHub Pages (ראו הדרכה מפורטת בלשונית "הדרכות")! שלבו: חשבון GitHub &rarr; Repository &rarr; העלאת קבצים &rarr; הפעלת Pages.</p>
+                            <p>2. שלחו את הלינק החי ל-3 חברים ובקשו פידבק: מה אהבו? מה לא ברור? מה הייתם משנים? רשמו את התגובות!</p>
+                            <p>3. חשבו: איך הסטארטאפ שלכם ירוויח כסף? מנוי חודשי? חינם+פרימיום? חנות? פרסום?</p>
                             <div class="hw-connection">&#x1F517; במפגש הבא נלמד על מודלים עסקיים ושיווק. האתר שבניתם יהיה הבסיס!</div>
                         </div>
                         <div class="session-actions">
@@ -1513,6 +1835,10 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: להבין איך סטארטאפ מרוויח כסף, איך מגיעים ללקוחות, ואיך AI עוזר ליצור תוכן שיווקי</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>שדרגנו את האתר עם אנימציות, טפסים ותפריט ניווט! &bull; <strong>בדיקת משימת בית:</strong> מי העלה לאינטרנט? מי קיבל פידבק? שתפו את הלינקים!</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>מנוי חודשי:</strong> הלקוח משלם כל חודש/שנה. דוגמאות: Spotify, Netflix. מתאים לשירותים שנותנים ערך מתמשך</li>
                             <li><strong>פרימיום (Freemium):</strong> גרסה בסיסית חינם + תשלום על פיצ'רים מתקדמים. דוגמאות: Spotify free vs premium. מצוין לגיוס משתמשים</li>
@@ -1533,7 +1859,7 @@
                             <p>איך האפליקציה האהובה עליכם מרוויחה כסף? &bull; כמה הייתם גובים עבור המוצר שלכם?</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; תרגול (15 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה (15 דקות)</div>
                             <p>בנו תוכנית עסקית בעמוד אחד + צרו 3 פוסטים שיווקיים לאינסטגרם עם AI</p>
                         </div>
                         <div class="session-homework">
@@ -1558,6 +1884,10 @@
                     </div>
                     <div class="session-card-body">
                         <div class="objective">מטרה: להציג את הפרויקט בפני קהל &mdash; 3 דקות, בעיה, פתרון, דמו חי!</div>
+                        <div class="session-recap">
+                            <div class="recap-label">&#x1F519; במפגש הקודם</div>
+                            <p>למדנו מודלים עסקיים ויצרנו תוכן שיווקי עם AI. &bull; <strong>בדיקת משימת בית:</strong> מי הכין מצגת? מי התאמן על הפיץ'? בואו נראה!</p>
+                        </div>
                         <ul class="content-list">
                             <li><strong>מבנה הפיץ' (3 דקות):</strong> Hook/פתיח (10 שניות) &mdash; עובדה מפתיעה או שאלה. הבעיה (30 שניות). הפתרון (30 שניות). דמו חי (90 שניות) &mdash; הראו את המוצר! מודל עסקי (20 שניות). קריאה לפעולה (10 שניות)</li>
                             <li><strong>טיפים להצגה מעולה:</strong> דברו לאט וברור. הסתכלו על הקהל/מצלמה. התלהבו &mdash; אם אתם לא מתלהבים, הקהל לא יתלהב! תתאמנו לפחות פעמיים. זה בסדר לטעות &mdash; פשוט תמשיכו</li>
@@ -1576,7 +1906,7 @@
                             <p>מה הדבר הכי מרשים בפרויקט שלכם? &bull; תתאמנו על ה-Hook &mdash; 10 השניות הראשונות!</p>
                         </div>
                         <div class="session-exercise">
-                            <div class="exercise-label">&#x1F3AF; יום הפיץ'! (30 דקות)</div>
+                            <div class="exercise-label">&#x1F3AF; משימת כיתה — יום הפיץ'! (30 דקות)</div>
                             <p>כל תלמיד מציג 3 דקות: הבעיה, הפתרון, דמו חי של המוצר! פידבק מהמנחה ומהכיתה</p>
                         </div>
                         <div class="session-homework">
@@ -1591,6 +1921,19 @@
                 </div>
 
             </div>
+
+            <!-- Session Detail View (populated by JS) -->
+            <div class="session-detail-view" id="sessionDetailView">
+                <div class="session-detail-header">
+                    <button class="session-detail-back" onclick="closeSession()">→ חזרה לכל המפגשים</button>
+                    <div class="session-detail-title">
+                        <div class="session-number" id="detailNum"></div>
+                        <h2 id="detailTitle"></h2>
+                    </div>
+                </div>
+                <div class="session-detail-content" id="detailContent"></div>
+            </div>
+
         </div>
 
         <!-- ==================== AI TOOLS ==================== -->
@@ -1607,7 +1950,7 @@
                         <h3>ChatGPT</h3>
                         <p class="ai-tool-desc">הכלי הכי פופולרי בעולם. מעולה לשיחות, כתיבה, סיעור מוחות וניתוח מידע. הממשק פשוט ואינטואיטיבי.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: שיחה, כתיבה, סיכומים, רעיונות</div>
-                        <a href="https://chat.openai.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-ChatGPT</a>
+                        <a href="https://chat.openai.com" target="_blank" class="ai-tool-link">כניסה ל-ChatGPT</a>
                     </div>
                 </div>
 
@@ -1617,7 +1960,7 @@
                         <h3>Claude</h3>
                         <p class="ai-tool-desc">של Anthropic. חכם ומדויק במיוחד. מצוין לקוד, ניתוח ארוך, כתיבה מקצועית ומשימות מורכבות.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: קוד, ניתוח, כתיבה ארוכה, דיוק</div>
-                        <a href="https://claude.ai" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Claude</a>
+                        <a href="https://claude.ai" target="_blank" class="ai-tool-link">כניסה ל-Claude</a>
                     </div>
                 </div>
 
@@ -1627,7 +1970,7 @@
                         <h3>Gemini</h3>
                         <p class="ai-tool-desc">של גוגל. משולב עם חיפוש גוגל, יכול לנתח תמונות ולעבוד עם כלי גוגל כמו Docs ו-Gmail.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: חיפוש, תמונות, שילוב עם גוגל</div>
-                        <a href="https://gemini.google.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Gemini</a>
+                        <a href="https://gemini.google.com" target="_blank" class="ai-tool-link">כניסה ל-Gemini</a>
                     </div>
                 </div>
 
@@ -1637,7 +1980,7 @@
                         <h3>Cursor</h3>
                         <p class="ai-tool-desc">עורך קוד חכם עם AI מובנה. כותבים מה רוצים לבנות ו-Cursor כותב את הקוד. הכלי המרכזי שלנו בקורס!</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: בניית אתרים, אפליקציות, קוד</div>
-                        <a href="https://cursor.com" target="_blank" class="ai-tool-link">&#x2192; הורדת Cursor</a>
+                        <a href="https://cursor.com" target="_blank" class="ai-tool-link">הורדת Cursor</a>
                     </div>
                 </div>
 
@@ -1647,7 +1990,7 @@
                         <h3>Grok</h3>
                         <p class="ai-tool-desc">של xAI (אילון מאסק). משולב עם X/Twitter, מעודכן בזמן אמת, סגנון ישיר וחד. מצוין לניתוח טרנדים ואירועים.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: חדשות, טרנדים, ניתוח בזמן אמת</div>
-                        <a href="https://grok.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Grok</a>
+                        <a href="https://grok.com" target="_blank" class="ai-tool-link">כניסה ל-Grok</a>
                     </div>
                 </div>
 
@@ -1657,7 +2000,7 @@
                         <h3>NotebookLM</h3>
                         <p class="ai-tool-desc">של גוגל. מעלים מסמכים, מאמרים או אתרים והכלי יוצר סיכומים, שאלות ותשובות, ואפילו פודקאסט אוטומטי!</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: לימוד, סיכומים, מחקר, פודקאסט</div>
-                        <a href="https://notebooklm.google.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-NotebookLM</a>
+                        <a href="https://notebooklm.google.com" target="_blank" class="ai-tool-link">כניסה ל-NotebookLM</a>
                     </div>
                 </div>
 
@@ -1667,7 +2010,7 @@
                         <h3>Novo</h3>
                         <p class="ai-tool-desc">יצירת סרטוני וידאו עם בינה מלאכותית. כותבים תסריט ומקבלים סרטון מוכן. מושלם לשיווק ולמדיה חברתית.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: סרטונים, שיווק, תוכן ויזואלי</div>
-                        <a href="https://www.novo.ai" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Novo</a>
+                        <a href="https://www.novo.ai" target="_blank" class="ai-tool-link">כניסה ל-Novo</a>
                     </div>
                 </div>
 
@@ -1677,7 +2020,7 @@
                         <h3>Sora</h3>
                         <p class="ai-tool-desc">של OpenAI. יצירת סרטוני וידאו מטקסט. כותבים תיאור ומקבלים סרטון מקצועי. הדור הבא של יצירת תוכן ויזואלי.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: סרטוני וידאו, קליפים, תוכן יצירתי</div>
-                        <a href="https://sora.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-Sora</a>
+                        <a href="https://sora.com" target="_blank" class="ai-tool-link">כניסה ל-Sora</a>
                     </div>
                 </div>
 
@@ -1687,97 +2030,36 @@
                         <h3>NanoBanana</h3>
                         <p class="ai-tool-desc">יצירת תמונות ועיצובים עם AI. מתארים מה רוצים ומקבלים תמונה מקצועית. מעולה ללוגואים, באנרים ופוסטים.</p>
                         <div class="ai-tool-good-for">&#x2B50; מצוין ל: תמונות, עיצוב, לוגואים</div>
-                        <a href="https://nanobanana.com" target="_blank" class="ai-tool-link">&#x2192; כניסה ל-NanoBanana</a>
+                        <a href="https://nanobanana.com" target="_blank" class="ai-tool-link">כניסה ל-NanoBanana</a>
                     </div>
                 </div>
 
             </div>
         </div>
 
-        <!-- ==================== PROJECT BUILDER ==================== -->
+        <!-- ==================== PROJECT BUILDER (WIZARD) ==================== -->
         <div class="portal-section" id="section-project">
-            <div class="page-header">
-                <h1>&#x1F680; בונה הפרויקט</h1>
-                <p>ענו על השאלות ובנו את האפיון לסטארטאפ שלכם</p>
-            </div>
+            <div class="project-wizard">
+                <!-- Progress bar -->
+                <div class="wizard-progress">
+                    <div class="wizard-progress-fill" id="wizardProgressFill"></div>
+                </div>
+                <div class="wizard-step-label" id="wizardStepLabel">שאלה 1 מתוך 10</div>
 
-            <div class="project-builder">
-                <div class="project-progress" id="progressBar"></div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 1 מתוך 10</div>
-                    <h3>מה השם של הפרויקט שלך?</h3>
-                    <div class="q-hint">תבחרו שם קליט שמסביר מה המוצר עושה</div>
-                    <textarea data-q="0" placeholder="למשל: StudyBuddy, FoodShare, PetAlert..."></textarea>
+                <!-- Question card (single visible) -->
+                <div class="wizard-card" id="wizardCard">
+                    <div class="wizard-emoji" id="wizardEmoji"></div>
+                    <h2 class="wizard-question" id="wizardQuestion"></h2>
+                    <p class="wizard-hint" id="wizardHint"></p>
+                    <textarea class="wizard-textarea" id="wizardTextarea" placeholder=""></textarea>
                 </div>
 
-                <div class="project-question">
-                    <div class="q-number">שאלה 2 מתוך 10</div>
-                    <h3>איזו בעיה אתה פותר?</h3>
-                    <div class="q-hint">תארו בעיה אמיתית שאנשים חווים ביומיום</div>
-                    <textarea data-q="1" placeholder="למשל: קשה למצוא חברים ללמוד איתם למבחנים..."></textarea>
+                <!-- Navigation -->
+                <div class="wizard-nav">
+                    <button class="wizard-btn wizard-btn-prev" id="wizardPrev" onclick="wizardPrev()">&#x2192; הקודם</button>
+                    <button class="wizard-btn wizard-btn-next" id="wizardNext" onclick="wizardNext()">הבא &#x2190;</button>
                 </div>
 
-                <div class="project-question">
-                    <div class="q-number">שאלה 3 מתוך 10</div>
-                    <h3>למי אתה פותר את הבעיה?</h3>
-                    <div class="q-hint">מי קהל היעד? גיל, תחומי עניין, מיקום</div>
-                    <textarea data-q="2" placeholder="למשל: תלמידי תיכון בישראל שנמצאים לפני בחינות..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 4 מתוך 10</div>
-                    <h3>איך פותרים את הבעיה היום?</h3>
-                    <div class="q-hint">מה קיים כבר? למה זה לא מספיק טוב?</div>
-                    <textarea data-q="3" placeholder="למשל: היום משתמשים בקבוצות וואטסאפ אבל זה לא מאורגן..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 5 מתוך 10</div>
-                    <h3>מה הפתרון שלך?</h3>
-                    <div class="q-hint">תסבירו את הרעיון שלכם במשפט אחד או שניים</div>
-                    <textarea data-q="4" placeholder="למשל: אפליקציה שמחברת תלמידים לקבוצות לימוד לפי מקצוע..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 6 מתוך 10</div>
-                    <h3>אילו פיצ'רים יהיו במוצר?</h3>
-                    <div class="q-hint">רשמו 3-5 יכולות עיקריות</div>
-                    <textarea data-q="5" placeholder="למשל: 1) חיפוש שותפים ללמידה 2) צ'אט קבוצתי 3) לוח זמנים משותף..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 7 מתוך 10</div>
-                    <h3>איך תרוויח כסף?</h3>
-                    <div class="q-hint">מנוי חודשי? חינם עם פרימיום? פרסום?</div>
-                    <textarea data-q="6" placeholder="למשל: גרסה בסיסית חינם, מנוי פרימיום עם פיצ'רים נוספים..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 8 מתוך 10</div>
-                    <h3>מה הדבר הראשון שתבנה? (MVP)</h3>
-                    <div class="q-hint">הגרסה הכי פשוטה שעדיין שימושית</div>
-                    <textarea data-q="7" placeholder="למשל: דף נחיתה + טופס הרשמה + חיבור לוואטסאפ..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 9 מתוך 10</div>
-                    <h3>איך תגיע ללקוחות?</h3>
-                    <div class="q-hint">שיווק ברשתות? מפה לאוזן? שיתופי פעולה?</div>
-                    <textarea data-q="8" placeholder="למשל: אשתף בקבוצות של בתי ספר, אעשה סרטון TikTok..."></textarea>
-                </div>
-
-                <div class="project-question">
-                    <div class="q-number">שאלה 10 מתוך 10</div>
-                    <h3>מה ההצלחה נראית עבורך?</h3>
-                    <div class="q-hint">מה המטרה? כמה משתמשים? איזה שינוי?</div>
-                    <textarea data-q="9" placeholder="למשל: 100 תלמידים ישתמשו באפליקציה בחודש הראשון..."></textarea>
-                </div>
-
-                <div class="project-actions">
-                    <button class="btn-save" onclick="saveProject()">&#x1F4BE; שמור תשובות</button>
-                    <button class="btn-summary" onclick="showSummary()">&#x1F4CB; הצג אפיון מלא</button>
-                </div>
                 <div class="save-status" id="saveStatus">&#x2714; נשמר בהצלחה!</div>
             </div>
         </div>
@@ -1883,7 +2165,7 @@
                         <div class="step-content">
                             <h4>שימוש ב-AI</h4>
                             <p>לחצו <kbd>Ctrl+I</kbd> לפתיחת חלון ה-AI. כתבו מה אתם רוצים לבנות בשפה חופשית &mdash; אפשר גם בעברית!</p>
-                            <div class="guide-tip">&#x1F4A1; <strong>דוגמה:</strong> "Build me a modern landing page for a pet-sitting startup called PetBuddy. Use blue and white colors, Hebrew RTL."</div>
+                            <div class="guide-tip">&#x1F4A1; <strong>דוגמה (כותבים באנגלית):</strong> "Build me a modern landing page for a pet-sitting startup called PetBuddy. Use blue and white colors, Hebrew RTL."</div>
                             <div class="guide-tip" style="margin-top:0.3rem;">&#x1F4BB; <strong>מק:</strong> השתמשו ב-<kbd>Cmd+I</kbd> במקום <kbd>Ctrl+I</kbd></div>
                         </div>
                     </div>
@@ -2177,6 +2459,239 @@
                 </div>
             </div>
 
+            <!-- Guide: YouTube Tutorials -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <div class="guide-header-right">
+                        <span class="guide-icon" style="background: linear-gradient(135deg, #FF0000, #CC0000);">&#x1F3AC;</span>
+                        <div>
+                            <h3>סרטוני הדרכה ב-YouTube</h3>
+                            <span class="guide-time">&#x1F4FA; סרטונים מומלצים ללמידה עצמית</span>
+                        </div>
+                    </div>
+                    <span class="guide-toggle">&#x25BC;</span>
+                </div>
+                <div class="guide-body">
+                    <div class="guide-step">
+                        <div class="step-num">&#x1F3AC;</div>
+                        <div class="step-content">
+                            <h4>מה זה בינה מלאכותית? (הסבר פשוט)</h4>
+                            <p>סרטון קצר שמסביר מה זה AI, איך מכונות לומדות, ולמה זה משנה את העולם.</p>
+                            <p><a href="https://www.youtube.com/results?search_query=%D7%9E%D7%94+%D7%96%D7%94+%D7%91%D7%99%D7%A0%D7%94+%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA+%D7%94%D7%A1%D7%91%D7%A8+%D7%A4%D7%A9%D7%95%D7%98" target="_blank" style="color:var(--accent);">&#x1F50D; חפשו ב-YouTube: "מה זה בינה מלאכותית הסבר פשוט"</a></p>
+                            <p><a href="https://www.youtube.com/watch?v=2ePf9rue1Ao" target="_blank" style="color:var(--accent);">&#x1F30D; What is AI? In 5 minutes (באנגלית)</a></p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">&#x1F3AC;</div>
+                        <div class="step-content">
+                            <h4>איך להשתמש ב-ChatGPT &mdash; מדריך למתחילים</h4>
+                            <p>הרשמה, כתיבת פרומפטים, טיפים לתוצאות טובות יותר.</p>
+                            <p><a href="https://www.youtube.com/results?search_query=ChatGPT+%D7%94%D7%93%D7%A8%D7%9B%D7%94+%D7%9C%D7%9E%D7%AA%D7%97%D7%99%D7%9C%D7%99%D7%9D+%D7%A2%D7%91%D7%A8%D7%99%D7%AA" target="_blank" style="color:var(--accent);">&#x1F50D; חפשו ב-YouTube: "ChatGPT הדרכה למתחילים עברית"</a></p>
+                            <p><a href="https://www.youtube.com/watch?v=jHv63Uvk5VA" target="_blank" style="color:var(--accent);">&#x1F30D; ChatGPT Tutorial for Beginners (באנגלית)</a></p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">&#x1F3AC;</div>
+                        <div class="step-content">
+                            <h4>איך להתקין ולהשתמש ב-Cursor</h4>
+                            <p>התקנה, הגדרות ראשוניות, כתיבת הפרומפט הראשון ובניית אתר.</p>
+                            <p><a href="https://www.youtube.com/results?search_query=Cursor+AI+tutorial+beginners+build+website" target="_blank" style="color:var(--accent);">&#x1F50D; חפשו ב-YouTube: "Cursor AI tutorial beginners"</a></p>
+                            <p><a href="https://www.youtube.com/watch?v=gqUQbjsYZLQ" target="_blank" style="color:var(--accent);">&#x1F30D; Cursor Tutorial for Beginners &mdash; AI Code Editor (באנגלית)</a></p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">&#x1F3AC;</div>
+                        <div class="step-content">
+                            <h4>איך לבנות אתר עם AI</h4>
+                            <p>סרטונים שמראים בניית אתר שלם מאפס עם כלי AI &mdash; בלי ידע בתכנות!</p>
+                            <p><a href="https://www.youtube.com/results?search_query=build+website+with+AI+no+code+Cursor+2025" target="_blank" style="color:var(--accent);">&#x1F50D; חפשו ב-YouTube: "Build website with AI no code"</a></p>
+                            <p><a href="https://www.youtube.com/results?search_query=%D7%91%D7%A0%D7%99%D7%99%D7%AA+%D7%90%D7%AA%D7%A8+%D7%A2%D7%9D+%D7%91%D7%99%D7%A0%D7%94+%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA" target="_blank" style="color:var(--accent);">&#x1F50D; חפשו ב-YouTube: "בניית אתר עם בינה מלאכותית"</a></p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-num">&#x1F4A1;</div>
+                        <div class="step-content">
+                            <h4>טיפ חשוב!</h4>
+                            <p>רוב הסרטונים הטובים ביותר על כלי AI הם באנגלית. אל תפחדו! &mdash; אפשר להפעיל <strong>כתוביות אוטומטיות בעברית</strong> ב-YouTube: לחצו על &#x2699; &rarr; כתוביות &rarr; תרגום אוטומטי &rarr; עברית.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== RECOMMENDATIONS ==================== -->
+        <div class="portal-section" id="section-recommendations">
+            <div class="page-header">
+                <h1>&#x2B50; המלצות</h1>
+                <p>מפרט מחשב מומלץ, כלים מומלצים וטיפים לעבודה יעילה</p>
+            </div>
+
+            <!-- Computer Specs -->
+            <div style="background:var(--dark-card); border-radius:20px; padding:2rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem;">&#x1F4BB; מפרט מחשב מומלץ לעבודה עם Cursor</h3>
+                <p style="color:var(--text-muted); margin-bottom:1.5rem; line-height:1.8;">Cursor הוא עורך קוד שמשתמש ב-AI. הוא לא צריך מחשב חזק במיוחד, אבל כדי לעבוד בצורה נוחה מומלץ:</p>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap:1.2rem; margin-bottom:1.5rem;">
+                    <div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; border-right:3px solid var(--accent);">
+                        <div style="font-weight:700; color:var(--accent); margin-bottom:0.5rem;">&#x2705; מומלץ (עובד מצוין)</div>
+                        <p style="color:var(--text-muted); line-height:2;">
+                            <strong>מעבד:</strong> Intel i5 דור 10+ / AMD Ryzen 5+<br>
+                            <strong>זיכרון RAM:</strong> 8GB ומעלה<br>
+                            <strong>אחסון:</strong> SSD (לא HDD!) — 256GB+<br>
+                            <strong>מסך:</strong> 13" ומעלה<br>
+                            <strong>מערכת הפעלה:</strong> Windows 10/11 או macOS
+                        </p>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; border-right:3px solid var(--gold);">
+                        <div style="font-weight:700; color:var(--gold); margin-bottom:0.5rem;">&#x26A0; מינימום (עובד, אבל יותר איטי)</div>
+                        <p style="color:var(--text-muted); line-height:2;">
+                            <strong>מעבד:</strong> Intel i3 דור 8+ / AMD Ryzen 3<br>
+                            <strong>זיכרון RAM:</strong> 4GB (לא אידיאלי)<br>
+                            <strong>אחסון:</strong> SSD מומלץ מאוד<br>
+                            <strong>מסך:</strong> כל גודל<br>
+                            <strong>מערכת הפעלה:</strong> Windows 10+ או macOS
+                        </p>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; border-right:3px solid var(--pink);">
+                        <div style="font-weight:700; color:var(--pink); margin-bottom:0.5rem;">&#x274C; לא מספיק</div>
+                        <p style="color:var(--text-muted); line-height:2;">
+                            <strong>Chromebook</strong> — לא מריץ Cursor<br>
+                            <strong>טאבלט/iPad</strong> — לא מריץ Cursor<br>
+                            <strong>מחשב עם 2GB RAM</strong> — איטי מדי<br>
+                            <strong>Windows 7/8</strong> — לא נתמך
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background:rgba(0,212,170,0.08); padding:1.2rem; border-radius:12px; border-right:3px solid var(--accent);">
+                    <p style="color:var(--text); line-height:2;">
+                        &#x1F4A1; <strong>טיפ:</strong> אם המחשב שלכם איטי, סגרו תוכנות אחרות בזמן העבודה עם Cursor. כרום עם הרבה טאבים + Cursor = איטיות!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Recommended Tools -->
+            <div style="background:var(--dark-card); border-radius:20px; padding:2rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem;">&#x1F6E0; כלים מומלצים (חינם!)</h3>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1.2rem;">
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #6C3CE1, #8B5CF6); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F4BB;</div>
+                        <div>
+                            <strong>Cursor</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">עורך קוד עם AI מובנה — הכלי המרכזי שלנו</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #D97757, #b85c3e); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F9E0;</div>
+                        <div>
+                            <strong>Claude Code</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">הכלי החכם ביותר לבניית אתרים ($20/חודש)</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #10a37f, #1a7f5a); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F4AC;</div>
+                        <div>
+                            <strong>ChatGPT</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">AI לשיחות, כתיבה, סיעור מוחות — חינם!</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #333, #555); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F5C3;</div>
+                        <div>
+                            <strong>GitHub</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">אחסון קוד + אתר חינם עם GitHub Pages</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #4285f4, #3367d6); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F30D;</div>
+                        <div>
+                            <strong>Google Chrome</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">הדפדפן המומלץ לפיתוח (F12 = Developer Tools)</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:center; gap:1rem;">
+                        <div style="width:48px; height:48px; background:linear-gradient(135deg, #e040fb, #aa00ff); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">&#x1F3A8;</div>
+                        <div>
+                            <strong>NanoBanana</strong>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">יצירת תמונות ולוגואים עם AI — חינם!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips for Success -->
+            <div style="background:var(--dark-card); border-radius:20px; padding:2rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem;">&#x1F4A1; טיפים להצלחה בקורס</h3>
+
+                <div style="display:grid; grid-template-columns: 1fr; gap:1rem;">
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F4BE;</span>
+                        <div>
+                            <strong style="color:var(--accent);">שמרו הרבה!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">שמרו את הקבצים כל כמה דקות (Ctrl+S). אם משהו נשבר — לחצו Ctrl+Z לבטל.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F4C1;</span>
+                        <div>
+                            <strong style="color:var(--accent);">שמות באנגלית!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">תמיד תנו שמות לתיקיות ולקבצים באנגלית, בלי רווחים. למשל: my-startup, index.html</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F50D;</span>
+                        <div>
+                            <strong style="color:var(--accent);">תבדקו בכרום!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">אחרי כל שינוי, פתחו את הקובץ index.html בכרום ובדקו. F5 = ריענון הדף.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F4F1;</span>
+                        <div>
+                            <strong style="color:var(--accent);">בדקו בטלפון!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">F12 בכרום פותח Developer Tools. לחצו על אייקון הטלפון כדי לראות איך האתר נראה במובייל.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F916;</span>
+                        <div>
+                            <strong style="color:var(--accent);">כתבו פרומפטים מפורטים!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">ככל שתתנו ל-AI יותר פרטים — התוצאה תהיה טובה יותר. תגידו מה, למי, באיזה סגנון, ובאיזה צבעים.</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; display:flex; align-items:flex-start; gap:1rem;">
+                        <span style="font-size:1.5rem; flex-shrink:0;">&#x1F91D;</span>
+                        <div>
+                            <strong style="color:var(--accent);">בקשו עזרה!</strong>
+                            <p style="color:var(--text-muted); line-height:1.8;">אם משהו לא עובד — אל תתביישו לשאול! בקשו עזרה מהמדריך, מחברים, או מ-ChatGPT עצמו.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parent Info -->
+            <div style="background:var(--dark-card); border-radius:20px; padding:2rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem;">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467; הנחיות להורים</h3>
+                <div style="display:grid; grid-template-columns: 1fr; gap:1rem;">
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; line-height:2; color:var(--text-muted);">
+                        <strong style="color:var(--text);">&#x1F4B3; עלויות הקורס:</strong><br>
+                        &#x2022; <strong>Cursor</strong> — חינם (הגרסה החינמית מספיקה לקורס)<br>
+                        &#x2022; <strong>Claude Code</strong> — $20/חודש (מומלץ מאוד! זה הכלי שבונה את האתרים)<br>
+                        &#x2022; <strong>ChatGPT / Claude / Gemini</strong> — חינם<br>
+                        &#x2022; <strong>GitHub Pages</strong> — חינם (אחסון האתר באינטרנט)<br>
+                        &#x2022; כל שאר הכלים — חינם!
+                    </div>
+                    <div style="background:var(--dark-lighter); padding:1.2rem 1.5rem; border-radius:14px; line-height:2; color:var(--text-muted);">
+                        <strong style="color:var(--text);">&#x1F6E1; בטיחות ברשת:</strong><br>
+                        &#x2022; כל הכלים שאנחנו משתמשים בהם הם מאובטחים ומוכרים<br>
+                        &#x2022; אין צורך למסור מידע אישי רגיש — רק אימייל להרשמה<br>
+                        &#x2022; ההורים מוזמנים לשבת ולהירשם ביחד עם הילדים<br>
+                        &#x2022; אם יש שאלות — פנו למדריך הקורס
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ==================== HELP/FAQ ==================== -->
@@ -2346,7 +2861,7 @@
     <div class="summary-overlay" id="presentationOverlay">
         <div class="summary-card" style="max-width: 950px; background: var(--dark); border: 1px solid rgba(255,255,255,0.1);">
             <button class="summary-close" onclick="closePresentation()">&times;</button>
-            <div id="presentationContent" style="padding: 2.5rem 3rem; min-height: 400px; display:flex; flex-direction:column; justify-content:center;"></div>
+            <div id="presentationContent" style="padding: 2.5rem 3rem; min-height: 400px; display:flex; flex-direction:column; justify-content:center; direction:rtl;"></div>
             <div style="display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.2);">
                 <button class="btn-save" id="prevSlide" onclick="prevSlide()" style="opacity: 0.5; min-width: 100px;">הקודם &#x2192;</button>
                 <div style="display:flex; gap:0.4rem;" id="slideDotsContainer"></div>
@@ -2363,10 +2878,10 @@
         function switchSection(sectionId) {
             allSections.forEach(s => s.classList.remove('active'));
             allNavBtns.forEach(b => b.classList.remove('active'));
-
             document.getElementById('section-' + sectionId).classList.add('active');
             document.querySelectorAll('[data-section="' + sectionId + '"]').forEach(b => b.classList.add('active'));
-
+            // When switching to sessions, close detail view
+            if (sectionId === 'sessions') closeSession();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -2374,84 +2889,200 @@
             btn.addEventListener('click', () => switchSection(btn.dataset.section));
         });
 
+        // ===== SESSION CARDS: COMPACT GRID + DETAIL VIEW =====
+        const sessionData = [
+            { desc: '\u05D4\u05DB\u05E8\u05D5\u05EA \u05E2\u05DD \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA, \u05E0\u05D9\u05E1\u05D9\u05D5\u05DF \u05E8\u05D0\u05E9\u05D5\u05DF \u05E2\u05DD ChatGPT \u05D5-Claude', topics: ['\u05DE\u05D4 \u05D6\u05D4 AI?', 'ChatGPT', 'Claude', '\u05DE\u05D9\u05DC\u05D5\u05DF \u05DE\u05D5\u05E9\u05D2\u05D9\u05DD'],
+              bg: 'linear-gradient(135deg, #1a0533 0%, #4a00e0 50%, #3f5efb 100%)' },
+            { desc: '\u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA \u05DC\u05DB\u05EA\u05D9\u05D1\u05EA \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8\u05D9\u05DD \u05DE\u05D5\u05E9\u05DC\u05DE\u05D9\u05DD + \u05D4\u05EA\u05E7\u05E0\u05EA Cursor \u05D5-Claude Code', topics: ['\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8', '5 \u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA', 'Cursor', 'Claude Code'],
+              bg: 'linear-gradient(135deg, #004d40 0%, #00897b 50%, #26c6da 100%)' },
+            { desc: '\u05D7\u05E9\u05D9\u05D1\u05D4 \u05D9\u05D6\u05DE\u05D9\u05EA, \u05D6\u05D9\u05D4\u05D5\u05D9 \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05DE\u05D9\u05EA\u05D9\u05D5\u05EA \u05D5\u05E1\u05D9\u05E4\u05D5\u05E8\u05D9 \u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4\u05D9\u05DD \u05D9\u05E9\u05E8\u05D0\u05DC\u05D9\u05D9\u05DD', topics: ['\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4', '\u05D1\u05E2\u05D9\u05D5\u05EA', 'Waze', 'Wix'],
+              bg: 'linear-gradient(135deg, #b71c1c 0%, #e65100 50%, #ff9800 100%)' },
+            { desc: '\u05D1\u05D7\u05D9\u05E8\u05EA \u05E8\u05E2\u05D9\u05D5\u05DF, \u05D4\u05D2\u05D3\u05E8\u05EA \u05E7\u05D4\u05DC \u05D9\u05E2\u05D3, \u05D4\u05E6\u05E2\u05EA \u05E2\u05E8\u05DA \u05D5\u05EA\u05DB\u05E0\u05D5\u05DF \u05DE\u05D5\u05E6\u05E8 \u05E8\u05D0\u05E9\u05D5\u05DF', topics: ['\u05E7\u05D4\u05DC \u05D9\u05E2\u05D3', '\u05D4\u05E6\u05E2\u05EA \u05E2\u05E8\u05DA', 'MVP', '\u05DE\u05EA\u05D7\u05E8\u05D9\u05DD'],
+              bg: 'linear-gradient(135deg, #311b92 0%, #7c4dff 50%, #e040fb 100%)' },
+            { desc: '\u05D4\u05EA\u05E7\u05E0\u05EA Cursor \u05D5\u05D1\u05E0\u05D9\u05D9\u05EA \u05D3\u05E3 \u05E0\u05D7\u05D9\u05EA\u05D4 \u05E8\u05D0\u05E9\u05D5\u05DF \u05DC\u05DE\u05D5\u05E6\u05E8 \u05E9\u05DC\u05DB\u05DD \u05E2\u05DD AI', topics: ['Cursor', 'HTML', 'CSS', '\u05D3\u05E3 \u05E0\u05D7\u05D9\u05EA\u05D4'],
+              bg: 'linear-gradient(135deg, #0d47a1 0%, #1976d2 50%, #42a5f5 100%)' },
+            { desc: '\u05E9\u05D3\u05E8\u05D5\u05D2 \u05D4\u05D0\u05EA\u05E8: \u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D5\u05EA, \u05E8\u05E1\u05E4\u05D5\u05E0\u05E1\u05D9\u05D1\u05D9\u05D5\u05EA \u05DC\u05DE\u05D5\u05D1\u05D9\u05D9\u05DC, \u05D8\u05E4\u05E1\u05D9\u05DD \u05D5\u05EA\u05E4\u05E8\u05D9\u05D8', topics: ['\u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D4', '\u05DE\u05D5\u05D1\u05D9\u05D9\u05DC', '\u05D8\u05D5\u05E4\u05E1', '\u05E0\u05D9\u05D5\u05D5\u05D8'],
+              bg: 'linear-gradient(135deg, #880e4f 0%, #c2185b 50%, #f06292 100%)' },
+            { desc: '\u05DE\u05D5\u05D3\u05DC\u05D9\u05DD \u05E2\u05E1\u05E7\u05D9\u05D9\u05DD, \u05E9\u05D9\u05D5\u05D5\u05E7 \u05D3\u05D9\u05D2\u05D9\u05D8\u05DC\u05D9 \u05D5\u05D9\u05E6\u05D9\u05E8\u05EA \u05EA\u05D5\u05DB\u05DF \u05E9\u05D9\u05D5\u05D5\u05E7\u05D9 \u05E2\u05DD AI', topics: ['\u05DE\u05D5\u05D3\u05DC \u05E2\u05E1\u05E7\u05D9', '\u05E9\u05D9\u05D5\u05D5\u05E7', '\u05EA\u05D5\u05DB\u05DF', 'AI'],
+              bg: 'linear-gradient(135deg, #1b5e20 0%, #43a047 50%, #66bb6a 100%)' },
+            { desc: '\u05D4\u05E6\u05D2\u05EA \u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8\u05D9\u05DD \u05D1\u05E4\u05E0\u05D9 \u05E7\u05D4\u05DC \u2014 3 \u05D3\u05E7\u05D5\u05EA, \u05D1\u05E2\u05D9\u05D4, \u05E4\u05EA\u05E8\u05D5\u05DF, \u05D3\u05DE\u05D5 \u05D7\u05D9!', topics: ['\u05E4\u05D9\u05E5\'', '\u05D3\u05DE\u05D5', '\u05D4\u05E6\u05D2\u05D4', '\u05D7\u05D2\u05D9\u05D2\u05D4!'],
+              bg: 'linear-gradient(135deg, #e65100 0%, #ff9800 50%, #ffd54f 100%)' }
+        ];
+
+        // On load: inject image banners + previews + hide bodies + add click handlers
+        (function initSessionCards() {
+            const cards = document.querySelectorAll('.session-card');
+            cards.forEach((card, i) => {
+                const body = card.querySelector('.session-card-body');
+                if (body) body.style.display = 'none';
+                const header = card.querySelector('.session-card-header');
+                const d = sessionData[i] || { desc: '', topics: [], bg: '' };
+
+                // Add gradient image banner before header
+                const imgBanner = document.createElement('div');
+                imgBanner.className = 'session-card-image';
+                imgBanner.style.background = d.bg;
+                imgBanner.innerHTML = '<span class="img-num">' + (i + 1) + '</span><div class="img-deco"></div>';
+                header.parentNode.insertBefore(imgBanner, header);
+
+                // Remove the old background from header (now it's a separate element)
+                header.style.background = 'none';
+
+                // Create preview text
+                const preview = document.createElement('div');
+                preview.className = 'session-card-preview';
+                preview.innerHTML = '<p>' + d.desc + '</p>' +
+                    '<div class="preview-topics">' + d.topics.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+                    '<div class="preview-enter">\u05D4\u05D9\u05DB\u05E0\u05E1\u05D5 \u05DC\u05DE\u05E4\u05D2\u05E9 \u2190</div>';
+                header.insertAdjacentElement('afterend', preview);
+
+                // Click handler
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.session-presentation')) return;
+                    openSession(i);
+                });
+            });
+        })();
+
+        function openSession(idx) {
+            const cards = document.querySelectorAll('.session-card');
+            const card = cards[idx];
+            if (!card) return;
+            const grid = document.querySelector('.sessions-grid');
+            const detail = document.getElementById('sessionDetailView');
+            const header = card.querySelector('.session-card-header');
+            // Populate detail
+            document.getElementById('detailNum').textContent = idx + 1;
+            document.getElementById('detailTitle').textContent = header.querySelector('h3').textContent;
+            const body = card.querySelector('.session-card-body');
+            const content = document.getElementById('detailContent');
+            // Put presentation button at TOP, then content
+            var presBtn = '<button class="session-detail-presentation" onclick="openPresentation(' + (idx + 1) + ')">\u{1F4CA} \u05E6\u05E4\u05D5 \u05D1\u05DE\u05E6\u05D2\u05EA \u05D4\u05E9\u05D9\u05E2\u05D5\u05E8</button>';
+            // Get body HTML but remove the old session-actions/presentation button
+            var bodyHTML = body.innerHTML;
+            bodyHTML = bodyHTML.replace(/<div class="session-actions">[\s\S]*?<\/div>\s*$/, '');
+            content.innerHTML = presBtn + bodyHTML;
+            // Show detail, hide grid
+            grid.style.display = 'none';
+            detail.classList.add('active');
+            // Push state so browser back button returns to grid
+            history.pushState({ view: 'session', idx: idx }, '', '#session-' + (idx + 1));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeSession() {
+            const grid = document.querySelector('.sessions-grid');
+            const detail = document.getElementById('sessionDetailView');
+            if (grid) grid.style.display = '';
+            if (detail) detail.classList.remove('active');
+            // Remove hash without triggering popstate
+            if (location.hash.startsWith('#session-')) {
+                history.replaceState(null, '', location.pathname);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Browser back button support
+        window.addEventListener('popstate', function(e) {
+            const detail = document.getElementById('sessionDetailView');
+            if (detail && detail.classList.contains('active')) {
+                const grid = document.querySelector('.sessions-grid');
+                if (grid) grid.style.display = '';
+                detail.classList.remove('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
         // ===== GUIDE TOGGLE =====
         function toggleGuide(el) {
             const card = el.closest('.guide-card');
-            const wasOpen = card.classList.contains('open');
-            if (!wasOpen) card.classList.add('open');
-            else card.classList.remove('open');
+            card.classList.toggle('open');
         }
 
         // ===== HELP TOGGLE =====
         function toggleHelp(el) {
             const item = el.closest('.help-item');
             const wasOpen = item.classList.contains('open');
-            // Close all
             document.querySelectorAll('.help-item').forEach(i => i.classList.remove('open'));
             if (!wasOpen) item.classList.add('open');
-            // Toggle icon
             document.querySelectorAll('.help-item .toggle-icon').forEach(icon => icon.textContent = '+');
             if (!wasOpen) item.querySelector('.toggle-icon').textContent = '\u00D7';
         }
 
-        // ===== PROJECT BUILDER =====
+        // ===== PROJECT WIZARD =====
         const STORAGE_KEY = 'youth-ai-project';
-        const questionLabels = [
-            'שם הפרויקט',
-            'הבעיה',
-            'קהל יעד',
-            'מתחרים / מצב קיים',
-            'הפתרון',
-            'פיצ\'רים עיקריים',
-            'מודל עסקי',
-            'MVP — גרסה ראשונה',
-            'אסטרטגיית שיווק',
-            'הגדרת הצלחה'
+        let wizardStep = 0;
+        const wizardQuestions = [
+            { emoji: '\u{1F3F7}', q: 'מה השם של הפרויקט שלך?', hint: 'תבחרו שם קליט שמסביר מה המוצר עושה', ph: 'למשל: StudyBuddy, FoodShare, PetAlert...' },
+            { emoji: '\u{1F6A8}', q: 'איזו בעיה אתה פותר?', hint: 'תארו בעיה אמיתית שאנשים חווים ביומיום', ph: 'למשל: קשה למצוא חברים ללמוד איתם למבחנים...' },
+            { emoji: '\u{1F465}', q: 'למי אתה פותר את הבעיה?', hint: 'מי קהל היעד? גיל, תחומי עניין, מיקום', ph: 'למשל: תלמידי תיכון בישראל שנמצאים לפני בחינות...' },
+            { emoji: '\u{1F50D}', q: 'איך פותרים את הבעיה היום?', hint: 'מה קיים כבר? למה זה לא מספיק טוב?', ph: 'למשל: היום משתמשים בקבוצות וואטסאפ אבל זה לא מאורגן...' },
+            { emoji: '\u{1F4A1}', q: 'מה הפתרון שלך?', hint: 'תסבירו את הרעיון שלכם במשפט אחד או שניים', ph: 'למשל: אפליקציה שמחברת תלמידים לקבוצות לימוד...' },
+            { emoji: '\u{2699}', q: 'אילו יכולות יהיו במוצר?', hint: 'רשמו 3-5 יכולות עיקריות', ph: 'למשל: 1) חיפוש שותפים 2) צ\'אט קבוצתי 3) לוח זמנים...' },
+            { emoji: '\u{1F4B0}', q: 'איך תרוויח כסף?', hint: 'מנוי חודשי? חינם עם פרימיום? פרסום?', ph: 'למשל: גרסה בסיסית חינם, מנוי פרימיום...' },
+            { emoji: '\u{1F680}', q: 'מה הדבר הראשון שתבנה?', hint: 'הגרסה הכי פשוטה שעדיין שימושית (MVP)', ph: 'למשל: דף נחיתה + טופס הרשמה...' },
+            { emoji: '\u{1F4E3}', q: 'איך תגיע ללקוחות?', hint: 'שיווק ברשתות? מפה לאוזן? שיתופי פעולה?', ph: 'למשל: אשתף בקבוצות של בתי ספר, סרטון TikTok...' },
+            { emoji: '\u{1F3C6}', q: 'מה ההצלחה נראית עבורך?', hint: 'מה המטרה? כמה משתמשים? איזה שינוי?', ph: 'למשל: 100 תלמידים ישתמשו בחודש הראשון...' }
         ];
+        const questionLabels = ['שם הפרויקט','הבעיה','קהל יעד','מתחרים / מצב קיים','הפתרון','יכולות עיקריות','מודל עסקי','MVP — גרסה ראשונה','שיווק','הגדרת הצלחה'];
+        let wizardAnswers = [];
 
-        // Load saved answers
-        function loadProject() {
+        function loadWizard() {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const answers = JSON.parse(saved);
-                document.querySelectorAll('[data-q]').forEach(ta => {
-                    const idx = parseInt(ta.dataset.q);
-                    if (answers[idx]) ta.value = answers[idx];
-                });
+            if (saved) wizardAnswers = JSON.parse(saved);
+            else wizardAnswers = new Array(10).fill('');
+            renderWizardStep();
+        }
+
+        function saveWizardAnswer() {
+            const ta = document.getElementById('wizardTextarea');
+            if (ta) wizardAnswers[wizardStep] = ta.value;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(wizardAnswers));
+        }
+
+        function renderWizardStep() {
+            const q = wizardQuestions[wizardStep];
+            document.getElementById('wizardEmoji').textContent = q.emoji;
+            document.getElementById('wizardQuestion').textContent = q.q;
+            document.getElementById('wizardHint').textContent = q.hint;
+            const ta = document.getElementById('wizardTextarea');
+            ta.value = wizardAnswers[wizardStep] || '';
+            ta.placeholder = q.ph;
+            ta.focus();
+            // Progress
+            document.getElementById('wizardStepLabel').textContent = '\u05E9\u05D0\u05DC\u05D4 ' + (wizardStep + 1) + ' \u05DE\u05EA\u05D5\u05DA 10';
+            document.getElementById('wizardProgressFill').style.width = ((wizardStep + 1) * 10) + '%';
+            // Buttons
+            document.getElementById('wizardPrev').style.visibility = wizardStep === 0 ? 'hidden' : 'visible';
+            const nextBtn = document.getElementById('wizardNext');
+            if (wizardStep === 9) {
+                nextBtn.textContent = '\u{1F4CB} \u05E6\u05D5\u05E8 \u05D0\u05E4\u05D9\u05D5\u05DF';
+                nextBtn.classList.add('finish');
+            } else {
+                nextBtn.innerHTML = '\u05D4\u05D1\u05D0 \u2190';
+                nextBtn.classList.remove('finish');
             }
-            updateProgress();
+            // Animate
+            document.getElementById('wizardCard').style.animation = 'none';
+            setTimeout(() => { document.getElementById('wizardCard').style.animation = 'wizardFade 0.3s ease'; }, 10);
         }
 
-        // Save answers
-        function saveProject() {
-            const answers = [];
-            document.querySelectorAll('[data-q]').forEach(ta => {
-                answers[parseInt(ta.dataset.q)] = ta.value;
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-            updateProgress();
-
-            const status = document.getElementById('saveStatus');
-            status.classList.add('show');
-            setTimeout(() => status.classList.remove('show'), 2000);
+        function wizardNext() {
+            saveWizardAnswer();
+            if (wizardStep < 9) {
+                wizardStep++;
+                renderWizardStep();
+            } else {
+                showSummary();
+            }
         }
 
-        // Auto-save on typing
-        document.querySelectorAll('[data-q]').forEach(ta => {
-            ta.addEventListener('input', () => {
-                updateProgress();
-            });
-        });
-
-        // Update progress bar
-        function updateProgress() {
-            const bar = document.getElementById('progressBar');
-            bar.innerHTML = '';
-            document.querySelectorAll('[data-q]').forEach(ta => {
-                const dot = document.createElement('div');
-                dot.className = 'progress-dot' + (ta.value.trim() ? ' filled' : '');
-                bar.appendChild(dot);
-            });
+        function wizardPrev() {
+            saveWizardAnswer();
+            if (wizardStep > 0) {
+                wizardStep--;
+                renderWizardStep();
+            }
         }
 
         // Show summary
@@ -2469,46 +3100,50 @@
         ];
 
         function showSummary() {
-            saveProject();
+            saveWizardAnswer();
             const container = document.getElementById('summaryContent');
             container.innerHTML = '';
-
-            // Set project name in header
-            const nameTA = document.querySelector('[data-q="0"]');
-            const projectName = nameTA && nameTA.value.trim() ? nameTA.value.trim() : 'הפרויקט שלי';
+            const projectName = (wizardAnswers[0] || '').trim() || '\u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 \u05E9\u05DC\u05D9';
             document.getElementById('summaryProjectName').textContent = projectName;
-
-            document.querySelectorAll('[data-q]').forEach(ta => {
-                const idx = parseInt(ta.dataset.q);
-                const val = ta.value.trim();
-                const icon = questionIcons[idx];
+            for (let i = 0; i < 10; i++) {
+                const val = (wizardAnswers[i] || '').trim();
+                const icon = questionIcons[i];
                 const item = document.createElement('div');
                 item.className = 'summary-item';
-                item.innerHTML =
-                    '<div class="s-icon" style="background:' + icon.bg + ';">' + icon.emoji + '</div>' +
-                    '<div class="s-content">' +
-                    '<div class="s-label">' + questionLabels[idx] + '</div>' +
-                    '<div class="s-value ' + (val ? '' : 'empty') + '">' +
-                    (val ? val.replace(/\n/g, '<br>') : '\u05D8\u05E8\u05DD \u05DE\u05D5\u05DC\u05D0') +
-                    '</div></div>';
+                item.innerHTML = '<div class="s-icon" style="background:' + icon.bg + ';">' + icon.emoji + '</div>' +
+                    '<div class="s-content"><div class="s-label">' + questionLabels[i] + '</div>' +
+                    '<div class="s-value ' + (val ? '' : 'empty') + '">' + (val ? val.replace(/\n/g, '<br>') : '\u05D8\u05E8\u05DD \u05DE\u05D5\u05DC\u05D0') + '</div></div>';
                 container.appendChild(item);
-            });
+            }
+            // Add Cursor instruction at the bottom
+            var cursorTip = document.createElement('div');
+            cursorTip.style.cssText = 'background:linear-gradient(135deg, rgba(108,60,225,0.15), rgba(0,212,170,0.08)); border:1px solid rgba(108,60,225,0.3); border-radius:16px; padding:1.5rem 2rem; margin-top:2rem; line-height:2.2;';
+            cursorTip.innerHTML = '<div style="font-weight:700; color:var(--primary-light); margin-bottom:0.8rem; font-size:1.1rem;">\u{1F4BB} \u05D0\u05D9\u05DA \u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD \u05D1\u05D0\u05E4\u05D9\u05D5\u05DF \u05D4\u05D6\u05D4?</div>' +
+                '<p style="color:var(--text-muted); font-size:1.05rem; margin-bottom:1rem;">\u05D4\u05E2\u05EA\u05D9\u05E7\u05D5 \u05D0\u05EA \u05DB\u05DC \u05D4\u05D0\u05E4\u05D9\u05D5\u05DF \u05DC-Cursor \u05D5\u05D4\u05D5\u05D0 \u05D9\u05D1\u05E0\u05D4 \u05DC\u05DB\u05DD \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8!</p>' +
+                '<ol style="color:var(--text-muted); font-size:1rem; line-height:2.4; padding-right:1.2rem;">' +
+                '<li>\u05E4\u05EA\u05D7\u05D5 \u05D0\u05EA Cursor \u05D5\u05DC\u05D7\u05E6\u05D5 <kbd style="background:var(--dark-lighter); padding:2px 8px; border-radius:4px;">Ctrl+I</kbd></li>' +
+                '<li>\u05DB\u05EA\u05D1\u05D5: "Build me a landing page for my startup based on this brief:" \u05D5\u05D0\u05D6 \u05D4\u05D3\u05D1\u05D9\u05E7\u05D5 \u05D0\u05EA \u05DB\u05DC \u05D4\u05D0\u05E4\u05D9\u05D5\u05DF</li>' +
+                '<li>Cursor \u05D9\u05D1\u05E0\u05D4 \u05DC\u05DB\u05DD \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8 \u05D4\u05E8\u05D0\u05E9\u05D5\u05DF!</li>' +
+                '</ol>' +
+                '<button onclick="copySummaryForCursor()" style="background:linear-gradient(135deg, var(--primary), var(--primary-light)); color:#fff; border:none; padding:0.7rem 1.5rem; border-radius:50px; font-family:Heebo,sans-serif; font-size:1rem; font-weight:600; cursor:pointer; margin-top:0.5rem;">\u{1F4CB} \u05D4\u05E2\u05EA\u05D9\u05E7\u05D5 \u05D0\u05E4\u05D9\u05D5\u05DF \u05DC\u05DC\u05D5\u05D7</button>';
+            container.appendChild(cursorTip);
 
             document.getElementById('summaryOverlay').classList.add('active');
         }
 
-        function closeSummary() {
-            document.getElementById('summaryOverlay').classList.remove('active');
+        function copySummaryForCursor() {
+            var text = 'Build me a modern landing page for my startup based on this brief. Use Hebrew RTL, modern design with gradients:\n\n';
+            for (var i = 0; i < wizardQuestions.length; i++) {
+                text += questionLabels[i] + ': ' + (wizardAnswers[i] || '') + '\n';
+            }
+            navigator.clipboard.writeText(text).then(function() {
+                alert('\u05D4\u05D0\u05E4\u05D9\u05D5\u05DF \u05D4\u05D5\u05E2\u05EA\u05E7! \u05E2\u05DB\u05E9\u05D9\u05D5 \u05DC\u05DB\u05D5 \u05DC-Cursor, \u05DC\u05D7\u05E6\u05D5 Ctrl+I \u05D5\u05D4\u05D3\u05D1\u05D9\u05E7\u05D5.');
+            });
         }
 
-        function downloadSummary() {
-            window.print();
-        }
-
-        // Close summary on overlay click
-        document.getElementById('summaryOverlay').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeSummary();
-        });
+        function closeSummary() { document.getElementById('summaryOverlay').classList.remove('active'); }
+        function downloadSummary() { window.print(); }
+        document.getElementById('summaryOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSummary(); });
 
         // ===== PRESENTATIONS =====
         let currentSlides = [];
@@ -2516,60 +3151,61 @@
 
         const presentations = {
             1: [
-                { title: 'ברוכים הבאים!', content: '<h2 style="text-align:center; margin-bottom:1rem;">&#x1F44B; שלום לכולם!</h2><p style="text-align:center; font-size:1.2rem; color:var(--text-muted);">קורס יזמות ובינה מלאכותית לנוער</p><br><p style="text-align:center; color:var(--accent); font-size:1.1rem;">היום נכיר את עולם ה-AI ונתחיל לעבוד!</p>' },
-                { title: 'מה זה בינה מלאכותית?', content: '<h2>&#x1F916; מה זה AI?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2;"><li>&#x25C2; מחשב שלומד לחשוב כמו בן אדם</li><li>&#x25C2; מבין שפה, מזהה תמונות, כותב קוד</li><li>&#x25C2; לא באמת "חושב" &mdash; אבל מדמה חשיבה ברמה גבוהה</li><li>&#x25C2; נמצא כבר בכל מקום: טלפון, גוגל, נטפליקס, ספוטיפיי</li></ul>' },
-                { title: 'דוגמאות מהחיים', content: '<h2>&#x1F30D; AI בחיים היומיום</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F4F1;</div><p>Siri / Google Assistant</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F3AC;</div><p>המלצות של נטפליקס</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F697;</div><p>רכב אוטונומי</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px; text-align:center;"><div style="font-size:2rem;">&#x1F4AC;</div><p>ChatGPT</p></div></div>' },
-                { title: 'סוגי AI', content: '<h2>&#x1F4A1; סוגי בינה מלאכותית</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li><span style="color:var(--accent); font-weight:700;">טקסט</span> &mdash; ChatGPT, Claude: שיחות, כתיבה, ניתוח</li><li><span style="color:var(--pink); font-weight:700;">תמונות</span> &mdash; NanoBanana, DALL-E: יצירת עיצובים</li><li><span style="color:var(--orange); font-weight:700;">וידאו</span> &mdash; Novo, Runway: יצירת סרטונים</li><li><span style="color:var(--blue); font-weight:700;">קוד</span> &mdash; Cursor, Claude Code: בניית אתרים ואפליקציות</li></ul>' },
-                { title: 'הכלים שלנו', content: '<h2>&#x1F6E0; הכלים שנשתמש בהם</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F4AC;</div><strong>ChatGPT</strong><p style="color:var(--text-muted); font-size:0.9rem;">שיחות, רעיונות, כתיבה</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F9E0;</div><strong>Claude</strong><p style="color:var(--text-muted); font-size:0.9rem;">ניתוח, קוד, דיוק</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong>Cursor</strong><p style="color:var(--text-muted); font-size:0.9rem;">בניית אתרים עם AI</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#x1F30D;</div><strong>Gemini</strong><p style="color:var(--text-muted); font-size:0.9rem;">חיפוש, תמונות, גוגל</p></div></div>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.2rem; margin-bottom:1rem;">שאלו את ה-AI 5 שאלות שונות</p><p style="color:var(--text-muted);">נסו את ChatGPT ואת Claude &mdash; שימו לב להבדלים!</p><br><div style="text-align:right; color:var(--gold); font-size:0.95rem;"><p>&#x2B50; שאלה על היסטוריה</p><p>&#x2B50; שאלה על מדע</p><p>&#x2B50; בקשה לכתוב שיר</p><p>&#x2B50; בקשה לפתור תרגיל</p><p>&#x2B50; שאלה אישית (תחביבים)</p></div></div>' }
+                { title: '\u05D1\u05E8\u05D5\u05DB\u05D9\u05DD \u05D4\u05D1\u05D0\u05D9\u05DD!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05D9\u05D6\u05DE\u05D5\u05EA \u05D5\u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA \u05DC\u05E0\u05D5\u05E2\u05E8</h1><p style="font-size:1.5rem; color:var(--text-muted); margin-bottom:2rem;">\u05D4\u05D9\u05D5\u05DD \u05E0\u05DB\u05D9\u05E8 \u05D0\u05EA \u05E2\u05D5\u05DC\u05DD \u05D4-AI!</p><div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;"><div style="background:linear-gradient(135deg, #10a37f, #1a7f5a); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F4AC;</div><div style="background:linear-gradient(135deg, #D97757, #b85c3e); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F9E0;</div><div style="background:linear-gradient(135deg, #6C3CE1, #8B5CF6); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F4BB;</div></div><p style="margin-top:1.5rem; font-size:0.9rem; color:var(--text-muted);">ChatGPT &bull; Claude &bull; Cursor</p></div>' },
+                { title: '\u05DE\u05D4 \u05D6\u05D4 AI?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F916; \u05DE\u05D4 \u05D6\u05D4 \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA?</h1><div style="display:grid; grid-template-columns:1fr; gap:1.2rem; max-width:600px; margin:0 auto;"><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F9E0;</span>\u05DE\u05D7\u05E9\u05D1 \u05E9\u05DC\u05D5\u05DE\u05D3 \u05DC\u05D7\u05E9\u05D5\u05D1 \u05DB\u05DE\u05D5 \u05D1\u05DF \u05D0\u05D3\u05DD</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F4AC;</span>\u05DE\u05D1\u05D9\u05DF \u05E9\u05E4\u05D4, \u05DE\u05D6\u05D4\u05D4 \u05EA\u05DE\u05D5\u05E0\u05D5\u05EA, \u05DB\u05D5\u05EA\u05D1 \u05E7\u05D5\u05D3</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; display:flex; align-items:center; gap:1rem; font-size:1.15rem;"><span style="font-size:2rem;">&#x1F30D;</span>\u05E0\u05DE\u05E6\u05D0 \u05D1\u05DB\u05DC \u05DE\u05E7\u05D5\u05DD: \u05D8\u05DC\u05E4\u05D5\u05DF, \u05D2\u05D5\u05D2\u05DC, \u05E0\u05D8\u05E4\u05DC\u05D9\u05E7\u05E1</div></div>' },
+                { title: 'AI \u05D1\u05D7\u05D9\u05D9\u05DD', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F30D; AI \u05D1\u05D7\u05D9\u05D9\u05DD \u05D4\u05D9\u05D5\u05DE\u05D9\u05D5\u05DD</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), rgba(77,163,255,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4F1;</div><p style="font-size:1.2rem; font-weight:600;">Siri / Google Assistant</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), rgba(255,77,141,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F3AC;</div><p style="font-size:1.2rem; font-weight:600;">\u05D4\u05DE\u05DC\u05E6\u05D5\u05EA \u05E0\u05D8\u05E4\u05DC\u05D9\u05E7\u05E1</p></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F697;</div><p style="font-size:1.2rem; font-weight:600;">\u05E8\u05DB\u05D1 \u05D0\u05D5\u05D8\u05D5\u05E0\u05D5\u05DE\u05D9</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4AC;</div><p style="font-size:1.2rem; font-weight:600;">ChatGPT</p></div></div>' },
+                { title: '\u05E1\u05D5\u05D2\u05D9 AI', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4A1; \u05E1\u05D5\u05D2\u05D9 \u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA</h1><div style="display:grid; grid-template-columns:1fr; gap:1rem; max-width:600px; margin:0 auto;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F4DD;</span><div><strong style="font-size:1.2rem; color:var(--accent);">\u05D8\u05E7\u05E1\u05D8</strong><p style="color:var(--text-muted); font-size:1rem;">ChatGPT, Claude \u2014 \u05E9\u05D9\u05D7\u05D5\u05EA, \u05DB\u05EA\u05D9\u05D1\u05D4</p></div></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F3A8;</span><div><strong style="font-size:1.2rem; color:var(--pink);">\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA</strong><p style="color:var(--text-muted); font-size:1rem;">NanoBanana, DALL-E \u2014 \u05E2\u05D9\u05E6\u05D5\u05D1\u05D9\u05DD</p></div></div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F3AC;</span><div><strong style="font-size:1.2rem; color:var(--orange);">\u05D5\u05D9\u05D3\u05D0\u05D5</strong><p style="color:var(--text-muted); font-size:1rem;">Novo, Sora \u2014 \u05E1\u05E8\u05D8\u05D5\u05E0\u05D9\u05DD</p></div></div><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), transparent); padding:1.5rem 2rem; border-radius:16px; display:flex; align-items:center; gap:1.2rem;"><span style="font-size:2.5rem;">&#x1F4BB;</span><div><strong style="font-size:1.2rem; color:var(--blue);">\u05E7\u05D5\u05D3</strong><p style="color:var(--text-muted); font-size:1rem;">Cursor, Claude Code \u2014 \u05D1\u05E0\u05D9\u05D9\u05EA \u05D0\u05EA\u05E8\u05D9\u05DD</p></div></div></div>' },
+                { title: '\u05D4\u05DB\u05DC\u05D9\u05DD \u05E9\u05DC\u05E0\u05D5', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F6E0; \u05D4\u05DB\u05DC\u05D9\u05DD \u05E9\u05E0\u05E9\u05EA\u05DE\u05E9 \u05D1\u05D4\u05DD</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, #10a37f, #1a7f5a); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F4AC;</div><strong style="font-size:1.3rem;">ChatGPT</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05E9\u05D9\u05D7\u05D5\u05EA, \u05E8\u05E2\u05D9\u05D5\u05E0\u05D5\u05EA, \u05DB\u05EA\u05D9\u05D1\u05D4</p></div><div style="background:linear-gradient(135deg, #D97757, #b85c3e); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F9E0;</div><strong style="font-size:1.3rem;">Claude</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05E0\u05D9\u05EA\u05D5\u05D7, \u05E7\u05D5\u05D3, \u05D3\u05D9\u05D5\u05E7</p></div><div style="background:linear-gradient(135deg, #6C3CE1, #8B5CF6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F4BB;</div><strong style="font-size:1.3rem;">Cursor</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05D1\u05E0\u05D9\u05D9\u05EA \u05D0\u05EA\u05E8\u05D9\u05DD \u05E2\u05DD AI</p></div><div style="background:linear-gradient(135deg, #4285f4, #3367d6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F30D;</div><strong style="font-size:1.3rem;">Gemini</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem;">\u05D7\u05D9\u05E4\u05D5\u05E9, \u05EA\u05DE\u05D5\u05E0\u05D5\u05EA, \u05D2\u05D5\u05D2\u05DC</p></div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; display:inline-block; text-align:center;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05E9\u05D0\u05DC\u05D5 \u05D0\u05EA \u05D4-AI 5 \u05E9\u05D0\u05DC\u05D5\u05EA \u05E9\u05D5\u05E0\u05D5\u05EA</p><p style="color:var(--text-muted); font-size:1.1rem; margin-bottom:1.5rem;">\u05E0\u05E1\u05D5 \u05D0\u05EA ChatGPT \u05D5\u05D0\u05EA Claude \u2014 \u05E9\u05D9\u05DE\u05D5 \u05DC\u05D1 \u05DC\u05D4\u05D1\u05D3\u05DC\u05D9\u05DD!</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:350px; margin:0 auto;"><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05E2\u05DC \u05D4\u05D9\u05E1\u05D8\u05D5\u05E8\u05D9\u05D4</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05E2\u05DC \u05DE\u05D3\u05E2</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05E7\u05E9\u05D4 \u05DC\u05DB\u05EA\u05D5\u05D1 \u05E9\u05D9\u05E8</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05E7\u05E9\u05D4 \u05DC\u05E4\u05EA\u05D5\u05E8 \u05EA\u05E8\u05D2\u05D9\u05DC</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E9\u05D0\u05DC\u05D4 \u05D0\u05D9\u05E9\u05D9\u05EA (\u05EA\u05D7\u05D1\u05D9\u05D1\u05D9\u05DD)</div></div></div></div>' }
             ],
             2: [
-                { title: 'אמנות הפרומפט', content: '<h2 style="text-align:center;">&#x270D; אמנות הפרומפט</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">פרומפט = ההוראה שאתם נותנים ל-AI</p><p style="text-align:center; font-size:1.1rem; color:var(--accent); margin-top:0.5rem;">ככל שהפרומפט טוב יותר &mdash; התוצאה טובה יותר!</p>' },
-                { title: 'פרומפט טוב vs רע', content: '<h2>&#x274C; פרומפט רע vs &#x2705; פרומפט טוב</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:rgba(255,77,141,0.15); padding:1.2rem; border-radius:12px; border:1px solid var(--pink);"><strong style="color:var(--pink);">&#x274C; רע</strong><p style="margin-top:0.5rem;">"תכתוב לי משהו על כלבים"</p></div><div style="background:rgba(0,212,170,0.15); padding:1.2rem; border-radius:12px; border:1px solid var(--accent);"><strong style="color:var(--accent);">&#x2705; טוב</strong><p style="margin-top:0.5rem;">"כתוב פוסט לאינסטגרם על 5 גזעי כלבים מומלצים למשפחות, בטון שמח, עם אמוג\'ים"</p></div></div>' },
-                { title: '5 טכניקות', content: '<h2>&#x1F4A1; 5 טכניקות לפרומפט מושלם</h2><br><ol style="font-size:1.05rem; line-height:2.2; padding-right:1.2rem;"><li><strong>היו ספציפיים</strong> &mdash; מה בדיוק אתם רוצים?</li><li><strong>תנו הקשר</strong> &mdash; בשביל מי? לאיזה צורך?</li><li><strong>הגדירו פורמט</strong> &mdash; רשימה? טבלה? פסקה?</li><li><strong>תנו דוגמה</strong> &mdash; "כמו X, אבל עם Y"</li><li><strong>חדדו בהדרגה</strong> &mdash; שפרו את התוצאה בשלבים</li></ol>' },
-                { title: 'מתי להשתמש בכל כלי', content: '<h2>&#x1F914; איזה כלי לאיזו משימה?</h2><br><ul style="list-style:none; font-size:1rem; line-height:2.2;"><li><strong style="color:var(--accent);">ChatGPT</strong> &mdash; סיעור מוחות, כתיבה יצירתית, שיחות</li><li><strong style="color:var(--orange);">Claude</strong> &mdash; ניתוח מעמיק, קוד, משימות מורכבות</li><li><strong style="color:var(--blue);">Gemini</strong> &mdash; חיפוש מידע עדכני, עבודה עם תמונות</li><li><strong style="color:var(--primary-light);">Cursor</strong> &mdash; בניית אתרים ואפליקציות</li></ul>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; אתגר פרומפטים!</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מי מקבל את התוצאה הכי טובה?</p><p style="color:var(--text-muted);">המשימה: גרמו ל-AI ליצור לוגו לחנות גלידה.</p><br><p style="color:var(--gold);">&#x1F3C6; נשווה תוצאות ונבחר מנצח!</p></div>' }
+                { title: '\u05D0\u05DE\u05E0\u05D5\u05EA \u05D4\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1rem;">&#x270D; \u05D0\u05DE\u05E0\u05D5\u05EA \u05D4\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 = \u05D4\u05D4\u05D5\u05E8\u05D0\u05D4 \u05E9\u05D0\u05EA\u05DD \u05E0\u05D5\u05EA\u05E0\u05D9\u05DD \u05DC-AI</p><p style="font-size:1.3rem; color:var(--accent); font-weight:600;">\u05DB\u05DB\u05DC \u05E9\u05D4\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05D8\u05D5\u05D1 \u05D9\u05D5\u05EA\u05E8 \u2014 \u05D4\u05EA\u05D5\u05E6\u05D0\u05D4 \u05D8\u05D5\u05D1\u05D4 \u05D9\u05D5\u05EA\u05E8!</p></div>' },
+                { title: '\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05D8\u05D5\u05D1 vs \u05E8\u05E2', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05E8\u05E2 vs \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05D8\u05D5\u05D1</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;"><div style="background:rgba(255,77,141,0.12); padding:2rem; border-radius:20px; border:2px solid var(--pink);"><div style="font-size:2.5rem; text-align:center; margin-bottom:1rem;">&#x274C;</div><p style="font-size:1.2rem; font-weight:600; color:var(--pink); margin-bottom:1rem; text-align:center;">\u05E8\u05E2</p><p style="font-size:1.1rem; line-height:1.8; background:var(--dark); padding:1rem; border-radius:12px; direction:rtl;">&ldquo;\u05EA\u05DB\u05EA\u05D5\u05D1 \u05DC\u05D9 \u05DE\u05E9\u05D4\u05D5 \u05E2\u05DC \u05DB\u05DC\u05D1\u05D9\u05DD&rdquo;</p></div><div style="background:rgba(0,212,170,0.12); padding:2rem; border-radius:20px; border:2px solid var(--accent);"><div style="font-size:2.5rem; text-align:center; margin-bottom:1rem;">&#x2705;</div><p style="font-size:1.2rem; font-weight:600; color:var(--accent); margin-bottom:1rem; text-align:center;">\u05D8\u05D5\u05D1</p><p style="font-size:1.1rem; line-height:1.8; background:var(--dark); padding:1rem; border-radius:12px; direction:rtl;">&ldquo;\u05DB\u05EA\u05D5\u05D1 \u05E4\u05D5\u05E1\u05D8 \u05DC\u05D0\u05D9\u05E0\u05E1\u05D8\u05D2\u05E8\u05DD \u05E2\u05DC 5 \u05D2\u05D6\u05E2\u05D9 \u05DB\u05DC\u05D1\u05D9\u05DD \u05DC\u05DE\u05E9\u05E4\u05D7\u05D5\u05EA, \u05D1\u05D8\u05D5\u05DF \u05E9\u05DE\u05D7&rdquo;</p></div></div>' },
+                { title: '5 \u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4A1; 5 \u05D8\u05DB\u05E0\u05D9\u05E7\u05D5\u05EA \u05DC\u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05DE\u05D5\u05E9\u05DC\u05DD</h1><div style="display:grid; grid-template-columns:1fr; gap:1rem; max-width:600px; margin:0 auto;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--primary); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">1</span><div><strong>\u05D4\u05D9\u05D5 \u05E1\u05E4\u05E6\u05D9\u05E4\u05D9\u05D9\u05DD</strong> \u2014 \u05DE\u05D4 \u05D1\u05D3\u05D9\u05D5\u05E7 \u05D0\u05EA\u05DD \u05E8\u05D5\u05E6\u05D9\u05DD?</div></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--accent); color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">2</span><div><strong>\u05EA\u05E0\u05D5 \u05D4\u05E7\u05E9\u05E8</strong> \u2014 \u05D1\u05E9\u05D1\u05D9\u05DC \u05DE\u05D9? \u05DC\u05D0\u05D9\u05D6\u05D4 \u05E6\u05D5\u05E8\u05DA?</div></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--gold); color:#000; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">3</span><div><strong>\u05D4\u05D2\u05D3\u05D9\u05E8\u05D5 \u05E4\u05D5\u05E8\u05DE\u05D8</strong> \u2014 \u05E8\u05E9\u05D9\u05DE\u05D4? \u05D8\u05D1\u05DC\u05D4? \u05E4\u05E1\u05E7\u05D4?</div></div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--orange); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">4</span><div><strong>\u05EA\u05E0\u05D5 \u05D3\u05D5\u05D2\u05DE\u05D4</strong> \u2014 &ldquo;\u05DB\u05DE\u05D5 X, \u05D0\u05D1\u05DC \u05E2\u05DD Y&rdquo;</div></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--pink); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800;">5</span><div><strong>\u05E9\u05E4\u05E8\u05D5 \u05E6\u05E2\u05D3 \u05D0\u05D7\u05E8 \u05E6\u05E2\u05D3</strong> \u2014 \u05DB\u05DC \u05E4\u05E2\u05DD \u05D8\u05D5\u05D1 \u05D9\u05D5\u05EA\u05E8!</div></div></div>' },
+                { title: '\u05D0\u05D9\u05D6\u05D4 \u05DB\u05DC\u05D9?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F914; \u05D0\u05D9\u05D6\u05D4 \u05DB\u05DC\u05D9 \u05DC\u05D0\u05D9\u05D6\u05D5 \u05DE\u05E9\u05D9\u05DE\u05D4?</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, #10a37f, #1a7f5a); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2rem; margin-bottom:0.5rem;">&#x1F4AC;</div><strong style="font-size:1.3rem;">ChatGPT</strong><p style="margin-top:0.8rem; color:rgba(255,255,255,0.85); font-size:1.05rem;">\u05E1\u05D9\u05E2\u05D5\u05E8 \u05DE\u05D5\u05D7\u05D5\u05EA, \u05DB\u05EA\u05D9\u05D1\u05D4, \u05E9\u05D9\u05D7\u05D5\u05EA</p></div><div style="background:linear-gradient(135deg, #D97757, #b85c3e); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2rem; margin-bottom:0.5rem;">&#x1F9E0;</div><strong style="font-size:1.3rem;">Claude</strong><p style="margin-top:0.8rem; color:rgba(255,255,255,0.85); font-size:1.05rem;">\u05E0\u05D9\u05EA\u05D5\u05D7, \u05E7\u05D5\u05D3, \u05DE\u05E9\u05D9\u05DE\u05D5\u05EA \u05DE\u05D5\u05E8\u05DB\u05D1\u05D5\u05EA</p></div><div style="background:linear-gradient(135deg, #4285f4, #3367d6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2rem; margin-bottom:0.5rem;">&#x1F30D;</div><strong style="font-size:1.3rem;">Gemini</strong><p style="margin-top:0.8rem; color:rgba(255,255,255,0.85); font-size:1.05rem;">\u05D7\u05D9\u05E4\u05D5\u05E9 \u05E2\u05D3\u05DB\u05E0\u05D9, \u05EA\u05DE\u05D5\u05E0\u05D5\u05EA</p></div><div style="background:linear-gradient(135deg, #6C3CE1, #8B5CF6); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong style="font-size:1.3rem;">Cursor</strong><p style="margin-top:0.8rem; color:rgba(255,255,255,0.85); font-size:1.05rem;">\u05D1\u05E0\u05D9\u05D9\u05EA \u05D0\u05EA\u05E8\u05D9\u05DD \u05D5\u05D0\u05E4\u05DC\u05D9\u05E7\u05E6\u05D9\u05D5\u05EA</p></div></div>' },
+                { title: '\u05D0\u05EA\u05D2\u05E8!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3C6; \u05D0\u05EA\u05D2\u05E8 \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8\u05D9\u05DD!</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05DE\u05D9 \u05DE\u05E7\u05D1\u05DC \u05D0\u05EA \u05D4\u05EA\u05D5\u05E6\u05D0\u05D4 \u05D4\u05DB\u05D9 \u05D8\u05D5\u05D1\u05D4?</p><p style="color:var(--text-muted); font-size:1.15rem; margin-bottom:1.5rem;">\u05D4\u05DE\u05E9\u05D9\u05DE\u05D4: \u05D2\u05E8\u05DE\u05D5 \u05DC-AI \u05DC\u05D9\u05E6\u05D5\u05E8 \u05DC\u05D5\u05D2\u05D5 \u05DC\u05D7\u05E0\u05D5\u05EA \u05D2\u05DC\u05D9\u05D3\u05D4</p><p style="color:var(--gold); font-size:1.3rem; font-weight:700;">&#x1F3C6; \u05E0\u05E9\u05D5\u05D5\u05D4 \u05EA\u05D5\u05E6\u05D0\u05D5\u05EA \u05D5\u05E0\u05D1\u05D7\u05E8 \u05DE\u05E0\u05E6\u05D7!</p></div></div>' }
             ],
             3: [
-                { title: 'חשיבה יזמית', content: '<h2 style="text-align:center;">&#x1F4A1; חשיבה יזמית</h2><br><p style="text-align:center; font-size:1.2rem; color:var(--text-muted);">היום נלמד לחשוב כמו יזמים &mdash;</p><p style="text-align:center; font-size:1.2rem; color:var(--accent);">לראות בעיות ולהפוך אותן להזדמנויות!</p>' },
-                { title: 'מה זה סטארטאפ?', content: '<h2>&#x1F680; מה זה סטארטאפ?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; חברה צעירה שפותרת בעיה בצורה חדשה</li><li>&#x25C2; מתחילה קטן &mdash; חולמת בגדול</li><li>&#x25C2; ישראל = "אומת הסטארטאפ" &#x1F1EE;&#x1F1F1;</li><li>&#x25C2; Waze, Wix, Monday &mdash; כולם התחילו מרעיון קטן!</li></ul>' },
-                { title: 'הנוסחה', content: '<h2>&#x1F4CB; הנוסחה של כל סטארטאפ</h2><br><div style="text-align:center; font-size:1.5rem; margin:2rem 0;"><span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">בעיה</span> <span style="color:var(--accent); margin:0 1rem;">&#x2192;</span> <span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">פתרון</span> <span style="color:var(--accent); margin:0 1rem;">&#x2192;</span> <span style="background:var(--dark-lighter); padding:0.8rem 1.5rem; border-radius:12px;">מוצר</span></div><p style="text-align:center; color:var(--text-muted);">הכל מתחיל מבעיה שאנשים רוצים לפתור!</p>' },
-                { title: 'איך מוצאים בעיות?', content: '<h2>&#x1F50D; איך מוצאים בעיות טובות?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x2B50; מה מעצבן אותך ביומיום?</li><li>&#x2B50; על מה חברים מתלוננים?</li><li>&#x2B50; מה היית רוצה שיהיה קל יותר?</li><li>&#x2B50; מה חסר לך שלא קיים?</li></ul><br><p style="color:var(--accent);">טיפ: הבעיות הכי טובות הן אלה שאתם חווים בעצמכם!</p>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מצאו 3 בעיות מהחיים שלכם!</p><p style="color:var(--text-muted);">חשבו על: בית ספר, תחביבים, חברים, משפחה</p><br><p style="color:var(--gold);">&#x1F3A4; כל אחד יציג את הבעיות שלו לכיתה</p></div>' }
+                { title: '\u05D7\u05E9\u05D9\u05D1\u05D4 \u05D9\u05D6\u05DE\u05D9\u05EA', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem;">&#x1F4A1; \u05D7\u05E9\u05D9\u05D1\u05D4 \u05D9\u05D6\u05DE\u05D9\u05EA</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05D4\u05D9\u05D5\u05DD \u05E0\u05DC\u05DE\u05D3 \u05DC\u05D7\u05E9\u05D5\u05D1 \u05DB\u05DE\u05D5 \u05D9\u05D6\u05DE\u05D9\u05DD \u2014</p><p style="font-size:1.3rem; color:var(--accent); font-weight:600;">\u05DC\u05E8\u05D0\u05D5\u05EA \u05D1\u05E2\u05D9\u05D5\u05EA \u05D5\u05DC\u05D4\u05E4\u05D5\u05DA \u05D0\u05D5\u05EA\u05DF \u05DC\u05D4\u05D6\u05D3\u05DE\u05E0\u05D5\u05D9\u05D5\u05EA!</p></div>' },
+                { title: '\u05DE\u05D4 \u05D6\u05D4 \u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F680; \u05DE\u05D4 \u05D6\u05D4 \u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4?</h1><div style="display:grid; grid-template-columns:1fr; gap:1.2rem; max-width:600px; margin:0 auto;"><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; font-size:1.2rem; display:flex; align-items:center; gap:1rem;"><span style="font-size:2rem;">&#x1F4A1;</span>\u05D7\u05D1\u05E8\u05D4 \u05E6\u05E2\u05D9\u05E8\u05D4 \u05E9\u05E4\u05D5\u05EA\u05E8\u05EA \u05D1\u05E2\u05D9\u05D4 \u05D1\u05E6\u05D5\u05E8\u05D4 \u05D7\u05D3\u05E9\u05D4</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; font-size:1.2rem; display:flex; align-items:center; gap:1rem;"><span style="font-size:2rem;">&#x1F331;</span>\u05DE\u05EA\u05D7\u05D9\u05DC\u05D4 \u05E7\u05D8\u05DF \u2014 \u05D7\u05D5\u05DC\u05DE\u05EA \u05D1\u05D2\u05D3\u05D5\u05DC</div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; font-size:1.2rem; display:flex; align-items:center; gap:1rem;"><span style="font-size:2rem;">&#x1F1EE;&#x1F1F1;</span>\u05D9\u05E9\u05E8\u05D0\u05DC = &ldquo;\u05D0\u05D5\u05DE\u05EA \u05D4\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4&rdquo;</div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.15), transparent); padding:1.5rem; border-radius:16px; font-size:1.2rem; display:flex; align-items:center; gap:1rem; font-weight:600;"><span style="font-size:2rem;">&#x2B50;</span>Waze, Wix, Monday \u2014 \u05D4\u05EA\u05D7\u05D9\u05DC\u05D5 \u05DE\u05E8\u05E2\u05D9\u05D5\u05DF \u05E7\u05D8\u05DF!</div></div>' },
+                { title: '\u05D4\u05E0\u05D5\u05E1\u05D7\u05D4', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4CB; \u05D4\u05E0\u05D5\u05E1\u05D7\u05D4 \u05E9\u05DC \u05DB\u05DC \u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4</h1><div style="display:flex; justify-content:center; align-items:center; gap:1.5rem; flex-wrap:wrap; margin:3rem 0;"><div style="background:linear-gradient(135deg, var(--pink), #e63976); padding:2rem 2.5rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6A8;</div><strong style="font-size:1.3rem;">\u05D1\u05E2\u05D9\u05D4</strong></div><div style="font-size:2.5rem; color:var(--accent);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:2rem 2.5rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4A1;</div><strong style="font-size:1.3rem;">\u05E4\u05EA\u05E8\u05D5\u05DF</strong></div><div style="font-size:2.5rem; color:var(--accent);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:2rem 2.5rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F680;</div><strong style="font-size:1.3rem;">\u05DE\u05D5\u05E6\u05E8</strong></div></div><p style="text-align:center; color:var(--text-muted); font-size:1.2rem;">\u05D4\u05DB\u05DC \u05DE\u05EA\u05D7\u05D9\u05DC \u05DE\u05D1\u05E2\u05D9\u05D4 \u05E9\u05D0\u05E0\u05E9\u05D9\u05DD \u05E8\u05D5\u05E6\u05D9\u05DD \u05DC\u05E4\u05EA\u05D5\u05E8!</p>' },
+                { title: '\u05D0\u05D9\u05DA \u05DE\u05D5\u05E6\u05D0\u05D9\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F50D; \u05D0\u05D9\u05DA \u05DE\u05D5\u05E6\u05D0\u05D9\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D8\u05D5\u05D1\u05D5\u05EA?</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:600px; margin:0 auto;"><div style="background:linear-gradient(135deg, rgba(245,200,66,0.15), transparent); padding:2rem; border-radius:20px; text-align:center; font-size:1.15rem;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F620;</div>\u05DE\u05D4 \u05DE\u05E2\u05E6\u05D1\u05DF \u05D0\u05D5\u05EA\u05DA \u05D1\u05D9\u05D5\u05DE\u05D9\u05D5\u05DD?</div><div style="background:linear-gradient(135deg, rgba(108,60,225,0.15), transparent); padding:2rem; border-radius:20px; text-align:center; font-size:1.15rem;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F5E3;</div>\u05E2\u05DC \u05DE\u05D4 \u05D7\u05D1\u05E8\u05D9\u05DD \u05DE\u05EA\u05DC\u05D5\u05E0\u05E0\u05D9\u05DD?</div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.15), transparent); padding:2rem; border-radius:20px; text-align:center; font-size:1.15rem;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x2728;</div>\u05DE\u05D4 \u05D4\u05D9\u05D9\u05EA \u05E8\u05D5\u05E6\u05D4 \u05E9\u05D9\u05D4\u05D9\u05D4 \u05E7\u05DC \u05D9\u05D5\u05EA\u05E8?</div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.15), transparent); padding:2rem; border-radius:20px; text-align:center; font-size:1.15rem;"><div style="font-size:2.5rem; margin-bottom:0.8rem;">&#x1F914;</div>\u05DE\u05D4 \u05D7\u05E1\u05E8 \u05DC\u05DA \u05E9\u05DC\u05D0 \u05E7\u05D9\u05D9\u05DD?</div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05DE\u05E6\u05D0\u05D5 3 \u05D1\u05E2\u05D9\u05D5\u05EA \u05DE\u05D4\u05D7\u05D9\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD!</p><p style="color:var(--text-muted); font-size:1.15rem; margin-bottom:1rem;">\u05D7\u05E9\u05D1\u05D5 \u05E2\u05DC: \u05D1\u05D9\u05EA \u05E1\u05E4\u05E8, \u05EA\u05D7\u05D1\u05D9\u05D1\u05D9\u05DD, \u05D7\u05D1\u05E8\u05D9\u05DD, \u05DE\u05E9\u05E4\u05D7\u05D4</p><p style="color:var(--gold); font-size:1.2rem; font-weight:600;">&#x1F3A4; \u05DB\u05DC \u05D0\u05D7\u05D3 \u05D9\u05E6\u05D9\u05D2 \u05D0\u05EA \u05D4\u05D1\u05E2\u05D9\u05D5\u05EA \u05E9\u05DC\u05D5 \u05DC\u05DB\u05D9\u05EA\u05D4</p></div></div>' }
             ],
             4: [
-                { title: 'מרעיון למוצר', content: '<h2 style="text-align:center;">&#x1F3AF; מרעיון למוצר</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום נבחר את הרעיון הטוב ביותר</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ונבנה ממנו תוכנית למוצר אמיתי!</p>' },
-                { title: 'בוחרים רעיון', content: '<h2>&#x2705; איך בוחרים את הרעיון הטוב?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; האם הבעיה אמיתית? (אנשים באמת סובלים מזה?)</li><li>&#x25C2; האם אני מבין את הבעיה? (חוויתי אותה בעצמי?)</li><li>&#x25C2; האם אפשר לבנות פתרון? (עם הכלים שלנו)</li><li>&#x25C2; האם אנשים ירצו להשתמש? (יש ביקוש?)</li></ul>' },
-                { title: 'קהל יעד', content: '<h2>&#x1F465; מי קהל היעד?</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:12px;"><p style="font-size:1.05rem; margin-bottom:1rem;">ענו על השאלות:</p><ul style="list-style:none; font-size:1rem; line-height:2;"><li>&#x2B50; מי ישתמש במוצר? (גיל, מין, תחביבים)</li><li>&#x2B50; איפה הם נמצאים? (סושיאל, בית ספר)</li><li>&#x2B50; מה כואב להם?</li><li>&#x2B50; כמה הם מוכנים לשלם?</li></ul></div>' },
-                { title: 'הצעת ערך', content: '<h2>&#x1F48E; מה מיוחד אצלך?</h2><br><div style="text-align:center; margin:2rem 0;"><div style="background:linear-gradient(135deg, var(--primary), var(--accent)); padding:1.5rem 2rem; border-radius:16px; display:inline-block;"><p style="font-size:1.2rem; font-weight:700;">אנחנו עוזרים ל-[קהל יעד]</p><p style="font-size:1.2rem; font-weight:700;">לפתור את [הבעיה]</p><p style="font-size:1.2rem; font-weight:700;">על ידי [הפתרון שלנו]</p></div></div><p style="text-align:center; color:var(--text-muted);">מלאו את המשפט הזה לפרויקט שלכם!</p>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">מלאו את "בונה הפרויקט" באזור האישי!</p><p style="color:var(--text-muted);">10 שאלות שבונות את האפיון המלא של הסטארטאפ שלכם</p><br><p style="color:var(--gold);">&#x1F4BB; לכו ללשונית "הפרויקט שלי" ותתחילו!</p></div>' }
+                { title: '\u05DE\u05E8\u05E2\u05D9\u05D5\u05DF \u05DC\u05DE\u05D5\u05E6\u05E8', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05DE\u05E8\u05E2\u05D9\u05D5\u05DF \u05DC\u05DE\u05D5\u05E6\u05E8</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05D4\u05D9\u05D5\u05DD \u05E0\u05D1\u05D7\u05E8 \u05D0\u05EA \u05D4\u05E8\u05E2\u05D9\u05D5\u05DF \u05D4\u05D8\u05D5\u05D1 \u05D1\u05D9\u05D5\u05EA\u05E8 \u2014</p><p style="font-size:1.3rem; color:var(--accent); font-weight:600;">\u05D5\u05E0\u05D1\u05E0\u05D4 \u05DE\u05DE\u05E0\u05D5 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05DC\u05DE\u05D5\u05E6\u05E8 \u05D0\u05DE\u05D9\u05EA\u05D9!</p></div>' },
+                { title: '\u05D4\u05DE\u05E1\u05E2 \u05DC\u05DE\u05D5\u05E6\u05E8', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F3AF; \u05D4\u05DE\u05E1\u05E2 \u05DE\u05E8\u05E2\u05D9\u05D5\u05DF \u05DC\u05DE\u05D5\u05E6\u05E8</h1><div style="display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap; margin:2rem 0;"><div style="background:linear-gradient(135deg, var(--pink), #e63976); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6A8;</div><strong style="font-size:1.2rem;">\u05D1\u05E2\u05D9\u05D4</strong></div><div style="font-size:2.5rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--primary), var(--primary-light)); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4A1;</div><strong style="font-size:1.2rem;">\u05E8\u05E2\u05D9\u05D5\u05DF</strong></div><div style="font-size:2.5rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4E6;</div><strong style="font-size:1.2rem;">\u05DE\u05D5\u05E6\u05E8</strong></div><div style="font-size:2.5rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4B0;</div><strong style="font-size:1.2rem;">\u05E2\u05E1\u05E7</strong></div></div><p style="text-align:center; color:var(--text-muted); font-size:1.2rem;">\u05DB\u05DC \u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4 \u05DE\u05EA\u05D7\u05D9\u05DC \u05DE\u05D1\u05E2\u05D9\u05D4 \u05D0\u05DE\u05D9\u05EA\u05D9\u05EA \u05E9\u05D0\u05E0\u05E9\u05D9\u05DD \u05E8\u05D5\u05E6\u05D9\u05DD \u05DC\u05E4\u05EA\u05D5\u05E8!</p>' },
+                { title: '\u05D4\u05E6\u05E2\u05EA \u05E2\u05E8\u05DA', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F48E; \u05D4\u05E6\u05E2\u05EA \u05D4\u05E2\u05E8\u05DA \u05E9\u05DC\u05DB\u05DD</h1><div style="background:linear-gradient(135deg, var(--primary), var(--accent)); padding:2.5rem; border-radius:24px; max-width:550px; margin:0 auto; text-align:center;"><p style="font-size:1.5rem; font-weight:700; margin-bottom:0.8rem;">\u05D0\u05E0\u05D7\u05E0\u05D5 \u05E2\u05D5\u05D6\u05E8\u05D9\u05DD \u05DC-</p><div style="background:rgba(255,255,255,0.15); padding:1rem; border-radius:12px; margin-bottom:0.8rem;"><p style="font-size:1.4rem; font-weight:800; color:var(--gold);">[\u05E7\u05D4\u05DC \u05D9\u05E2\u05D3]</p></div><p style="font-size:1.5rem; font-weight:700; margin-bottom:0.8rem;">\u05DC\u05E4\u05EA\u05D5\u05E8 \u05D0\u05EA</p><div style="background:rgba(255,255,255,0.15); padding:1rem; border-radius:12px; margin-bottom:0.8rem;"><p style="font-size:1.4rem; font-weight:800; color:var(--pink);">[\u05D4\u05D1\u05E2\u05D9\u05D4]</p></div><p style="font-size:1.5rem; font-weight:700; margin-bottom:0.8rem;">\u05E2\u05DC \u05D9\u05D3\u05D9</p><div style="background:rgba(255,255,255,0.15); padding:1rem; border-radius:12px;"><p style="font-size:1.4rem; font-weight:800; color:var(--accent);">[\u05D4\u05E4\u05EA\u05E8\u05D5\u05DF \u05E9\u05DC\u05E0\u05D5]</p></div></div><p style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-top:1.5rem;">\u05DE\u05DC\u05D0\u05D5 \u05D0\u05EA \u05D4\u05DE\u05E9\u05E4\u05D8 \u05D4\u05D6\u05D4 \u05DC\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 \u05E9\u05DC\u05DB\u05DD!</p>' },
+                { title: 'MVP', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F680; MVP &mdash; \u05DE\u05D5\u05E6\u05E8 \u05DE\u05D9\u05E0\u05D9\u05DE\u05DC\u05D9</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;"><div style="background:rgba(0,212,170,0.12); padding:2rem; border-radius:20px; border:2px solid var(--accent);"><div style="font-size:2.5rem; text-align:center; margin-bottom:1rem;">&#x2705;</div><p style="font-size:1.2rem; font-weight:600; color:var(--accent); margin-bottom:1rem; text-align:center;">MVP</p><div style="display:grid; gap:0.6rem;"><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">\u05D3\u05E3 \u05E0\u05D7\u05D9\u05EA\u05D4 \u05D0\u05D7\u05D3</div><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">\u05E4\u05D9\u05E6\u05F3\u05E8 \u05DE\u05E8\u05DB\u05D6\u05D9 \u05D0\u05D7\u05D3</div><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">\u05D1\u05D5\u05E0\u05D9\u05DD \u05DE\u05D4\u05E8!</div></div></div><div style="background:rgba(255,77,141,0.12); padding:2rem; border-radius:20px; border:2px solid var(--pink);"><div style="font-size:2.5rem; text-align:center; margin-bottom:1rem;">&#x1F6AB;</div><p style="font-size:1.2rem; font-weight:600; color:var(--pink); margin-bottom:1rem; text-align:center;">\u05DE\u05D5\u05E6\u05E8 \u05DE\u05DC\u05D0</p><div style="display:grid; gap:0.6rem;"><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">20 \u05E2\u05DE\u05D5\u05D3\u05D9\u05DD</div><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">100 \u05E4\u05D9\u05E6\u05F3\u05E8\u05D9\u05DD</div><div style="background:var(--dark); padding:0.8rem; border-radius:10px; font-size:1.05rem;">\u05DC\u05D5\u05E7\u05D7 \u05E9\u05E0\u05D4!</div></div></div></div><p style="text-align:center; color:var(--gold); font-size:1.2rem; margin-top:1.5rem; font-weight:600;">\u05EA\u05EA\u05D7\u05D9\u05DC\u05D5 \u05E7\u05D8\u05DF &mdash; \u05EA\u05E9\u05D9\u05E7\u05D5 \u05E4\u05D9\u05D3\u05D1\u05E7 &mdash; \u05EA\u05E9\u05E4\u05E8\u05D5!</p>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.4rem; margin-bottom:1.5rem; font-weight:600;">\u05DE\u05DC\u05D0\u05D5 \u05D0\u05EA "\u05D1\u05D5\u05E0\u05D4 \u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8" \u05D1\u05D0\u05D6\u05D5\u05E8 \u05D4\u05D0\u05D9\u05E9\u05D9!</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:380px; margin:0 auto;"><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; 10 \u05E9\u05D0\u05DC\u05D5\u05EA \u05E9\u05D1\u05D5\u05E0\u05D5\u05EA \u05D0\u05EA \u05D4\u05D0\u05E4\u05D9\u05D5\u05DF \u05D4\u05DE\u05DC\u05D0</div><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D4\u05D2\u05D3\u05D9\u05E8\u05D5 \u05D1\u05E2\u05D9\u05D4, \u05E7\u05D4\u05DC \u05D9\u05E2\u05D3, \u05D4\u05E6\u05E2\u05EA \u05E2\u05E8\u05DA</div><div style="background:rgba(0,212,170,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D7\u05E9\u05D1\u05D5 \u05E2\u05DC \u05E2\u05D9\u05E6\u05D5\u05D1 \u05D5\u05E6\u05D1\u05E2\u05D9\u05DD</div></div><p style="color:var(--gold); font-size:1.2rem; font-weight:600; margin-top:1.5rem;">&#x1F4BB; \u05DC\u05DB\u05D5 \u05DC\u05DC\u05E9\u05D5\u05E0\u05D9\u05EA "\u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 \u05E9\u05DC\u05D9" \u05D5\u05EA\u05EA\u05D7\u05D9\u05DC\u05D5!</p></div></div>' }
             ],
             5: [
-                { title: 'בונים אתר!', content: '<h2 style="text-align:center;">&#x1F6E0; בונים אתר &mdash; חלק 1</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום מתקינים Cursor</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ובונים את דף הנחיתה הראשון למוצר שלכם!</p>' },
-                { title: 'מה זה Cursor?', content: '<h2>&#x1F4BB; מה זה Cursor?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; עורך קוד חכם עם AI מובנה</li><li>&#x25C2; אתם כותבים מה אתם רוצים &mdash; Cursor כותב את הקוד!</li><li>&#x25C2; לא צריך לדעת תכנות מראש</li><li>&#x25C2; הכלי המרכזי שנשתמש בו לבניית הפרויקט</li></ul>' },
-                { title: 'התקנה', content: '<h2>&#x1F4E5; מתקינים Cursor</h2><br><ol style="font-size:1.05rem; line-height:2.2; padding-right:1.2rem;"><li>נכנסים ל-<strong>cursor.com</strong></li><li>לוחצים "Download"</li><li>מתקינים ופותחים</li><li>נרשמים עם Google או אימייל</li><li>לוחצים <strong>Cmd+I</strong> (מק) או <strong>Ctrl+I</strong> (ווינדוס)</li><li>כותבים מה רוצים לבנות!</li></ol>' },
-                { title: 'מבנה אתר', content: '<h2>&#x1F3D7; מבנה בסיסי של אתר</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li><strong style="color:var(--accent);">HTML</strong> &mdash; השלד (מה יש בדף)</li><li><strong style="color:var(--pink);">CSS</strong> &mdash; העיצוב (איך זה נראה)</li><li><strong style="color:var(--gold);">JavaScript</strong> &mdash; הלוגיקה (מה קורה כשלוחצים)</li></ul><br><p style="color:var(--text-muted);">אל דאגה! Cursor כותב את הכל בשבילכם &#x1F60E;</p>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">בנו דף נחיתה למוצר שלכם!</p><p style="color:var(--text-muted);">פתחו Cursor, לחצו Cmd+I וכתבו:</p><br><div style="background:var(--dark-card); padding:1rem; border-radius:8px; direction:ltr; text-align:left; font-family:monospace; color:var(--accent);">"Build me a landing page for [שם המוצר] in Hebrew RTL"</div></div>' }
+                { title: '\u05D1\u05D5\u05E0\u05D9\u05DD \u05D0\u05EA\u05E8!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05D1\u05D5\u05E0\u05D9\u05DD \u05D0\u05EA\u05E8!</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:1rem;">\u05D4\u05D9\u05D5\u05DD \u05DE\u05EA\u05E7\u05D9\u05E0\u05D9\u05DD Cursor \u05D5\u05D1\u05D5\u05E0\u05D9\u05DD \u05D0\u05EA \u05D3\u05E3 \u05D4\u05E0\u05D7\u05D9\u05EA\u05D4 \u05D4\u05E8\u05D0\u05E9\u05D5\u05DF!</p><div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;"><div style="background:linear-gradient(135deg, #6C3CE1, #8B5CF6); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F4BB;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x1F310;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); width:90px; height:90px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2.5rem;">&#x2728;</div></div><p style="margin-top:1.5rem; font-size:1rem; color:var(--text-muted);">Cursor &bull; HTML &bull; CSS &bull; JavaScript</p></div>' },
+                { title: 'HTML / CSS / JS', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F3D7; \u05E9\u05DC\u05D5\u05E9 \u05D4\u05E9\u05E4\u05D5\u05EA \u05E9\u05DC \u05DB\u05DC \u05D0\u05EA\u05E8</h1><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem 1.2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F9B4;</div><strong style="font-size:1.4rem; color:var(--accent);">HTML</strong><p style="color:var(--text-muted); margin-top:0.8rem; font-size:1rem;">\u05D4\u05E9\u05DC\u05D3<br>\u05DE\u05D4 \u05D9\u05E9 \u05D1\u05D3\u05E3?<br>\u05DB\u05D5\u05EA\u05E8\u05D5\u05EA, \u05EA\u05DE\u05D5\u05E0\u05D5\u05EA,<br>\u05DB\u05E4\u05EA\u05D5\u05E8\u05D9\u05DD</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), rgba(255,77,141,0.05)); padding:2rem 1.2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F3A8;</div><strong style="font-size:1.4rem; color:var(--pink);">CSS</strong><p style="color:var(--text-muted); margin-top:0.8rem; font-size:1rem;">\u05D4\u05E2\u05D9\u05E6\u05D5\u05D1<br>\u05D0\u05D9\u05DA \u05D6\u05D4 \u05E0\u05E8\u05D0\u05D4?<br>\u05E6\u05D1\u05E2\u05D9\u05DD, \u05E4\u05D5\u05E0\u05D8\u05D9\u05DD,<br>\u05E4\u05E8\u05D9\u05E1\u05D4</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem 1.2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F9E0;</div><strong style="font-size:1.4rem; color:var(--gold);">JavaScript</strong><p style="color:var(--text-muted); margin-top:0.8rem; font-size:1rem;">\u05D4\u05DE\u05D5\u05D7<br>\u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4 \u05DB\u05E9\u05DC\u05D5\u05D7\u05E6\u05D9\u05DD?<br>\u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D5\u05EA,<br>\u05D8\u05E4\u05E1\u05D9\u05DD</p></div></div><p style="text-align:center; color:var(--accent); font-size:1.1rem; margin-top:1.5rem; font-weight:600;">\u05D0\u05DC \u05D3\u05D0\u05D2\u05D4! Cursor \u05DB\u05D5\u05EA\u05D1 \u05D0\u05EA \u05D4\u05DB\u05DC \u05D1\u05E9\u05D1\u05D9\u05DC\u05DB\u05DD &#x1F60E;</p>' },
+                { title: '\u05DE\u05D4 \u05D6\u05D4 \u05E9\u05E8\u05EA?', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F5A5; \u05DE\u05D4 \u05D6\u05D4 \u05E9\u05E8\u05EA? \u05D0\u05D9\u05DA \u05D0\u05EA\u05E8 \u05E2\u05D5\u05D1\u05D3?</h1><div style="display:flex; justify-content:center; align-items:center; gap:1.5rem; flex-wrap:wrap; margin:2rem 0;"><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), rgba(77,163,255,0.05)); padding:2rem; border-radius:20px; text-align:center; min-width:140px;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong style="font-size:1.1rem;">\u05D4\u05DE\u05D7\u05E9\u05D1 \u05E9\u05DC\u05DB\u05DD</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">(\u05E7\u05DC\u05D9\u05D9\u05E0\u05D8)</p></div><div style="font-size:2.5rem; color:var(--accent);">&#x2194;</div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem; border-radius:20px; text-align:center; min-width:140px;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F30D;</div><strong style="font-size:1.1rem;">\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">(\u05E8\u05E9\u05EA)</p></div><div style="font-size:2.5rem; color:var(--accent);">&#x2194;</div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem; border-radius:20px; text-align:center; min-width:140px;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F5C4;</div><strong style="font-size:1.1rem;">\u05E9\u05E8\u05EA</strong><p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">(\u05DE\u05D7\u05E9\u05D1 \u05E9\u05DE\u05D0\u05D7\u05E1\u05DF \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8)</p></div></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:16px; max-width:500px; margin:1rem auto; text-align:center;"><p style="font-size:1.1rem; color:var(--text-muted);"><strong style="color:var(--gold);">\u05D3\u05D5\u05DE\u05D9\u05D9\u05DF</strong> = \u05DB\u05EA\u05D5\u05D1\u05EA \u05D4\u05D0\u05EA\u05E8 (google.com)</p><p style="font-size:1.1rem; color:var(--text-muted); margin-top:0.5rem;"><strong style="color:var(--gold);">\u05D0\u05D7\u05E1\u05D5\u05DF (Hosting)</strong> = \u05D4\u05DE\u05E7\u05D5\u05DD \u05E9\u05D4\u05E7\u05D1\u05E6\u05D9\u05DD \u05E0\u05E9\u05DE\u05E8\u05D9\u05DD</p></div>' },
+                { title: 'Cursor \u05E6\u05E2\u05D3 \u05D0\u05D7\u05E8 \u05E6\u05E2\u05D3', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4BB; \u05DE\u05EA\u05E7\u05D9\u05E0\u05D9\u05DD \u05D5\u05D1\u05D5\u05E0\u05D9\u05DD \u05E2\u05DD Cursor!</h1><div style="display:grid; grid-template-columns:1fr; gap:1rem; max-width:600px; margin:0 auto;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--primary); width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800; font-size:1.2rem;">1</span><div>\u05E0\u05DB\u05E0\u05E1\u05D9\u05DD \u05DC-<strong>cursor.com</strong> \u05D5\u05DC\u05D5\u05D7\u05E6\u05D9\u05DD Download</div></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--accent); color:#000; width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800; font-size:1.2rem;">2</span><div>\u05DE\u05EA\u05E7\u05D9\u05E0\u05D9\u05DD \u05D5\u05E0\u05E8\u05E9\u05DE\u05D9\u05DD \u05E2\u05DD <strong>Google</strong></div></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--gold); color:#000; width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800; font-size:1.2rem;">3</span><div><strong>File &rarr; Open Folder</strong> &mdash; \u05E4\u05D5\u05EA\u05D7\u05D9\u05DD \u05EA\u05D9\u05E7\u05D9\u05D9\u05D4 \u05D7\u05D3\u05E9\u05D4</div></div><div style="background:linear-gradient(135deg, rgba(255,120,73,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--orange); width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800; font-size:1.2rem;">4</span><div>\u05DC\u05D5\u05D7\u05E6\u05D9\u05DD <kbd style="background:var(--dark); padding:0.2rem 0.5rem; border-radius:6px;">Ctrl+I</kbd> (\u05D0\u05D5 <kbd style="background:var(--dark); padding:0.2rem 0.5rem; border-radius:6px;">Cmd+I</kbd> \u05D1\u05DE\u05E7)</div></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), transparent); padding:1.2rem 1.5rem; border-radius:16px; font-size:1.15rem; display:flex; gap:1rem; align-items:center;"><span style="background:var(--pink); width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:800; font-size:1.2rem;">5</span><div>\u05DB\u05D5\u05EA\u05D1\u05D9\u05DD \u05DE\u05D4 \u05E8\u05D5\u05E6\u05D9\u05DD \u05DC\u05D1\u05E0\u05D5\u05EA &mdash; \u05D5-Cursor \u05D1\u05D5\u05E0\u05D4!</div></div></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05D1\u05E0\u05D5 \u05D3\u05E3 \u05E0\u05D7\u05D9\u05EA\u05D4!</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:550px; margin:0 auto;"><p style="font-size:1.3rem; margin-bottom:1.5rem; font-weight:600;">\u05E4\u05EA\u05D7\u05D5 Cursor, \u05DC\u05D7\u05E6\u05D5 <kbd style="background:var(--dark); padding:0.2rem 0.5rem; border-radius:6px;">Ctrl+I</kbd> \u05D5\u05DB\u05EA\u05D1\u05D5:</p><div style="background:var(--dark); padding:1.2rem; border-radius:12px; direction:ltr; text-align:left; font-family:monospace; color:var(--accent); font-size:0.95rem; line-height:1.8;">"Build me a landing page for [name] with a hero section, about, features with 3 cards, and contact form. Hebrew RTL, modern design."</div><p style="color:var(--text-muted); font-size:1rem; margin-top:1rem;">\u05DB\u05D5\u05EA\u05D1\u05D9\u05DD \u05D1\u05D0\u05E0\u05D2\u05DC\u05D9\u05EA \u2014 \u05D4\u05EA\u05D5\u05E6\u05D0\u05D4 \u05EA\u05D4\u05D9\u05D4 \u05D1\u05E2\u05D1\u05E8\u05D9\u05EA!</p></div></div>' }
             ],
             6: [
-                { title: 'בונים אתר — חלק 2', content: '<h2 style="text-align:center;">&#x2728; בונים אתר &mdash; חלק 2</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">היום נשדרג את האתר שלכם!</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">עיצוב, אנימציות, מובייל ועוד...</p>' },
-                { title: 'אנימציות', content: '<h2>&#x1F3AC; הוספת אנימציות</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; כניסה חלקה של אלמנטים (fade in)</li><li>&#x25C2; אפקט hover על כפתורים וכרטיסים</li><li>&#x25C2; גלילה חלקה בין סקשנים</li><li>&#x25C2; טרנזישנים וגרדיאנטים</li></ul><br><p style="color:var(--text-muted);">&#x1F4A1; פשוט תגידו ל-Cursor: "הוסף אנימציות לאתר"!</p>' },
-                { title: 'רספונסיביות', content: '<h2>&#x1F4F1; רספונסיביות &mdash; מובייל!</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; text-align:center;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F5A5;</div><p>דסקטופ</p><p style="color:var(--text-muted); font-size:0.85rem;">פריסה רחבה, 2-3 עמודות</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F4F1;</div><p>מובייל</p><p style="color:var(--text-muted); font-size:0.85rem;">עמודה אחת, כפתורים גדולים</p></div></div><br><p style="color:var(--accent);">האתר חייב לעבוד טוב בטלפון!</p>' },
-                { title: 'פיצ\'רים', content: '<h2>&#x2699; הוספת פיצ\'רים</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; טופס יצירת קשר</li><li>&#x25C2; תפריט ניווט עם המבורגר למובייל</li><li>&#x25C2; גלריית תמונות</li><li>&#x25C2; דף "אודות" ו"צור קשר" נוספים</li></ul>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">שדרגו את האתר שלכם!</p><p style="color:var(--text-muted);">הוסיפו לפחות 3 דברים:</p><br><p style="color:var(--gold);">&#x2B50; טופס יצירת קשר</p><p style="color:var(--gold);">&#x2B50; אנימציה אחת לפחות</p><p style="color:var(--gold);">&#x2B50; תפריט ניווט</p></div>' }
+                { title: '\u05E9\u05D3\u05E8\u05D5\u05D2 \u05D4\u05D0\u05EA\u05E8', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05E9\u05D3\u05E8\u05D5\u05D2 \u05D4\u05D0\u05EA\u05E8!</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05D4\u05D9\u05D5\u05DD \u05E0\u05E9\u05D3\u05E8\u05D2 \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8 \u05E9\u05DC\u05DB\u05DD</p><p style="font-size:1.3rem; color:var(--accent); font-weight:600;">\u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D5\u05EA, \u05DE\u05D5\u05D1\u05D9\u05D9\u05DC, \u05D5\u05E4\u05E8\u05E1\u05D5\u05DD \u05DC\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8!</p></div>' },
+                { title: '\u05D3\u05E1\u05E7\u05D8\u05D5\u05E4 vs \u05DE\u05D5\u05D1\u05D9\u05D9\u05DC', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4F1; \u05E8\u05E1\u05E4\u05D5\u05E0\u05E1\u05D9\u05D1\u05D9\u05D5\u05EA &mdash; \u05D7\u05D5\u05D1\u05D4!</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;"><div style="background:linear-gradient(135deg, rgba(77,163,255,0.15), transparent); padding:2rem; border-radius:20px; border:2px solid var(--blue); text-align:center;"><div style="font-size:4rem; margin-bottom:1rem;">&#x1F5A5;</div><strong style="font-size:1.3rem; color:var(--blue);">\u05D3\u05E1\u05E7\u05D8\u05D5\u05E4</strong><div style="margin-top:1rem; display:grid; gap:0.5rem;"><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">2-3 \u05E2\u05DE\u05D5\u05D3\u05D5\u05EA \u05D6\u05D5 \u05DC\u05D9\u05D3 \u05D6\u05D5</div><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">\u05EA\u05E4\u05E8\u05D9\u05D8 \u05E0\u05D9\u05D5\u05D5\u05D8 \u05E8\u05D7\u05D1</div><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA \u05D2\u05D3\u05D5\u05DC\u05D5\u05EA</div></div></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.15), transparent); padding:2rem; border-radius:20px; border:2px solid var(--accent); text-align:center;"><div style="font-size:4rem; margin-bottom:1rem;">&#x1F4F1;</div><strong style="font-size:1.3rem; color:var(--accent);">\u05DE\u05D5\u05D1\u05D9\u05D9\u05DC</strong><div style="margin-top:1rem; display:grid; gap:0.5rem;"><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">\u05E2\u05DE\u05D5\u05D3\u05D4 \u05D0\u05D7\u05EA</div><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">\u05EA\u05E4\u05E8\u05D9\u05D8 \u05D4\u05DE\u05D1\u05D5\u05E8\u05D2\u05E8 &#x2630;</div><div style="background:var(--dark); padding:0.6rem; border-radius:8px; font-size:0.95rem;">\u05DB\u05E4\u05EA\u05D5\u05E8\u05D9\u05DD \u05D2\u05D3\u05D5\u05DC\u05D9\u05DD</div></div></div></div><p style="text-align:center; color:var(--gold); font-size:1.1rem; margin-top:1.5rem; font-weight:600;">60% \u05DE\u05D4\u05D2\u05D5\u05DC\u05E9\u05D9\u05DD \u05D2\u05D5\u05DC\u05E9\u05D9\u05DD \u05DE\u05D4\u05D8\u05DC\u05E4\u05D5\u05DF!</p>' },
+                { title: '\u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D5\u05EA', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x2728; \u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D5\u05EA \u05E9\u05DE\u05E9\u05D3\u05E8\u05D2\u05D5\u05EA \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), rgba(255,77,141,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F4AB;</div><strong style="font-size:1.1rem; color:var(--pink);">Fade In</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D0\u05DC\u05DE\u05E0\u05D8\u05D9\u05DD \u05E0\u05DB\u05E0\u05E1\u05D9\u05DD \u05D1\u05E2\u05D3\u05D9\u05E0\u05D5\u05EA \u05D1\u05D2\u05DC\u05D9\u05DC\u05D4</p></div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F3AF;</div><strong style="font-size:1.1rem; color:var(--accent);">Hover</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05DB\u05E4\u05EA\u05D5\u05E8\u05D9\u05DD \u05DE\u05E9\u05E0\u05D9\u05DD \u05E6\u05D1\u05E2 \u05D1\u05DE\u05E8\u05D7\u05E4\u05D4</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F4A8;</div><strong style="font-size:1.1rem; color:var(--gold);">Slide</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA \u05E0\u05DB\u05E0\u05E1\u05D5\u05EA \u05DE\u05D4\u05E6\u05D3</p></div><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), rgba(108,60,225,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.5rem;">&#x1F300;</div><strong style="font-size:1.1rem; color:var(--primary-light);">Smooth Scroll</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D2\u05DC\u05D9\u05DC\u05D4 \u05D7\u05DC\u05E7\u05D4 \u05D1\u05D9\u05DF \u05E1\u05E7\u05E9\u05E0\u05D9\u05DD</p></div></div>' },
+                { title: 'GitHub Pages', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F310; \u05DE\u05E2\u05DC\u05D9\u05DD \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8 \u05DC\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8!</h1><div style="display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap; margin:2rem 0;"><div style="background:linear-gradient(135deg, rgba(108,60,225,0.2), transparent); padding:1.5rem 1.8rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4C1;</div><strong>\u05D4\u05E7\u05D1\u05E6\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD</strong></div><div style="font-size:2rem; color:var(--accent);">&#x2190;</div><div style="background:linear-gradient(135deg, rgba(51,51,51,0.3), transparent); padding:1.5rem 1.8rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F5C3;</div><strong>GitHub</strong></div><div style="font-size:2rem; color:var(--accent);">&#x2190;</div><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), transparent); padding:1.5rem 1.8rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F30D;</div><strong>\u05D0\u05EA\u05E8 \u05D7\u05D9 \u05D1\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8!</strong></div></div><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; max-width:500px; margin:1rem auto;"><div style="background:var(--dark); padding:1rem; border-radius:10px; direction:ltr; text-align:center; font-family:monospace; color:var(--accent); font-size:1.1rem;">https://username.github.io/my-startup/</div><p style="color:var(--text-muted); font-size:0.95rem; margin-top:0.8rem; text-align:center;">\u05D4\u05DB\u05EA\u05D5\u05D1\u05EA \u05E9\u05DC\u05DB\u05DD \u05D1\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8 &mdash; \u05D1\u05D7\u05D9\u05E0\u05DD!</p></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05E9\u05D3\u05E8\u05D2\u05D5 \u05D0\u05EA \u05D4\u05D0\u05EA\u05E8!</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.3rem; margin-bottom:1.5rem; font-weight:600;">\u05D4\u05D5\u05E1\u05D9\u05E4\u05D5 \u05DC\u05E4\u05D7\u05D5\u05EA 3 \u05D3\u05D1\u05E8\u05D9\u05DD:</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:350px; margin:0 auto;"><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D8\u05D5\u05E4\u05E1 \u05D9\u05E6\u05D9\u05E8\u05EA \u05E7\u05E9\u05E8</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D0\u05E0\u05D9\u05DE\u05E6\u05D9\u05D4 \u05D0\u05D7\u05EA \u05DC\u05E4\u05D7\u05D5\u05EA</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05EA\u05E4\u05E8\u05D9\u05D8 \u05E0\u05D9\u05D5\u05D5\u05D8</div></div><p style="color:var(--accent); font-size:1.1rem; font-weight:600; margin-top:1.5rem;">\u05D5\u05D0\u05D6 &mdash; \u05D4\u05E2\u05DC\u05D5 \u05DC\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8 \u05E2\u05DD GitHub Pages!</p></div></div>' }
             ],
             7: [
-                { title: 'מודל עסקי ושיווק', content: '<h2 style="text-align:center;">&#x1F4B0; מודל עסקי ושיווק</h2><br><p style="text-align:center; font-size:1.1rem; color:var(--text-muted);">איך הסטארטאפ שלכם ירוויח כסף?</p><p style="text-align:center; font-size:1.1rem; color:var(--accent);">ואיך תגיעו ללקוחות?</p>' },
-                { title: 'מודלים עסקיים', content: '<h2>&#x1F4B3; מודלים עסקיים</h2><br><div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--accent);">מנוי חודשי</strong><p style="color:var(--text-muted); font-size:0.9rem;">Spotify, Netflix</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--gold);">פרימיום</strong><p style="color:var(--text-muted); font-size:0.9rem;">חינם + תשלום על פיצ\'רים</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--pink);">חנות</strong><p style="color:var(--text-muted); font-size:0.9rem;">מוכרים מוצרים</p></div><div style="background:var(--dark-lighter); padding:1.2rem; border-radius:12px;"><strong style="color:var(--blue);">פרסום</strong><p style="color:var(--text-muted); font-size:0.9rem;">חינם + הכנסות מפרסום</p></div></div>' },
-                { title: 'שיווק', content: '<h2>&#x1F4E3; איך מגיעים ללקוחות?</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x25C2; <strong>אינסטגרם / TikTok</strong> &mdash; תוכן ויזואלי, רילס</li><li>&#x25C2; <strong>מפה לאוזן</strong> &mdash; חברים מספרים לחברים</li><li>&#x25C2; <strong>שיתופי פעולה</strong> &mdash; עם אנשים בתחום</li><li>&#x25C2; <strong>תוכן + AI</strong> &mdash; AI עוזר ליצור תוכן מהר!</li></ul>' },
-                { title: 'תוכן עם AI', content: '<h2>&#x1F916; יצירת תוכן עם AI</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:12px;"><p style="margin-bottom:1rem;">בקשו מ-ChatGPT:</p><div style="background:var(--dark-card); padding:1rem; border-radius:8px; direction:ltr; text-align:left; font-family:monospace; color:var(--accent); font-size:0.9rem;">"Write 3 Instagram posts for my startup [name] that helps [audience] with [problem]. Write in Hebrew, fun tone, with emojis."</div></div>' },
-                { title: 'תרגול!', content: '<h2 style="text-align:center;">&#x1F3AF; תרגול</h2><br><div style="background:var(--dark-lighter); padding:1.5rem; border-radius:16px; text-align:center;"><p style="font-size:1.15rem; margin-bottom:1rem;">בנו תוכנית עסקית + 3 פוסטים!</p><p style="color:var(--text-muted);">השתמשו ב-AI ליצירת תוכן שיווקי</p><br><p style="color:var(--gold);">&#x2B50; תוכנית עסקית בעמוד אחד</p><p style="color:var(--gold);">&#x2B50; 3 פוסטים לאינסטגרם</p></div>' }
+                { title: '\u05DE\u05D5\u05D3\u05DC \u05E2\u05E1\u05E7\u05D9', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05DE\u05D5\u05D3\u05DC \u05E2\u05E1\u05E7\u05D9 \u05D5\u05E9\u05D9\u05D5\u05D5\u05E7</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:0.5rem;">\u05D0\u05D9\u05DA \u05D4\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4 \u05E9\u05DC\u05DB\u05DD \u05D9\u05E8\u05D5\u05D5\u05D9\u05D7 \u05DB\u05E1\u05E3?</p><p style="font-size:1.3rem; color:var(--accent); font-weight:600;">\u05D5\u05D0\u05D9\u05DA \u05EA\u05D2\u05D9\u05E2\u05D5 \u05DC\u05DC\u05E7\u05D5\u05D7\u05D5\u05EA?</p></div>' },
+                { title: '4 \u05DE\u05D5\u05D3\u05DC\u05D9\u05DD \u05E2\u05E1\u05E7\u05D9\u05D9\u05DD', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4B3; 4 \u05D3\u05E8\u05DB\u05D9\u05DD \u05DC\u05D4\u05E8\u05D5\u05D5\u05D9\u05D7 \u05DB\u05E1\u05E3</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F501;</div><strong style="font-size:1.2rem; color:var(--accent);">\u05DE\u05E0\u05D5\u05D9 \u05D7\u05D5\u05D3\u05E9\u05D9</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05DE\u05E9\u05DC\u05DE\u05D9\u05DD \u05DB\u05DC \u05D7\u05D5\u05D3\u05E9<br>\u05D3\u05D5\u05D2\u05DE\u05D4: Spotify, Netflix</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F381;</div><strong style="font-size:1.2rem; color:var(--gold);">\u05D7\u05D9\u05E0\u05DD + \u05E4\u05E8\u05D9\u05DE\u05D9\u05D5\u05DD</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D1\u05E1\u05D9\u05E1 \u05D7\u05D9\u05E0\u05DD, \u05EA\u05E9\u05DC\u05D5\u05DD \u05E2\u05DC \u05EA\u05D5\u05E1\u05E4\u05D5\u05EA<br>\u05D3\u05D5\u05D2\u05DE\u05D4: Canva, Zoom</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.2), rgba(255,77,141,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6D2;</div><strong style="font-size:1.2rem; color:var(--pink);">\u05D7\u05E0\u05D5\u05EA \u05DE\u05E7\u05D5\u05D5\u05E0\u05EA</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05DE\u05D5\u05DB\u05E8\u05D9\u05DD \u05DE\u05D5\u05E6\u05E8\u05D9\u05DD \u05D9\u05E9\u05D9\u05E8\u05D5\u05EA<br>\u05D3\u05D5\u05D2\u05DE\u05D4: \u05D0\u05DE\u05D6\u05D5\u05DF, \u05E9\u05D5\u05E4\u05D9\u05E4\u05D9</p></div><div style="background:linear-gradient(135deg, rgba(77,163,255,0.2), rgba(77,163,255,0.05)); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4E2;</div><strong style="font-size:1.2rem; color:var(--blue);">\u05E4\u05E8\u05E1\u05D5\u05DD</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05E9\u05D9\u05DE\u05D5\u05E9 \u05D7\u05D9\u05E0\u05DD, \u05D4\u05DB\u05E0\u05E1\u05D5\u05EA \u05DE\u05E4\u05E8\u05E1\u05D5\u05DD<br>\u05D3\u05D5\u05D2\u05DE\u05D4: \u05D0\u05D9\u05E0\u05E1\u05D8\u05D2\u05E8\u05DD, YouTube</p></div></div>' },
+                { title: '\u05E2\u05E8\u05D5\u05E6\u05D9 \u05E9\u05D9\u05D5\u05D5\u05E7', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4E3; \u05D0\u05D9\u05DA \u05DE\u05D2\u05D9\u05E2\u05D9\u05DD \u05DC\u05DC\u05E7\u05D5\u05D7\u05D5\u05EA?</h1><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;"><div style="background:linear-gradient(135deg, #C13584, #E1306C); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4F8;</div><strong style="font-size:1.2rem;">\u05D0\u05D9\u05E0\u05E1\u05D8\u05D2\u05E8\u05DD</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.9rem;">\u05E8\u05D9\u05DC\u05E1, \u05E1\u05D8\u05D5\u05E8\u05D9\u05D6, \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD</p></div><div style="background:linear-gradient(135deg, #000, #333); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F3B5;</div><strong style="font-size:1.2rem;">TikTok</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.9rem;">\u05E1\u05E8\u05D8\u05D5\u05E0\u05D9\u05DD \u05E7\u05E6\u05E8\u05D9\u05DD \u05D5\u05E7\u05DC\u05D9\u05D8\u05D9\u05DD</p></div><div style="background:linear-gradient(135deg, #FF0000, #CC0000); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F3AC;</div><strong style="font-size:1.2rem;">YouTube</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.9rem;">\u05D4\u05D3\u05E8\u05DB\u05D5\u05EA, \u05E1\u05E7\u05D9\u05E8\u05D5\u05EA, \u05D4\u05E1\u05D1\u05E8\u05D9\u05DD</p></div></div><p style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-top:1.5rem;">\u05D4\u05E7\u05D4\u05DC \u05E9\u05DC\u05DB\u05DD \u05DB\u05D1\u05E8 \u05E0\u05DE\u05E6\u05D0 \u05E9\u05DD &mdash; \u05E6\u05E8\u05D9\u05DA \u05DC\u05D3\u05D1\u05E8 \u05D0\u05D9\u05EA\u05DD!</p>' },
+                { title: '\u05EA\u05D5\u05DB\u05DF \u05E2\u05DD AI', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F916; \u05D9\u05E6\u05D9\u05E8\u05EA \u05EA\u05D5\u05DB\u05DF \u05E2\u05DD AI</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2rem; border-radius:20px; max-width:550px; margin:0 auto;"><p style="font-size:1.15rem; margin-bottom:1rem; font-weight:600; color:var(--accent);">\u05D3\u05D5\u05D2\u05DE\u05EA \u05E4\u05E8\u05D5\u05DE\u05E4\u05D8 \u05DC-ChatGPT:</p><div style="background:var(--dark); padding:1.2rem; border-radius:12px; font-size:1rem; line-height:1.8; direction:rtl; text-align:right;">&ldquo;\u05DB\u05EA\u05D5\u05D1 \u05DC\u05D9 3 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD \u05DC\u05D0\u05D9\u05E0\u05E1\u05D8\u05D2\u05E8\u05DD \u05E2\u05D1\u05D5\u05E8 \u05D4\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4 \u05E9\u05DC\u05D9 \u05E9\u05E0\u05E7\u05E8\u05D0 [\u05E9\u05DD] \u05D5\u05E2\u05D5\u05D6\u05E8 \u05DC-[\u05E7\u05D4\u05DC \u05D9\u05E2\u05D3] \u05E2\u05DD [\u05D1\u05E2\u05D9\u05D4]. \u05D1\u05D8\u05D5\u05DF \u05E9\u05DE\u05D7 \u05D5\u05E6\u05E2\u05D9\u05E8, \u05E2\u05DD \u05D0\u05DE\u05D5\u05D2\u05F3\u05D9\u05DD \u05D5\u05D4\u05D0\u05E9\u05D8\u05D2\u05D9\u05DD \u05E8\u05DC\u05D5\u05D5\u05E0\u05D8\u05D9\u05D9\u05DD.&rdquo;</div><p style="color:var(--text-muted); font-size:0.95rem; margin-top:1rem;">\u05D0\u05E4\u05E9\u05E8 \u05D2\u05DD \u05DC\u05D1\u05E7\u05E9 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05EA\u05D5\u05DB\u05DF \u05DC\u05E9\u05D1\u05D5\u05E2!</p></div>' },
+                { title: '\u05EA\u05E8\u05D2\u05D5\u05DC!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.2rem; margin-bottom:2rem;">&#x1F3AF; \u05EA\u05E8\u05D2\u05D5\u05DC</h1><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2.5rem; border-radius:24px; max-width:500px; margin:0 auto;"><p style="font-size:1.3rem; margin-bottom:1.5rem; font-weight:600;">\u05D1\u05E0\u05D5 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05E2\u05E1\u05E7\u05D9\u05EA + 3 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD!</p><div style="display:grid; grid-template-columns:1fr; gap:0.8rem; text-align:right; max-width:380px; margin:0 auto;"><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D1\u05D7\u05E8\u05D5 \u05DE\u05D5\u05D3\u05DC \u05E2\u05E1\u05E7\u05D9 \u05DC\u05E1\u05D8\u05D0\u05E8\u05D8\u05D0\u05E4</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05E6\u05E8\u05D5 3 \u05E4\u05D5\u05E1\u05D8\u05D9\u05DD \u05E2\u05DD AI</div><div style="background:rgba(245,200,66,0.15); padding:0.8rem 1.2rem; border-radius:12px; font-size:1.05rem;">&#x2B50; \u05D4\u05DB\u05D9\u05E0\u05D5 \u05EA\u05D5\u05DB\u05E0\u05D9\u05EA \u05EA\u05D5\u05DB\u05DF \u05DC\u05E9\u05D1\u05D5\u05E2</div></div><p style="color:var(--accent); font-size:1.1rem; font-weight:600; margin-top:1.5rem;">\u05D4\u05E9\u05EA\u05DE\u05E9\u05D5 \u05D1-ChatGPT \u05D0\u05D5 Claude!</p></div></div>' }
             ],
             8: [
-                { title: 'יום הפיץ\'!', content: '<h2 style="text-align:center;">&#x1F3C6; יום הפיץ\'!</h2><br><p style="text-align:center; font-size:1.2rem; color:var(--gold);">היום אתם מציגים את הפרויקט!</p><p style="text-align:center; font-size:1.1rem; color:var(--text-muted); margin-top:0.5rem;">3 דקות. בעיה. פתרון. דמו.</p>' },
-                { title: 'מבנה הפיץ\'', content: '<h2>&#x1F4CB; מבנה הפיץ\' &mdash; 3 דקות</h2><br><ol style="font-size:1.1rem; line-height:2.5; padding-right:1.2rem;"><li><strong style="color:var(--pink);">הבעיה</strong> (30 שניות) &mdash; ספרו על הבעיה</li><li><strong style="color:var(--accent);">הפתרון</strong> (30 שניות) &mdash; מה בניתם?</li><li><strong style="color:var(--gold);">דמו חי</strong> (90 שניות) &mdash; הראו את המוצר!</li><li><strong style="color:var(--blue);">סיכום</strong> (30 שניות) &mdash; מה הלאה?</li></ol>' },
-                { title: 'טיפים', content: '<h2>&#x1F4A1; טיפים להצגה מעולה</h2><br><ul style="list-style:none; font-size:1.05rem; line-height:2.2;"><li>&#x2B50; דברו לאט וברור</li><li>&#x2B50; תסתכלו על הקהל (המצלמה)</li><li>&#x2B50; תתלהבו! אם אתם לא מתלהבים &mdash; הקהל לא יתלהב</li><li>&#x2B50; תתאמנו לפני &mdash; לפחות פעמיים</li><li>&#x2B50; זה בסדר לטעות &mdash; פשוט תמשיכו!</li></ul>' },
-                { title: 'בהצלחה!', content: '<h2 style="text-align:center;">&#x1F680; בהצלחה!</h2><br><div style="text-align:center;"><p style="font-size:1.3rem; margin-bottom:1.5rem;">סיימתם קורס יזמות ובינה מלאכותית!</p><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;"><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F4A1;</div><p>למדתם לחשוב<br>כמו יזמים</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F916;</div><p>שלטתם<br>בכלי AI</p></div><div style="background:var(--dark-lighter); padding:1rem; border-radius:12px;"><div style="font-size:2rem;">&#x1F3D7;</div><p>בניתם מוצר<br>אמיתי!</p></div></div></div>' }
+                { title: '\u05D9\u05D5\u05DD \u05D4\u05E4\u05D9\u05E5\'!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">&#x1F3C6; \u05D9\u05D5\u05DD \u05D4\u05E4\u05D9\u05E5\'!</h1><p style="font-size:1.4rem; color:var(--gold); margin-bottom:0.5rem; font-weight:600;">\u05D4\u05D9\u05D5\u05DD \u05D0\u05EA\u05DD \u05DE\u05E6\u05D9\u05D2\u05D9\u05DD \u05D0\u05EA \u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8!</p><p style="font-size:1.3rem; color:var(--text-muted);">3 \u05D3\u05E7\u05D5\u05EA. \u05D1\u05E2\u05D9\u05D4. \u05E4\u05EA\u05E8\u05D5\u05DF. \u05D3\u05DE\u05D5.</p><div style="display:flex; justify-content:center; gap:1.5rem; margin-top:2rem;"><div style="font-size:3rem;">&#x1F3C6;</div><div style="font-size:3rem;">&#x1F389;</div><div style="font-size:3rem;">&#x1F31F;</div></div></div>' },
+                { title: '\u05DE\u05D1\u05E0\u05D4 \u05D4\u05E4\u05D9\u05E5\'', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4CB; \u05DE\u05D1\u05E0\u05D4 \u05D4\u05E4\u05D9\u05E5\' &mdash; 3 \u05D3\u05E7\u05D5\u05EA</h1><div style="display:flex; justify-content:center; align-items:center; gap:1rem; flex-wrap:wrap; margin:2rem 0;"><div style="background:linear-gradient(135deg, var(--pink), #e63976); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F6A8;</div><strong style="font-size:1.1rem;">\u05D4\u05D1\u05E2\u05D9\u05D4</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4A1;</div><strong style="font-size:1.1rem;">\u05D4\u05E4\u05EA\u05E8\u05D5\u05DF</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4BB;</div><strong style="font-size:1.1rem;">\u05D3\u05DE\u05D5 \u05D7\u05D9!</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">90 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div><div style="font-size:2rem; color:var(--gold);">&#x2190;</div><div style="background:linear-gradient(135deg, var(--blue), #3367d6); padding:1.8rem 2rem; border-radius:20px; text-align:center; min-width:120px;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F3AF;</div><strong style="font-size:1.1rem;">\u05E1\u05D9\u05DB\u05D5\u05DD</strong><p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin-top:0.3rem;">30 \u05E9\u05E0\u05D9\u05D5\u05EA</p></div></div>' },
+                { title: '\u05D8\u05D9\u05E4\u05D9\u05DD \u05DC\u05D4\u05E6\u05D2\u05D4', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F4A1; \u05D8\u05D9\u05E4\u05D9\u05DD \u05DC\u05D4\u05E6\u05D2\u05D4 \u05DE\u05E2\u05D5\u05DC\u05D4</h1><div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;"><div style="background:linear-gradient(135deg, rgba(0,212,170,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F5E3;</div><strong style="font-size:1.1rem;">\u05D3\u05D1\u05E8\u05D5 \u05DC\u05D0\u05D8 \u05D5\u05D1\u05E8\u05D5\u05E8</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D0\u05DC \u05EA\u05DE\u05D4\u05E8\u05D5 &mdash; \u05D4\u05E7\u05D4\u05DC \u05E6\u05E8\u05D9\u05DA \u05DC\u05D4\u05D1\u05D9\u05DF</p></div><div style="background:linear-gradient(135deg, rgba(245,200,66,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F440;</div><strong style="font-size:1.1rem;">\u05EA\u05E1\u05EA\u05DB\u05DC\u05D5 \u05E2\u05DC \u05D4\u05E7\u05D4\u05DC</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05E7\u05E9\u05E8 \u05E2\u05D9\u05DF \u05D9\u05D5\u05E6\u05E8 \u05D0\u05DE\u05D5\u05DF!</p></div><div style="background:linear-gradient(135deg, rgba(255,77,141,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F525;</div><strong style="font-size:1.1rem;">\u05EA\u05EA\u05DC\u05D4\u05D1\u05D5!</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05D0\u05DD \u05D0\u05EA\u05DD \u05DC\u05D0 \u05DE\u05EA\u05DC\u05D4\u05D1\u05D9\u05DD &mdash; \u05D4\u05E7\u05D4\u05DC \u05DC\u05D0 \u05D9\u05EA\u05DC\u05D4\u05D1</p></div><div style="background:linear-gradient(135deg, rgba(108,60,225,0.15), transparent); padding:2rem; border-radius:20px; text-align:center;"><div style="font-size:2.5rem; margin-bottom:0.5rem;">&#x1F4AA;</div><strong style="font-size:1.1rem;">\u05EA\u05EA\u05D0\u05DE\u05E0\u05D5 \u05DC\u05E4\u05E0\u05D9!</strong><p style="color:var(--text-muted); margin-top:0.5rem;">\u05DC\u05E4\u05D7\u05D5\u05EA \u05E4\u05E2\u05DE\u05D9\u05D9\u05DD &mdash; \u05D6\u05D4 \u05DE\u05E9\u05EA\u05DC\u05DD!</p></div></div>' },
+                { title: '\u05DE\u05D4 \u05DC\u05DE\u05D3\u05EA\u05DD', content: '<h1 style="text-align:center; font-size:2rem; margin-bottom:2rem;">&#x1F31F; \u05DE\u05D4 \u05DC\u05DE\u05D3\u05EA\u05DD \u05D1\u05E7\u05D5\u05E8\u05E1 \u05D4\u05D6\u05D4</h1><div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;"><div style="background:linear-gradient(135deg, var(--primary), var(--primary-light)); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F4A1;</div><strong style="font-size:1.2rem;">\u05D7\u05E9\u05D9\u05D1\u05D4 \u05D9\u05D6\u05DE\u05D9\u05EA</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">\u05DC\u05E8\u05D0\u05D5\u05EA \u05D1\u05E2\u05D9\u05D5\u05EA, \u05DC\u05DE\u05E6\u05D5\u05D0 \u05E4\u05EA\u05E8\u05D5\u05E0\u05D5\u05EA, \u05DC\u05D7\u05E9\u05D5\u05D1 \u05DB\u05DE\u05D5 \u05D9\u05D6\u05DE\u05D9\u05DD</p></div><div style="background:linear-gradient(135deg, var(--accent), #00b894); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F916;</div><strong style="font-size:1.2rem;">\u05E9\u05DC\u05D9\u05D8\u05D4 \u05D1-AI</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">ChatGPT, Claude, Cursor &mdash; \u05DB\u05DC\u05D9\u05DD \u05E9\u05D9\u05E9\u05E0\u05D5 \u05D0\u05EA \u05D4\u05E2\u05D5\u05DC\u05DD</p></div><div style="background:linear-gradient(135deg, var(--gold), var(--orange)); padding:2rem 1rem; border-radius:20px; text-align:center;"><div style="font-size:3rem; margin-bottom:0.8rem;">&#x1F3D7;</div><strong style="font-size:1.2rem;">\u05D1\u05E0\u05D9\u05D9\u05EA \u05DE\u05D5\u05E6\u05E8</strong><p style="color:rgba(255,255,255,0.8); margin-top:0.5rem; font-size:0.95rem;">\u05D0\u05EA\u05E8 \u05D0\u05DE\u05D9\u05EA\u05D9, \u05D7\u05D9 \u05D1\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8, \u05E9\u05DC\u05DB\u05DD!</p></div></div>' },
+                { title: '\u05D1\u05D4\u05E6\u05DC\u05D7\u05D4!', content: '<div style="text-align:center; padding:2rem 0;"><h1 style="font-size:2.5rem; margin-bottom:1rem;">&#x1F389;&#x1F389;&#x1F389;</h1><h1 style="font-size:2.2rem; margin-bottom:1.5rem; background:linear-gradient(135deg, var(--gold), var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">\u05E1\u05D9\u05D9\u05DE\u05EA\u05DD \u05D0\u05EA \u05D4\u05E7\u05D5\u05E8\u05E1!</h1><p style="font-size:1.4rem; color:var(--text-muted); margin-bottom:2rem;">\u05D9\u05D6\u05DE\u05D5\u05EA \u05D5\u05D1\u05D9\u05E0\u05D4 \u05DE\u05DC\u05D0\u05DB\u05D5\u05EA\u05D9\u05EA \u05DC\u05E0\u05D5\u05E2\u05E8</p><div style="background:linear-gradient(135deg, var(--dark-lighter), var(--dark-card)); padding:2rem; border-radius:24px; max-width:450px; margin:0 auto;"><p style="font-size:1.3rem; font-weight:700; color:var(--gold); margin-bottom:1rem;">\u05D4\u05E2\u05EA\u05D9\u05D3 \u05E8\u05E7 \u05D4\u05EA\u05D7\u05D9\u05DC!</p><p style="font-size:1.1rem; color:var(--text-muted);">\u05D4\u05DE\u05E9\u05D9\u05DB\u05D5 \u05DC\u05D1\u05E0\u05D5\u05EA, \u05DC\u05D9\u05E6\u05D5\u05E8, \u05DC\u05D7\u05DC\u05D5\u05DD \u2014</p><p style="font-size:1.1rem; color:var(--text-muted);">\u05D4\u05DB\u05DC\u05D9\u05DD \u05D1\u05D9\u05D3\u05D9\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD!</p><p style="font-size:2rem; margin-top:1.5rem;">&#x1F680;&#x2B50;&#x1F4AA;</p></div></div>' }
             ]
         };
 
@@ -2630,7 +3266,7 @@
         });
 
         // Init
-        loadProject();
+        loadWizard();
     </script>
 </body>
 </html>
