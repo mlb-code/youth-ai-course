@@ -458,11 +458,19 @@
             padding: 1.8rem 0.8rem;
             font-size: 1.05rem;
             color: var(--text-muted);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
+            display: block;
             line-height: 2.2;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.25);
+            border-bottom: 2px solid rgba(139, 92, 246, 0.45);
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .session-card-body .content-list li::before {
+            content: "\25C2";
+            color: var(--primary-light);
+            position: absolute;
+            right: 0;
+            top: 1.8rem;
         }
 
         .session-card-body .content-list li:last-child {
@@ -472,17 +480,11 @@
         .session-card-body .content-list li strong {
             color: var(--text);
             display: block;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid rgba(0, 212, 170, 0.2);
-        }
-
-        .session-card-body .content-list li::before {
-            content: "\25C2";
-            color: var(--primary-light);
-            flex-shrink: 0;
-            margin-top: 2px;
+            font-size: 1.15rem;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0, 212, 170, 0.35);
+            width: fit-content;
         }
 
         .session-exercise {
